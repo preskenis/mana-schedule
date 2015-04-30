@@ -18,17 +18,29 @@ namespace ManaSchedule.DataModels
         {
             this.Name = "";
             this.Description = "";
+            this.Team1Win = false;
+            this.Team2Win = false;
         }
     
         public int Id { get; set; }
+        public int CompetitionId { get; set; }
+        public int StageId { get; set; }
+        public Nullable<int> PlaceId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int StageId { get; set; }
-        public int PlaceId { get; set; }
-        public int Team1Id { get; set; }
+        public Nullable<int> TeamId { get; set; }
+        public Nullable<int> Team2_Id { get; set; }
+        public Nullable<bool> Team1Missed { get; set; }
+        public Nullable<bool> Team2Missed { get; set; }
+        public bool Team1Win { get; set; }
+        public bool Team2Win { get; set; }
     
         public virtual Stage Stage { get; set; }
         public virtual Place Place { get; set; }
-        public virtual Team Team1 { get; set; }
+        public virtual Team Team { get; set; }
+        public virtual Competition Competition { get; set; }
+        public virtual Team Team2 { get; set; }
+        public virtual Game ParentGame1 { get; set; }
+        public virtual Game ParentGame2 { get; set; }
     }
 }

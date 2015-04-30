@@ -26,5 +26,6 @@ namespace ManaSchedule.DataModels
         public virtual DbSet<Stage> StageSet { get; set; }
         public virtual DbSet<Competition> CompetitionSet { get; set; }
         public virtual DbSet<Place> PlaceSet { get; set; }
+        public virtual DbSet<TeamCompetition> TeamCompetitionSet { get; set; }
     }
 }

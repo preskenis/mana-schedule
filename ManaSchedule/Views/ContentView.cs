@@ -29,9 +29,6 @@ namespace ManaSchedule.Views
         public virtual void OnClosing()
         { }
 
-        public virtual void Init(object content)
-        { }
-
         
         
     }

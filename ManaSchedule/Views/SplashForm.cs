@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
 namespace ManaSchedule.Views
 {
-    public partial class SoccerView : CompetitionView
+    public partial class SplashForm : Form
     {
-        public SoccerView()
+        public SplashForm()
         {
             InitializeComponent();
         }
-
-        public override void OnClosing()
-        { }
-
-        public override void Init(object content)
-        { }
-        
     }
 }

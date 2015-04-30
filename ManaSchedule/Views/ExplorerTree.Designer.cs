@@ -36,6 +36,7 @@
             // treeViewAdv1
             // 
             this.treeViewAdv1.BackColor = System.Drawing.SystemColors.Window;
+            this.treeViewAdv1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewAdv1.DefaultToolTipProvider = null;
             this.treeViewAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv1.DragDropMarkColor = System.Drawing.Color.Black;

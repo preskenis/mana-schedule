@@ -28,25 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            Janus.Windows.Common.JanusColorScheme janusColorScheme1 = new Janus.Windows.Common.JanusColorScheme();
             Janus.Windows.GridEX.GridEXLayout GridEX_DesignTimeLayout = new Janus.Windows.GridEX.GridEXLayout();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PersonView));
             this.GridEX = new Janus.Windows.GridEX.GridEX();
-            this.visualStyleManager1 = new Janus.Windows.Common.VisualStyleManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
             this.SuspendLayout();
+            // 
+            // ContentCaption
+            // 
+            this.ContentCaption.Size = new System.Drawing.Size(125, 30);
+            this.ContentCaption.Text = "Наши люди";
+            // 
+            // visualStyleManager
+            // 
+            janusColorScheme1.HighlightTextColor = System.Drawing.SystemColors.HighlightText;
+            janusColorScheme1.Name = "Scheme0";
+            janusColorScheme1.OfficeCustomColor = System.Drawing.Color.Empty;
+            janusColorScheme1.VisualStyle = Janus.Windows.Common.VisualStyle.Office2010;
             // 
             // GridEX
             // 
             this.GridEX.AllowAddNew = Janus.Windows.GridEX.InheritableBoolean.True;
+            this.GridEX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             GridEX_DesignTimeLayout.LayoutString = resources.GetString("GridEX_DesignTimeLayout.LayoutString");
             this.GridEX.DesignTimeLayout = GridEX_DesignTimeLayout;
-            this.GridEX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GridEX.Location = new System.Drawing.Point(0, 0);
+            this.GridEX.Location = new System.Drawing.Point(3, 33);
             this.GridEX.Name = "GridEX";
-            this.GridEX.Size = new System.Drawing.Size(614, 366);
+            this.GridEX.Size = new System.Drawing.Size(608, 330);
             this.GridEX.TabIndex = 2;
             this.GridEX.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2010;
+            this.GridEX.VisualStyleManager = this.visualStyleManager;
             // 
             // PersonView
             // 
@@ -54,14 +68,16 @@
             this.Controls.Add(this.GridEX);
             this.Name = "PersonView";
             this.Size = new System.Drawing.Size(614, 366);
+            this.Controls.SetChildIndex(this.GridEX, 0);
+            this.Controls.SetChildIndex(this.ContentCaption, 0);
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private Janus.Windows.GridEX.GridEX GridEX;
-        private Janus.Windows.Common.VisualStyleManager visualStyleManager1;
     }
 }

@@ -29,7 +29,14 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
+            this.GridEX = new Janus.Windows.GridEX.GridEX();
+            ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
             this.SuspendLayout();
+            // 
+            // ContentCaption
+            // 
+            this.ContentCaption.Size = new System.Drawing.Size(129, 30);
+            this.ContentCaption.Text = "Общий итог";
             // 
             // label1
             // 
@@ -40,12 +47,28 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Общий зачёт";
             // 
+            // GridEX
+            // 
+            this.GridEX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GridEX.Location = new System.Drawing.Point(3, 84);
+            this.GridEX.Name = "GridEX";
+            this.GridEX.Size = new System.Drawing.Size(608, 424);
+            this.GridEX.TabIndex = 1;
+            this.GridEX.VisualStyleManager = this.visualStyleManager;
+            // 
             // SummaryScoreView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.Controls.Add(this.GridEX);
             this.Controls.Add(this.label1);
             this.Name = "SummaryScoreView";
             this.Size = new System.Drawing.Size(614, 511);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.GridEX, 0);
+            this.Controls.SetChildIndex(this.ContentCaption, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -54,5 +77,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
+        private Janus.Windows.GridEX.GridEX GridEX;
     }
 }

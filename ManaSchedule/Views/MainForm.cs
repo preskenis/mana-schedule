@@ -1,5 +1,4 @@
-﻿using ManaSchedule.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,38 +15,13 @@ namespace ManaSchedule.Views
         {
             InitializeComponent();
             Explorer.Model = new ExplorerTreeModel();
-
         }
 
         private void Explorer_SelectionChanged(object sender, EventArgs e)
         {
             ContentView = null;
-            ContentView view = null;
-            
-                if (Explorer.SelectedNode is TeamNode)
-                {
-                    var item = Explorer.SelectedNode as TeamNode;
-
-                    view = new TeamView();
-                    view.Init(item);
-                }
-                else if (Explorer.SelectedNode is PersonNode)
-                {
-                    var item = Explorer.SelectedNode as PersonNode;
-
-                    view = new PersonView();
-                    view.Init(item);
-                }
-                else if (Explorer.SelectedNode is SoccerNode)
-                {
-                    var item = Explorer.SelectedNode as SoccerNode;
-
-                    view = new SoccerView();
-                    view.Init(item);
-                }
-          
-
-            ContentView = view;
+            if (Explorer.SelectedNode != null)
+                ContentView = Explorer.SelectedNode.GetView();
         }
 
         private ContentView _contentView = null;

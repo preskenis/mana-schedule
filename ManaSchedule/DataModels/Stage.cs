@@ -25,6 +25,7 @@ namespace ManaSchedule.DataModels
         public string Name { get; set; }
         public string Description { get; set; }
         public int CompetitionId { get; set; }
+        public ManaSchedule.DataModels.StageType Type { get; set; }
     
         public virtual Competition Competition { get; set; }
         public virtual Stage ParentStage { get; set; }

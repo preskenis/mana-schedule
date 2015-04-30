@@ -63,7 +63,7 @@
             janusColorScheme1.HighlightTextColor = System.Drawing.SystemColors.HighlightText;
             janusColorScheme1.Name = "Scheme0";
             janusColorScheme1.OfficeCustomColor = System.Drawing.Color.Empty;
-            janusColorScheme1.VisualStyle = Janus.Windows.Common.VisualStyle.Office2010;
+            janusColorScheme1.VisualStyle = Janus.Windows.Common.VisualStyle.Standard;
             this.visualStyleManager1.ColorSchemes.Add(janusColorScheme1);
             // 
             // uiPanelManager1
@@ -142,6 +142,7 @@
             this.Controls.Add(this.uiPanel0);
             this.Name = "MainForm";
             this.Text = "Мана 2015";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.uiPanelManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiPanel0)).EndInit();

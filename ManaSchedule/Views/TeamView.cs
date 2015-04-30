@@ -26,7 +26,7 @@ namespace ManaSchedule.Views
             
         }
 
-        public override void Init(object content)
+        public void Init()
         {
             DbContext.TeamSet.Load();
             GridEX.DataSource = DbContext.TeamSet.Local.ToBindingList();

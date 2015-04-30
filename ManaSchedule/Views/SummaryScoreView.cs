@@ -12,6 +12,9 @@ namespace ManaSchedule.Views
 {
     public partial class SummaryScoreView : ManaSchedule.Views.ContentView
     {
+        DataTable _table = null;
+        
+
         public SummaryScoreView()
         {
             InitializeComponent();
@@ -22,10 +25,21 @@ namespace ManaSchedule.Views
            
         }
 
-        public override void Init(object content)
+        public void Init()
         {
-           
-           
+            _table = new DataTable();
+            _table.Columns.Add("Команда", typeof(string));
+            _table.Columns.Add("Место", typeof(int));
+            _table.Columns.Add("Баллы", typeof(double));
+            foreach (var c in DbContext.CompetitionSet)
+            {
+                _table.Columns.Add(c.Name, typeof(int));
+            }
+
+            GridEX.DataSource = _table;
+            GridEX.RetrieveStructure();
         }
+
+
     }
 }

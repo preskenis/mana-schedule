@@ -22,8 +22,12 @@ namespace ManaSchedule.Views
         public override void OnClosing()
         { }
 
-        public override void Init(object content)
-        { }
-        
+        public Competition Competition { get; set; }
+
+        public virtual void Init(Competition content)
+        {
+            Competition = DbContext.CompetitionSet.First(f => f.Id == content.Id);
+        }
+
     }
 }

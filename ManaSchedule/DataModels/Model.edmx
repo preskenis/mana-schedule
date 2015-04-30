@@ -66,7 +66,32 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
             <End Role="Team" EntitySet="TeamSet" />
             <End Role="Game" EntitySet="GameSet" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="TeamCompetitionSet" EntityType="DataModels.TeamCompetition" />
+          <AssociationSet Name="TeamTeamCompetition" Association="DataModels.TeamTeamCompetition">
+            <End Role="Team" EntitySet="TeamSet" />
+            <End Role="TeamCompetition" EntitySet="TeamCompetitionSet" />
+          </AssociationSet>
+          <AssociationSet Name="CompetitionTeamCompetition" Association="DataModels.CompetitionTeamCompetition">
+            <End Role="Competition" EntitySet="CompetitionSet" />
+            <End Role="TeamCompetition" EntitySet="TeamCompetitionSet" />
+          </AssociationSet>
+          <AssociationSet Name="CompetitionGame" Association="DataModels.CompetitionGame">
+            <End Role="Competition" EntitySet="CompetitionSet" />
+            <End Role="Game" EntitySet="GameSet" />
+          </AssociationSet>
+          <AssociationSet Name="Team2Game" Association="DataModels.Team2Game">
+            <End Role="Team" EntitySet="TeamSet" />
+            <End Role="Game" EntitySet="GameSet" />
+          </AssociationSet>
+          <AssociationSet Name="ParentGame1" Association="DataModels.ParentGame1">
+            <End EntitySet="GameSet" Role="Game" />
+            <End EntitySet="GameSet" Role="Game1" />
+          </AssociationSet>
+          <AssociationSet Name="ParentGame2" Association="DataModels.ParentGame2">
+            <End EntitySet="GameSet" Role="Game" />
+            <End EntitySet="GameSet" Role="Game1" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Team">
           <Key>
             <PropertyRef Name="Id" />
@@ -75,21 +100,32 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           <Property Name="Name" Type="String" Nullable="false" DefaultValue="" />
           <Property Name="Description" Type="String" Nullable="false" DefaultValue="" />
           <NavigationProperty Name="Person" Relationship="DataModels.TeamPerson" FromRole="Team" ToRole="Person" />
+          <NavigationProperty Name="Competitions" Relationship="DataModels.TeamTeamCompetition" FromRole="Team" ToRole="TeamCompetition" />
         </EntityType>
         <EntityType Name="Game">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompetitionId" Type="Int32" Nullable="false" />
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="PlaceId" Type="Int32" Nullable="true" />
           <Property Name="Name" Type="String" Nullable="false" DefaultValue="" />
           <Property Name="Description" Type="String" Nullable="false" DefaultValue="" />
           <NavigationProperty Name="Stage" Relationship="DataModels.StageGame" FromRole="Game" ToRole="Stage" />
-          <Property Name="StageId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Place" Relationship="DataModels.PlaceGame" FromRole="Game" ToRole="Place" />
-          <Property Name="PlaceId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Team1" Relationship="DataModels.Team1Game" FromRole="Game" ToRole="Team" />
-          <Property Name="Team1Id" Type="Int32" Nullable="false" />
-        </EntityType>
+          <NavigationProperty Name="Team" Relationship="DataModels.Team1Game" FromRole="Game" ToRole="Team" />
+          <Property Name="TeamId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="Competition" Relationship="DataModels.CompetitionGame" FromRole="Game" ToRole="Competition" />
+          <NavigationProperty Name="Team2" Relationship="DataModels.Team2Game" FromRole="Game" ToRole="Team" />
+          <Property Name="Team2_Id" Type="Int32" Nullable="true" />
+          <Property Name="Team1Missed" Type="Boolean" Nullable="true" />
+          <Property Name="Team2Missed" Type="Boolean" Nullable="true" />
+          <Property Name="Team1Win" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="Team2Win" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <NavigationProperty Name="ParentGame1" Relationship="DataModels.ParentGame1" FromRole="Game" ToRole="Game1" />
+          <NavigationProperty Name="ParentGame2" Relationship="DataModels.ParentGame2" FromRole="Game" ToRole="Game1" />
+          </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Id" />
@@ -112,6 +148,7 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           <Property Name="CompetitionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ParentStage" Relationship="DataModels.ParentStage" FromRole="Stage" ToRole="Stage1" />
           <NavigationProperty Name="Game" Relationship="DataModels.StageGame" FromRole="Stage" ToRole="Game" />
+          <Property Name="Type" Type="DataModels.StageType" Nullable="false" />
         </EntityType>
         <EntityType Name="Competition">
           <Key>
@@ -123,6 +160,8 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           <NavigationProperty Name="Stage" Relationship="DataModels.CompetitionStage" FromRole="Competition" ToRole="Stage" />
           <NavigationProperty Name="Place" Relationship="DataModels.CompetitionPlace" FromRole="Competition" ToRole="Place" />
           <Property Name="Type" Type="DataModels.GameType" Nullable="false" />
+          <NavigationProperty Name="Teams" Relationship="DataModels.CompetitionTeamCompetition" FromRole="Competition" ToRole="TeamCompetition" />
+          <NavigationProperty Name="Games" Relationship="DataModels.CompetitionGame" FromRole="Competition" ToRole="Game" />
         </EntityType>
         <Association Name="TeamPerson">
           <End Type="DataModels.Team" Role="Team" Multiplicity="1" />
@@ -188,7 +227,7 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           </ReferentialConstraint>
         </Association>
         <Association Name="PlaceGame">
-          <End Type="DataModels.Place" Role="Place" Multiplicity="1" />
+          <End Type="DataModels.Place" Role="Place" Multiplicity="0..1" />
           <End Type="DataModels.Game" Role="Game" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Place">
@@ -200,18 +239,87 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           </ReferentialConstraint>
         </Association>
         <Association Name="Team1Game">
-          <End Type="DataModels.Team" Role="Team" Multiplicity="1" />
+          <End Type="DataModels.Team" Role="Team" Multiplicity="0..1" />
           <End Type="DataModels.Game" Role="Game" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Game">
-              <PropertyRef Name="Team1Id" />
+              <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EnumType Name="GameType" cg:ExternalTypeName="ManaSchedule.Models.GameType" />
+        <EnumType Name="GameType" cg:ExternalTypeName="ManaSchedule.DataModels.GameType" />
+        <EntityType Name="TeamCompetition" >
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="CompetitionId" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int16" Nullable="true" />
+          <Property Name="IsPastWinner" Type="Boolean" Nullable="false" DefaultValue="false" />
+          <NavigationProperty Name="Team" Relationship="DataModels.TeamTeamCompetition" FromRole="TeamCompetition" ToRole="Team" />
+          <NavigationProperty Name="Competition" Relationship="DataModels.CompetitionTeamCompetition" FromRole="TeamCompetition" ToRole="Competition" />
+        </EntityType>
+        <Association Name="TeamTeamCompetition">
+          <End Type="DataModels.Team" Role="Team" Multiplicity="1" />
+          <End Type="DataModels.TeamCompetition" Role="TeamCompetition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamCompetition">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompetitionTeamCompetition">
+          <End Type="DataModels.Competition" Role="Competition" Multiplicity="1" />
+          <End Type="DataModels.TeamCompetition" Role="TeamCompetition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamCompetition">
+              <PropertyRef Name="CompetitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompetitionGame">
+          <End Type="DataModels.Competition" Role="Competition" Multiplicity="1" />
+          <End Type="DataModels.Game" Role="Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="CompetitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="StageType" cg:ExternalTypeName="ManaSchedule.DataModels.StageType" />
+        <Association Name="Team2Game">
+          <End Type="DataModels.Team" Role="Team" Multiplicity="0..1" />
+          <End Type="DataModels.Game" Role="Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="Team2_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ParentGame1">
+          <End Type="DataModels.Game" Multiplicity="0..1" Role="Game" />
+          <End Type="DataModels.Game" Multiplicity="0..1" Role="Game1" />
+        </Association>
+        <Association Name="ParentGame2">
+          <End Type="DataModels.Game" Multiplicity="0..1" Role="Game" />
+          <End Type="DataModels.Game" Multiplicity="0..1" Role="Game1" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

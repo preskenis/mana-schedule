@@ -39,6 +39,12 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Crainiate.Diagramming">
+      <HintPath>..\lib\Crainiate.Diagramming.dll</HintPath>
+    </Reference>
+    <Reference Include="Crainiate.Diagramming.Forms">
+      <HintPath>..\lib\Crainiate.Diagramming.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -114,6 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.cs" />
     <Compile Include="DataModels\Competition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -150,11 +157,42 @@
     <Compile Include="DataModels\Team.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\SoccerView.cs">
+    <Compile Include="DataModels\TeamCompetition.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Services\GameGenerator.cs" />
+    <Compile Include="Services\GameUpdater.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="Views\GameEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\GameEditForm.Designer.cs">
+      <DependentUpon>GameEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameTableView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\SoccerView.Designer.cs">
-      <DependentUpon>SoccerView.cs</DependentUpon>
+    <Compile Include="Views\GameTableView.Designer.cs">
+      <DependentUpon>GameTableView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\GameListView.Designer.cs">
+      <DependentUpon>GameListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ZherebView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ZherebView.Designer.cs">
+      <DependentUpon>ZherebView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CompetitionSummaryView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CompetitionSummaryView.Designer.cs">
+      <DependentUpon>CompetitionSummaryView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\CompetitionView.cs">
       <SubType>UserControl</SubType>
@@ -181,9 +219,15 @@
     <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\GameType.cs" />
+    <Compile Include="DataModels\Enums.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\SummaryScoreView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -214,8 +258,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\SoccerView.resx">
-      <DependentUpon>SoccerView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\ContentView.resx">
+      <DependentUpon>ContentView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GameEditForm.resx">
+      <DependentUpon>GameEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GameTableView.resx">
+      <DependentUpon>GameTableView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GameListView.resx">
+      <DependentUpon>GameListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ZherebView.resx">
+      <DependentUpon>ZherebView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CompetitionSummaryView.resx">
+      <DependentUpon>CompetitionSummaryView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CompetitionView.resx">
       <DependentUpon>CompetitionView.cs</DependentUpon>
@@ -225,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SummaryScoreView.resx">
       <DependentUpon>SummaryScoreView.cs</DependentUpon>
@@ -295,6 +357,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\chart_column.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Teams.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\splash1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430183799_699881-icon-22-volleyball-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430183764_699881-icon-22-volleyball-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430183903_rugby-20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430183930_699881-icon-22-volleyball-20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430184782_sport_soccer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430319865_microphone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430319923_guitar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430319956_acoustic_guitar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430319987_hamburger.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430320065_Tent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430320145_circus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430320271_user_clown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430320339_animation.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

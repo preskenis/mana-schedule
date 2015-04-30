@@ -33,7 +33,7 @@ namespace ManaSchedule.Views
          
         }
 
-        public override void Init(object content)
+        public void Init()
         {
             DbContext.PersonSet.Load();
             GridEX.DataSource = DbContext.PersonSet.Local.ToBindingList();

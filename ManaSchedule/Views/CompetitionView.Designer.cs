@@ -37,6 +37,7 @@
             this.Name = "CompetitionView";
             this.Size = new System.Drawing.Size(591, 381);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

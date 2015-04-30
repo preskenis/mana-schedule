@@ -20,14 +20,18 @@ namespace ManaSchedule.DataModels
             this.Description = "";
             this.Stage = new HashSet<Stage>();
             this.Place = new HashSet<Place>();
+            this.Teams = new HashSet<TeamCompetition>();
+            this.Games = new HashSet<Game>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ManaSchedule.Models.GameType Type { get; set; }
+        public ManaSchedule.DataModels.GameType Type { get; set; }
     
         public virtual ICollection<Stage> Stage { get; set; }
         public virtual ICollection<Place> Place { get; set; }
+        public virtual ICollection<TeamCompetition> Teams { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

@@ -63,6 +63,106 @@ namespace ManaSchedule.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1430183903_rugby_20 {
+            get {
+                object obj = ResourceManager.GetObject("_1430183903_rugby_20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430183930_699881_icon_22_volleyball_20 {
+            get {
+                object obj = ResourceManager.GetObject("_1430183930_699881_icon_22_volleyball_20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430184782_sport_soccer {
+            get {
+                object obj = ResourceManager.GetObject("_1430184782_sport_soccer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430319865_microphone {
+            get {
+                object obj = ResourceManager.GetObject("_1430319865_microphone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430319956_acoustic_guitar {
+            get {
+                object obj = ResourceManager.GetObject("_1430319956_acoustic_guitar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430319987_hamburger {
+            get {
+                object obj = ResourceManager.GetObject("_1430319987_hamburger", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430320065_Tent {
+            get {
+                object obj = ResourceManager.GetObject("_1430320065_Tent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430320145_circus {
+            get {
+                object obj = ResourceManager.GetObject("_1430320145_circus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430320271_user_clown {
+            get {
+                object obj = ResourceManager.GetObject("_1430320271_user_clown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430320339_animation {
+            get {
+                object obj = ResourceManager.GetObject("_1430320339_animation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap chart_column {
             get {
                 object obj = ResourceManager.GetObject("chart_column", resourceCulture);
@@ -87,6 +187,84 @@ namespace ManaSchedule.Properties {
             get {
                 object obj = ResourceManager.GetObject("soccer_ball", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap splash {
+            get {
+                object obj = ResourceManager.GetObject("splash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap splash1 {
+            get {
+                object obj = ResourceManager.GetObject("splash1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Азимут
+        ///Апилки
+        ///Баня
+        ///Бардак
+        ///Бедные родственники
+        ///Безопасный кекс
+        ///Беларусь
+        ///БМС
+        ///Бобры
+        ///Бомболюк
+        ///Бояне
+        ///Бух-та
+        ///В дрова
+        ///Вобля
+        ///Вумники
+        ///Держи Глаза
+        ///Джа
+        ///Джем
+        ///Дикие колобки
+        ///Дубль-В
+        ///ЗАО «Гондурас»
+        ///Звездолет
+        ///Кайф
+        ///Калабаха
+        ///Клещи
+        ///Колхоз дело добровольное
+        ///Коротконосые буратины
+        ///Корсары удачи
+        ///Кресты
+        ///Кряки
+        ///Куркули
+        ///Лапти
+        ///Легион
+        ///Лихо
+        ///Людмила Петрова
+        ///Манаград
+        ///Мандраж
+        ///МАНерные МАНьяки
+        ///Мания
+        ///Манская мафия
+        ///Манты
+        ///Мухоморы
+        ///НаМана
+        ///Настоящие индейцы
+        ///Негодяи
+        ///Не дробя
+        ///Некстати
+        ///Нечисть
+        ///Ноли
+        ///О [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Teams {
+            get {
+                return ResourceManager.GetString("Teams", resourceCulture);
             }
         }
         
