@@ -21,7 +21,7 @@ namespace ManaSchedule
             try
             {
 
-                File.Delete(@"h:\Mana\mana-schedule\mana-schedule\ManaSchedule\bin\Debug\mana.sdf");
+              //  File.Delete(@"h:\Mana\mana-schedule\mana-schedule\ManaSchedule\bin\Debug\mana.sdf");
             }
             catch (Exception)
             {

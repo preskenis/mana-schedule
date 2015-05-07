@@ -33,10 +33,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.uiTab1 = new Janus.Windows.UI.Tab.UITab();
             this.uiTabPage1 = new Janus.Windows.UI.Tab.UITabPage();
+            this.btGenerate = new Janus.Windows.EditControls.UIButton();
             this.GridEX = new Janus.Windows.GridEX.GridEX();
             this.uiTabPage2 = new Janus.Windows.UI.Tab.UITabPage();
             this.schedule = new Janus.Windows.Schedule.Schedule();
-            this.btGenerate = new Janus.Windows.EditControls.UIButton();
             ((System.ComponentModel.ISupportInitialize)(this.uiTab1)).BeginInit();
             this.uiTab1.SuspendLayout();
             this.uiTabPage1.SuspendLayout();
@@ -83,6 +83,17 @@
             this.uiTabPage1.TabStop = true;
             this.uiTabPage1.Text = "Список этапов";
             // 
+            // btGenerate
+            // 
+            this.btGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btGenerate.Location = new System.Drawing.Point(3, 339);
+            this.btGenerate.Name = "btGenerate";
+            this.btGenerate.Size = new System.Drawing.Size(159, 23);
+            this.btGenerate.TabIndex = 1;
+            this.btGenerate.Text = "Распределить";
+            this.btGenerate.VisualStyleManager = this.visualStyleManager;
+            this.btGenerate.Click += new System.EventHandler(this.btGenerate_Click);
+            // 
             // GridEX
             // 
             this.GridEX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -113,26 +124,16 @@
             this.schedule.Dates.Add(new System.DateTime(2015, 5, 9, 0, 0, 0, 0));
             this.schedule.Dates.Add(new System.DateTime(2015, 5, 10, 0, 0, 0, 0));
             this.schedule.Dates.Add(new System.DateTime(2015, 5, 11, 0, 0, 0, 0));
+            this.schedule.DayEndHour = 13;
             this.schedule.Dock = System.Windows.Forms.DockStyle.Fill;
             this.schedule.Location = new System.Drawing.Point(0, 0);
             this.schedule.Name = "schedule";
             this.schedule.Size = new System.Drawing.Size(640, 365);
             this.schedule.TabIndex = 0;
             this.schedule.TimeFormat = Janus.Windows.Schedule.TimeFormat.TwentyFourHours;
-            this.schedule.VerticalScrollPosition = 16;
+            this.schedule.VerticalScrollPosition = 11;
             this.schedule.VisualStyleManager = this.visualStyleManager;
             this.schedule.WorkEndTime = System.TimeSpan.Parse("24.00:00:00");
-            // 
-            // btGenerate
-            // 
-            this.btGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btGenerate.Location = new System.Drawing.Point(3, 339);
-            this.btGenerate.Name = "btGenerate";
-            this.btGenerate.Size = new System.Drawing.Size(159, 23);
-            this.btGenerate.TabIndex = 1;
-            this.btGenerate.Text = "Распределить";
-            this.btGenerate.VisualStyleManager = this.visualStyleManager;
-            this.btGenerate.Click += new System.EventHandler(this.btGenerate_Click);
             // 
             // ScheduleGeneratorView
             // 

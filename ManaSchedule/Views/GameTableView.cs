@@ -13,11 +13,7 @@ using Crainiate.Diagramming.Forms.Rendering;
 
 namespace ManaSchedule.Views
 {
-    public class GameShape : Shape
-    {
-
-    }
-
+    
    
 
     public partial class GameTableView : CompetitionView
@@ -44,12 +40,27 @@ namespace ManaSchedule.Views
 
                     if (game.Team1Missed == true) label += "[-] ";
                     if (game.Team1Win == true) label += "[✓] ";
-                    if (game.ParentGame1 == null && game.Team != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team.Id].Order.ToString());
+   
+                    if (game.Team != null && View.TeamCompetitions[game.Team.Id].IsPastWinner)
+                    {
+                        label += string.Format("({0}) ", View.TeamCompetitions[game.Team.Id].PastWinnerPlace.ToString());
+                    }
+                    else
+                    {
+                        if (game.ParentGame1 == null && game.Team != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team.Id].Order.ToString());
+                    }
+
                     if (game.Team != null) label += game.Team.Name.Length < 20 ? game.Team.Name :  game.Team.Name.Substring(0,20);
                     label += Environment.NewLine;
                     if (game.Team2Missed == true) label += "[-] ";
                     if (game.Team2Win == true) label += "[✓] ";
-                    if (game.ParentGame2 == null && game.Team2 != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team2.Id].Order.ToString());
+
+                    if (game.Team2 != null && View.TeamCompetitions[game.Team2.Id].IsPastWinner)
+                    {
+                        label += string.Format("({0}) ", View.TeamCompetitions[game.Team2.Id].PastWinnerPlace.ToString());
+                    }
+                    else
+                        if (game.ParentGame2 == null && game.Team2 != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team2.Id].Order.ToString());
                     if (game.Team2 != null) label += game.Team2.Name.Length < 20 ? game.Team2.Name :  game.Team2.Name.Substring(0,20);
                    
                     switch (game.GetState())
@@ -113,6 +124,14 @@ namespace ManaSchedule.Views
         public override void Init(Competition content)
         {
             base.Init(content);
+
+            ContentCaption.Text = string.Format("{0} - Турнирная таблица", content.Name);
+
+            var tt = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).GroupBy(f=>f.Team).Where(f=>f.Count() > 1).ToList();
+            if (tt.Count > 0)
+            {
+
+            }
 
             TeamCompetitions = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).ToDictionary(f => f.TeamId, f => f);
 
@@ -235,6 +254,38 @@ namespace ManaSchedule.Views
                 }
             }
         }
+
+        private void btExportToExcel_Click(object sender, EventArgs e)
+        {
+            using (var fs = new SaveFileDialog() { Filter = "png (*.png)|*.png" })
+
+                if (fs.ShowDialog(this) == DialogResult.OK)
+                {
+
+                
+                    using (var bitmap = new System.Drawing.Bitmap(diagram.Width, diagram.Height))
+                    {
+                        Rectangle bounds = new Rectangle(Left, Top, Width, Height);
+
+                        diagram.DrawToBitmap(bitmap, diagram.ClientRectangle);
+                        bitmap.Save(fs.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                    }
+
+
+                }
+
+        }
+         
+
+          
+        
         
     }
+    public class GameShape : Shape
+    { 
+    
+    }
+
+   
+
 }

@@ -355,7 +355,6 @@ namespace ManaSchedule.DataModels
             AddZhereb(context, comp, "НаМана", 9);
             AddZhereb(context, comp, "Джем", 30);
             AddZhereb(context, comp, "Звездолет", 13);
-            AddZhereb(context, comp, "Легион", 50);
             AddZhereb(context, comp, "Клещи", 47);
 
             AddZherebPrevChamp(context, comp, "Сенаторы", 1);

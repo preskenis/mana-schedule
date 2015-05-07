@@ -31,6 +31,7 @@
             Crainiate.Diagramming.Forms.Paging paging1 = new Crainiate.Diagramming.Forms.Paging();
             Crainiate.Diagramming.Forms.Margin margin1 = new Crainiate.Diagramming.Forms.Margin();
             this.diagram = new Crainiate.Diagramming.Forms.Diagram();
+            this.btExportToExcel = new Janus.Windows.EditControls.UIButton();
             this.SuspendLayout();
             // 
             // ContentCaption
@@ -67,15 +68,28 @@
             this.diagram.Zoom = 100F;
             this.diagram.ElementDoubleClick += new System.EventHandler(this.diagram_ElementDoubleClick);
             // 
+            // btExportToExcel
+            // 
+            this.btExportToExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btExportToExcel.Location = new System.Drawing.Point(404, 8);
+            this.btExportToExcel.Name = "btExportToExcel";
+            this.btExportToExcel.Size = new System.Drawing.Size(184, 23);
+            this.btExportToExcel.TabIndex = 10;
+            this.btExportToExcel.Text = "Экспорт";
+            this.btExportToExcel.VisualStyleManager = this.visualStyleManager;
+            this.btExportToExcel.Click += new System.EventHandler(this.btExportToExcel_Click);
+            // 
             // GameTableView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btExportToExcel);
             this.Controls.Add(this.diagram);
             this.Name = "GameTableView";
             this.Size = new System.Drawing.Size(591, 357);
             this.Controls.SetChildIndex(this.ContentCaption, 0);
             this.Controls.SetChildIndex(this.diagram, 0);
+            this.Controls.SetChildIndex(this.btExportToExcel, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,6 +98,7 @@
         #endregion
 
         private Crainiate.Diagramming.Forms.Diagram diagram;
+        private Janus.Windows.EditControls.UIButton btExportToExcel;
 
 
     }

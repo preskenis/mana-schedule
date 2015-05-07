@@ -17,7 +17,7 @@ namespace ManaSchedule.Services
             Stage finalStage = null;
             ClearAll();
 
-            var pastChamnpions = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && f.IsPastWinner).OrderBy(f => f.Team.Name).ToList();
+            var pastChamnpions = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && f.IsPastWinner).OrderBy(f => f.PastWinnerPlace).ToList();
             var teams = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && !f.IsPastWinner).OrderBy(f => f.Order).ToList();
 
             var stageChampCount = Utils.MinPow2(pastChamnpions.Count);
@@ -31,13 +31,14 @@ namespace ManaSchedule.Services
                 Type = Utils.GetStageTypeByGamesCount(stageChampCount)
             });
 
-            for (var i = 0; i < stageChampCount; i++)
+            var indexes = new int[] {1, 8, 4, 5, 2, 7, 3, 6};
+            for (var i = 0; i < indexes.Length; i++)
             {
                 var game = DbContext.GameSet.Add(new Game()
                 {
                     CompetitionId = Competition.Id,
                     Stage = stageChamp,
-                    Team = i < pastChamnpions.Count ? pastChamnpions[i].Team : null
+                    Team = pastChamnpions[indexes[i]-1].Team
                 });
             }
 
