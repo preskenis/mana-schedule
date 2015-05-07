@@ -17,6 +17,14 @@ namespace ManaSchedule.Services
             Stage finalStage = null;
             ClearAll();
 
+            DbContext.TeamSet.Local.ToList().ForEach(f =>
+            {
+                DbContext.CompetitionScoreSet.Add(
+                    new CompetitionScore() { Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе" });
+            });
+
+
+
             var pastChamnpions = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && f.IsPastWinner).OrderBy(f => f.PastWinnerPlace).ToList();
             var teams = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && !f.IsPastWinner).OrderBy(f => f.Order).ToList();
 
@@ -40,6 +48,9 @@ namespace ManaSchedule.Services
                     Stage = stageChamp,
                     Team = pastChamnpions[indexes[i]-1].Team
                 });
+
+             
+
             }
 
             var parentStage = stageChamp;
@@ -222,6 +233,14 @@ namespace ManaSchedule.Services
             var allTeams = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).ToList();
 
 
+            allTeams.ForEach(tc =>
+            {
+                var score = DbContext.CompetitionScoreSet.Local.First(f => Competition == Competition && f.Team == tc.Team);
+                score.Place = DbContext.TeamCompetitionSet.Local.Count;
+                score.Score = 0;
+                score.Description = tc.IsPastWinner ? "Победитель прошлого сезона" : "заявка на участие";
+            });
+
             foreach (var game in DbContext.GameSet.Local.Where(f => f.CompetitionId == Competition.Id))
             {
                 if (game.Team != null) allTeams.Remove(allTeams.First(f => f.Team.Id == game.Team.Id));
@@ -240,9 +259,71 @@ namespace ManaSchedule.Services
 
         }
 
+        public List<Game> GetCurrentStageGames(Stage stage)
+        {
+            return DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id && f.Stage.Type == stage.Type).ToList();
+        }
+
+        public List<Game> GetTeamGames(Team team)
+        {
+            return DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id && (f.TeamId == team.Id || f.Team2_Id == team.Id)).ToList();
+        }
+
+        public List<Game> GetNextStageGames(Stage stage)
+        {
+            var result = new List<Game>();
+
+            foreach (var stageType in EnumHelper<StageType>.GetValues(StageType.Final).Where(f => f < stage.Type).OrderByDescending(f=>f))
+            {
+                result.AddRange(DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id && f.Stage.Type == stageType));
+            }
+
+            return result;
+
+        }
+
 
         public override void UpdateGame(Game game)
         {
+            if (game.Winner != null)
+            {
+                var nextStageGames = GetNextStageGames(game.Stage);
+                SetTeamScore(game.Winner, nextStageGames.Count, nextStageGames.Count, "Победа в этапе " + game.Stage.Name);
+                switch (game.Stage.Type)
+                {
+                    case StageType.Final: SetTeamScore(game.Winner, 1, 1, "Победа финале"); break;
+                    case StageType.Third: SetTeamScore(game.Winner, 3, 3, "Победа матче за 3 место"); break;
+                }
+
+            }
+            if (game.Looser != null)
+            {
+                switch (game.Stage.Type)
+                {
+                    case StageType.Final: SetTeamScore(game.Looser, 2, 2, "Проигрыш в финале"); break;
+                    case StageType.Third: SetTeamScore(game.Looser, 4, 4, "Проигрыш в матче за 3 место"); break;
+                    default:
+                        var nextStageGames = GetNextStageGames(game.Stage).Count;
+                        var currentStageGames = GetCurrentStageGames(game.Stage).Count;
+                        double place = 0;
+                        for (int i = nextStageGames +1; i <= nextStageGames+currentStageGames; i++)place+=i;
+                        SetTeamScore(game.Looser, place / currentStageGames, place / currentStageGames, "Проигрыш в этапе " + game.Stage.Name);
+                        break;
+                }
+            }
+
+            if (game.Team != null && game.Team1Missed == true && GetTeamGames(game.Team).Count < 2)
+            {
+                SetTeamScore(game.Team, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
+            }
+
+            if (game.Team2 != null && game.Team2Missed == true && GetTeamGames(game.Team2).Count < 2)
+            {
+                SetTeamScore(game.Team, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
+            }
+
+
+
             var nextGames = DbContext.GameSet.Local.Where(f => f.ParentGame1 == game || f.ParentGame2 == game).ToList();
 
             if (nextGames.Count == 0 || !game.Team1Missed.HasValue || !game.Team2Missed.HasValue)

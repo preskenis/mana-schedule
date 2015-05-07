@@ -11,6 +11,16 @@ namespace ManaSchedule.Services
 {
     public abstract class GameService
     {
+        public void SetTeamScore(Team team, double place, double score, string description)
+        {
+            if (team == null) return;
+
+            var sc = DbContext.CompetitionScoreSet.First(f => f.CompetitionId == Competition.Id && f.TeamId == team.Id);
+            sc.Score = score;
+            sc.Place = place;
+            sc.Description = description;
+        }
+
         public static GameService GetGameService(Competition competition, Db dbContext)
         {
             dbContext.TeamSet.Load();
