@@ -319,7 +319,7 @@ namespace ManaSchedule.Services
 
             if (game.Team2 != null && game.Team2Missed == true && GetTeamGames(game.Team2).Count < 2)
             {
-                SetTeamScore(game.Team, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
+                SetTeamScore(game.Team2, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
             }
 
 

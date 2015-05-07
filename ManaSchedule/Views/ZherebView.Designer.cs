@@ -35,6 +35,7 @@
             this.btGenerate = new Janus.Windows.EditControls.UIButton();
             this.btClearAll = new Janus.Windows.EditControls.UIButton();
             this.btRandom = new Janus.Windows.EditControls.UIButton();
+            this.btExportToExcel = new Janus.Windows.EditControls.UIButton();
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,10 +102,22 @@
             this.btRandom.VisualStyleManager = this.visualStyleManager;
             this.btRandom.Click += new System.EventHandler(this.btRandom_Click);
             // 
+            // btExportToExcel
+            // 
+            this.btExportToExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btExportToExcel.Location = new System.Drawing.Point(154, 8);
+            this.btExportToExcel.Name = "btExportToExcel";
+            this.btExportToExcel.Size = new System.Drawing.Size(102, 23);
+            this.btExportToExcel.TabIndex = 11;
+            this.btExportToExcel.Text = "Экспорт в Excel";
+            this.btExportToExcel.VisualStyleManager = this.visualStyleManager;
+            this.btExportToExcel.Click += new System.EventHandler(this.btExportToExcel_Click);
+            // 
             // ZherebView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btExportToExcel);
             this.Controls.Add(this.btRandom);
             this.Controls.Add(this.btClearAll);
             this.Controls.Add(this.btGenerate);
@@ -118,6 +131,7 @@
             this.Controls.SetChildIndex(this.btClearAll, 0);
             this.Controls.SetChildIndex(this.ContentCaption, 0);
             this.Controls.SetChildIndex(this.btRandom, 0);
+            this.Controls.SetChildIndex(this.btExportToExcel, 0);
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -131,5 +145,6 @@
         private Janus.Windows.EditControls.UIButton btGenerate;
         private Janus.Windows.EditControls.UIButton btClearAll;
         private Janus.Windows.EditControls.UIButton btRandom;
+        private Janus.Windows.EditControls.UIButton btExportToExcel;
     }
 }

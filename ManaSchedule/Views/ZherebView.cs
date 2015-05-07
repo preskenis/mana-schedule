@@ -10,6 +10,8 @@ using ManaSchedule.DataModels;
 using System.Data.Entity;
 using Janus.Windows.GridEX;
 using ManaSchedule.Services;
+using System.IO;
+using NPOI.HSSF.UserModel;
 
 namespace ManaSchedule.Views
 {
@@ -109,6 +111,19 @@ namespace ManaSchedule.Views
             GameService.ClearAll();
             UpdateCompetition();
             Init(Competition);
+        }
+
+        private void btExportToExcel_Click(object sender, EventArgs e)
+        {
+            using (var fs = new SaveFileDialog() { Filter = "Excel (*.xls)|*.xls" })
+
+                if (fs.ShowDialog(this) == DialogResult.OK)
+                {
+                    var workbook = new HSSFWorkbook();
+                    Utils.ExportToExcel(GridEX, workbook, ContentCaption.Text);
+                    using (var s = File.Create(fs.FileName))
+                        workbook.Write(s);
+                }
         }
   
     }

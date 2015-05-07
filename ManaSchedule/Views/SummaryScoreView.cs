@@ -93,6 +93,9 @@ namespace ManaSchedule.Views
                 h.AutoSizeMode = ColumnAutoSizeMode.AllCellsAndHeader;
                 h.AutoSize();
             }
+
+            GridEX.RootTable.SortKeys.Add(GridEX.RootTable.Columns["Баллы"]);
+
         }
 
         private void btExportToExcel_Click(object sender, EventArgs e)
