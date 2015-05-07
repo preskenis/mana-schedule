@@ -302,6 +302,7 @@ namespace ManaSchedule.Services
                 {
                     case StageType.Final: SetTeamScore(game.Looser, 2, 2, "Проигрыш в финале"); break;
                     case StageType.Third: SetTeamScore(game.Looser, 4, 4, "Проигрыш в матче за 3 место"); break;
+                    case StageType.Stage12: SetTeamScore(game.Looser, 4, 4, "Проигрыш в полуфинале"); break;
                     default:
                         var nextStageGames = GetNextStageGames(game.Stage).Count;
                         var currentStageGames = GetCurrentStageGames(game.Stage).Count;
