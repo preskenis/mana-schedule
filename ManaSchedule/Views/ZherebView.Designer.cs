@@ -125,6 +125,7 @@
             this.Controls.Add(this.GridEX);
             this.Name = "ZherebView";
             this.Size = new System.Drawing.Size(545, 340);
+            this.Load += new System.EventHandler(this.ZherebView_Load);
             this.Controls.SetChildIndex(this.GridEX, 0);
             this.Controls.SetChildIndex(this.btLoadCompanies, 0);
             this.Controls.SetChildIndex(this.btGenerate, 0);

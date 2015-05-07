@@ -103,7 +103,8 @@ namespace ManaSchedule.Views
         private void btGenerate_Click(object sender, EventArgs e)
         {
             GameService.GenerateGames();
-            
+            MessageBox.Show("Игры созданы");
+            Init(Competition);
         }
 
         private void btClearAll_Click(object sender, EventArgs e)
@@ -124,6 +125,11 @@ namespace ManaSchedule.Views
                     using (var s = File.Create(fs.FileName))
                         workbook.Write(s);
                 }
+        }
+
+        private void ZherebView_Load(object sender, EventArgs e)
+        {
+
         }
   
     }
