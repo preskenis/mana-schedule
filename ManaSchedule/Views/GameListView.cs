@@ -39,10 +39,16 @@ namespace ManaSchedule.Views
             this.GridEX.RootTable.Columns["Team"].EditType = EditType.Combo;
             this.GridEX.RootTable.Columns["Team"].ColumnType = ColumnType.Text;
             this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            
             this.GridEX.RootTable.Columns["Team2"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team2"].EditType = EditType.Combo;
             this.GridEX.RootTable.Columns["Team2"].ColumnType = ColumnType.Text;
             this.GridEX.RootTable.Columns["Team2"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            
+            this.GridEX.RootTable.Columns["Winner"].HasValueList = true;
+            this.GridEX.RootTable.Columns["Winner"].EditType = EditType.NoEdit;
+            this.GridEX.RootTable.Columns["Winner"].ColumnType = ColumnType.Text;
+            this.GridEX.RootTable.Columns["Winner"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
 
             DbContext.StageSet.Where(f => stages.Contains(f.Id)).Load();
             this.GridEX.RootTable.Columns["Stage"].HasValueList = true;
@@ -68,6 +74,20 @@ namespace ManaSchedule.Views
             if (x == null) return 1;
             if (y == null) return -1;
             return (x as Stage).Type.CompareTo((y as Stage).Type);
+        }
+
+        private void GridEX_RowDoubleClick(object sender, RowActionEventArgs e)
+        {
+            var game = e.Row.DataRow as Game;
+            using (var form = new GameEditForm(game, DbContext))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK )
+                {
+                    GameService.UpdateGame(game);
+                    GridEX.Refetch();
+                }
+            }
+          
         }
     }
 }

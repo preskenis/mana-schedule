@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="visualStyleManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="GridEX_DesignTimeLayout.LayoutString" xml:space="preserve">
-    <value>&lt;GridEXLayoutData&gt;&lt;RootTable&gt;&lt;Columns Collection="true" ElementName="Column"&gt;&lt;Column0 ID="Name"&gt;&lt;Caption&gt;Название&lt;/Caption&gt;&lt;DataMember&gt;Name&lt;/DataMember&gt;&lt;Key&gt;Name&lt;/Key&gt;&lt;Position&gt;0&lt;/Position&gt;&lt;Width&gt;150&lt;/Width&gt;&lt;/Column0&gt;&lt;Column1 ID="Description"&gt;&lt;Caption&gt;Описание&lt;/Caption&gt;&lt;DataMember&gt;Description&lt;/DataMember&gt;&lt;Key&gt;Description&lt;/Key&gt;&lt;Position&gt;1&lt;/Position&gt;&lt;AutoSizeMode&gt;AllCells&lt;/AutoSizeMode&gt;&lt;/Column1&gt;&lt;/Columns&gt;&lt;GroupCondition /&gt;&lt;/RootTable&gt;&lt;/GridEXLayoutData&gt;</value>
+    <value>&lt;GridEXLayoutData&gt;&lt;RootTable&gt;&lt;Columns Collection="true" ElementName="Column"&gt;&lt;Column0 ID="Name"&gt;&lt;Caption&gt;Название&lt;/Caption&gt;&lt;DataMember&gt;Name&lt;/DataMember&gt;&lt;Key&gt;Name&lt;/Key&gt;&lt;Position&gt;0&lt;/Position&gt;&lt;Width&gt;184&lt;/Width&gt;&lt;/Column0&gt;&lt;Column1 ID="Description"&gt;&lt;Caption&gt;Описание&lt;/Caption&gt;&lt;DataMember&gt;Description&lt;/DataMember&gt;&lt;Key&gt;Description&lt;/Key&gt;&lt;Position&gt;1&lt;/Position&gt;&lt;Width&gt;229&lt;/Width&gt;&lt;AutoSizeMode&gt;AllCells&lt;/AutoSizeMode&gt;&lt;/Column1&gt;&lt;/Columns&gt;&lt;GroupCondition /&gt;&lt;/RootTable&gt;&lt;/GridEXLayoutData&gt;</value>
   </data>
   <metadata name="visualStyleManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>174, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>

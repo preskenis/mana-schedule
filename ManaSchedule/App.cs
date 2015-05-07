@@ -18,12 +18,14 @@ namespace ManaSchedule
                 db.TeamSet.ToList();
             }
             MainForm = new Views.MainForm();
+           
         }
 
         public static Views.MainForm MainForm { get; set; }
 
         public static Action<string> LogSplash { get; set; }
 
+      
         
     }
 }

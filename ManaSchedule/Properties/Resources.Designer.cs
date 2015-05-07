@@ -163,6 +163,26 @@ namespace ManaSchedule.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1430497231_699907_icon_38_whistle_20 {
+            get {
+                object obj = ResourceManager.GetObject("_1430497231_699907_icon_38_whistle_20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1430704063_free_20_20 {
+            get {
+                object obj = ResourceManager.GetObject("_1430704063_free_20_20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap chart_column {
             get {
                 object obj = ResourceManager.GetObject("chart_column", resourceCulture);
@@ -216,7 +236,7 @@ namespace ManaSchedule.Properties {
         ///Баня
         ///Бардак
         ///Бедные родственники
-        ///Безопасный кекс
+        ///Безопасный Кекс
         ///Беларусь
         ///БМС
         ///Бобры

@@ -54,6 +54,9 @@
     <Reference Include="EntityFramework.SqlServerCompact">
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net40\EntityFramework.SqlServerCompact.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Janus.Data.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Data.v4.dll</HintPath>
@@ -101,6 +104,18 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.2.0.0\lib\net40\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -124,9 +139,21 @@
     <Compile Include="DataModels\Competition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\CompetitionReferee.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\CompetitionScore.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModels\Constrants.cs" />
     <Compile Include="DataModels\DbInitializer.cs" />
     <Compile Include="DataModels\Game.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\GameResult.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\GameResultValue.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\Model.Context.cs">
@@ -160,15 +187,58 @@
     <Compile Include="DataModels\TeamCompetition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\TeamScore.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Services\GameGenerator.cs" />
-    <Compile Include="Services\GameUpdater.cs" />
+    <Compile Include="Services\CarnivalGameService.cs" />
+    <Compile Include="Services\CookGameService.cs" />
+    <Compile Include="Services\GameService.cs" />
+    <Compile Include="Services\LagerGameService.cs" />
+    <Compile Include="Services\PlayoffGameService.cs" />
+    <Compile Include="Services\ShowSongGameService.cs" />
+    <Compile Include="Services\SoloSongGameService.cs" />
+    <Compile Include="Services\TourRelayGameService.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Views\GameEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\GameEditForm.Designer.cs">
       <DependentUpon>GameEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameResultView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\GameResultView.Designer.cs">
+      <DependentUpon>GameResultView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NextStageTeamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\NextStageTeamsForm.Designer.cs">
+      <DependentUpon>NextStageTeamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RefereeResultView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\RefereeResultView.Designer.cs">
+      <DependentUpon>RefereeResultView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScheduleGeneratorView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ScheduleGeneratorView.Designer.cs">
+      <DependentUpon>ScheduleGeneratorView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StageResultView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\StageResultView.Designer.cs">
+      <DependentUpon>StageResultView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameListView2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\GameListView2.Designer.cs">
+      <DependentUpon>GameListView2.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\GameTableView.cs">
       <SubType>UserControl</SubType>
@@ -181,6 +251,18 @@
     </Compile>
     <Compile Include="Views\GameListView.Designer.cs">
       <DependentUpon>GameListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RefereeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\RefereeView.Designer.cs">
+      <DependentUpon>RefereeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScheduleView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ScheduleView.Designer.cs">
+      <DependentUpon>ScheduleView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ZherebView.cs">
       <SubType>UserControl</SubType>
@@ -264,11 +346,35 @@
     <EmbeddedResource Include="Views\GameEditForm.resx">
       <DependentUpon>GameEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\GameResultView.resx">
+      <DependentUpon>GameResultView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NextStageTeamsForm.resx">
+      <DependentUpon>NextStageTeamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RefereeResultView.resx">
+      <DependentUpon>RefereeResultView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ScheduleGeneratorView.resx">
+      <DependentUpon>ScheduleGeneratorView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StageResultView.resx">
+      <DependentUpon>StageResultView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GameListView2.resx">
+      <DependentUpon>GameListView2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\GameTableView.resx">
       <DependentUpon>GameTableView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\GameListView.resx">
       <DependentUpon>GameListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RefereeView.resx">
+      <DependentUpon>RefereeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ScheduleView.resx">
+      <DependentUpon>ScheduleView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ZherebView.resx">
       <DependentUpon>ZherebView.cs</DependentUpon>
@@ -405,6 +511,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1430320339_animation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430497231_699907-icon-38-whistle-20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1430704063_free-20-20.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

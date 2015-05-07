@@ -20,6 +20,9 @@ namespace ManaSchedule.DataModels
             this.Description = "";
             this.Team1Win = false;
             this.Team2Win = false;
+            this.Team1Cancel = false;
+            this.Team2Cancel = false;
+            this.GameResults = new HashSet<GameResult>();
         }
     
         public int Id { get; set; }
@@ -34,6 +37,13 @@ namespace ManaSchedule.DataModels
         public Nullable<bool> Team2Missed { get; set; }
         public bool Team1Win { get; set; }
         public bool Team2Win { get; set; }
+        public Nullable<System.DateTime> From { get; set; }
+        public Nullable<System.DateTime> To { get; set; }
+        public Nullable<System.DateTime> FromFact { get; set; }
+        public Nullable<System.DateTime> ToFact { get; set; }
+        public bool Team1Cancel { get; set; }
+        public bool Team2Cancel { get; set; }
+        public string PlaceName { get; set; }
     
         public virtual Stage Stage { get; set; }
         public virtual Place Place { get; set; }
@@ -42,5 +52,6 @@ namespace ManaSchedule.DataModels
         public virtual Team Team2 { get; set; }
         public virtual Game ParentGame1 { get; set; }
         public virtual Game ParentGame2 { get; set; }
+        public virtual ICollection<GameResult> GameResults { get; set; }
     }
 }

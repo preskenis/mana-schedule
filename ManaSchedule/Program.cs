@@ -3,6 +3,7 @@ using ManaSchedule.Views;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -17,6 +18,16 @@ namespace ManaSchedule
         [STAThread]
         static void Main()
         {
+            try
+            {
+
+                File.Delete(@"h:\Mana\mana-schedule\mana-schedule\ManaSchedule\bin\Debug\mana.sdf");
+            }
+            catch (Exception)
+            {
+             
+            }
+           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

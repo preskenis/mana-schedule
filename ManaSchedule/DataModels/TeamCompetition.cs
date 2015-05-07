@@ -24,6 +24,7 @@ namespace ManaSchedule.DataModels
         public int CompetitionId { get; set; }
         public Nullable<short> Order { get; set; }
         public bool IsPastWinner { get; set; }
+        public Nullable<double> PastWinnerPlace { get; set; }
     
         public virtual Team Team { get; set; }
         public virtual Competition Competition { get; set; }

@@ -50,6 +50,8 @@ namespace ManaSchedule.DataModels
         Stage1128,
         [Display(Name = "Отборочный")]
         Otbor,
+       
+        
     }
 
     public enum GameState
@@ -62,4 +64,143 @@ namespace ManaSchedule.DataModels
         Finished,
     }
 
+    public enum GameValueType
+    {
+
+        [Display(Name = "Вокал")]
+        Vocal,
+        [Display(Name = "Музыкальность")]
+        Music,
+        [Display(Name = "Артистичность")]
+        Artist,
+        [Display(Name = "тема ВОВ")]
+        WOW,
+        [Display(Name = "тема Маны")]
+        Mana,
+        [Display(Name = "тема Туризм")]
+        Tourism,
+        [Display(Name = "Собственный текст")]
+        SelfSong,
+        [Display(Name = "Собственная музыка")]
+        SelfMusic,
+        [Display(Name = "Вовлечение зрителей")]
+        Interactive,
+        [Display(Name = "Поддержка зрителей")]
+        FanSupport,
+        [Display(Name = "Штраф за поведение")]
+        BadBehaviour,
+
+        [Display(Name = "Поддержка команды")]
+        CommandSupport,
+
+        [Display(Name = "Вкус")]
+        Taste,
+        [Display(Name = "Оформление")]
+        Visual,
+        [Display(Name = "Подача")]
+        CookShow,
+
+        [Display(Name = "Неисп. продукты")]
+        NonUsedIngredients,
+        [Display(Name = "Неубр. территория")]
+        UncleanTerritory,
+        [Display(Name = "> 60 мин.")]
+        LongCook,
+        [Display(Name = "Розжиг воспл. средствами")]
+        FireBenzin,
+        [Display(Name = "Исп гот. продуктов")]
+        CookWithCooked,
+        [Display(Name = "Помощь посторонних")]
+        HelpOther,
+        [Display(Name = "Препятствие сопернику")]
+        Prepatstvie,
+
+        [Display(Name = "Целостность идеи")]
+        CookIdea,
+        [Display(Name = "Подача и сервировка")]
+        CookVisualShow,
+
+
+        [Display(Name = "Штраф за мат")]
+        MatShtraf,
+
+
+        [Display(Name = "Время")]
+        Time,
+
+
+        [Display(Name = "Флаг")]
+        Flag,
+        [Display(Name = "Обозн. территории")]
+        Territory,
+        [Display(Name = "Дежурный")]
+        Dezhur,
+        [Display(Name = "Костр. хоз-во")]
+        FireHoz,
+        [Display(Name = "Место костра")]
+        FirePlace,
+        [Display(Name = "Аптечка")]
+        Medicine,
+        [Display(Name = "Оп. знаки")]
+        Znaki,
+        [Display(Name = "Тент")]
+        Tent,
+        [Display(Name = "Зона дров")]
+        DrovaZone,
+        [Display(Name = "Зона мусора")]
+        TrashZone,
+        [Display(Name = "Зона еды")]
+        EatZone,
+        [Display(Name = "Чистота")]
+        Clean,
+        [Display(Name = "Оформление")]
+        Oformlenie,
+        [Display(Name = "Стенд")]
+        Stend,
+        [Display(Name = "Фишки")]
+        Fishki,
+        [Display(Name = "Лапник")]
+        Lapnik,
+        [Display(Name = "Плохое повед.")]
+        BadPovedenie,
+        [Display(Name = "Пож. опасность")]
+        FireDanger,
+        [Display(Name = "Итоговое место")]
+        FinalPlace,
+
+
+        [Display(Name = "Откр. ком. кост.")]
+        OtkrTeamSuite,
+        [Display(Name = "Откр. инд. кост.")]
+        OtkrManSuite,
+        [Display(Name = "Откр. флаг")]
+        OtkrFlag,
+        [Display(Name = "Откр. наклейки")]
+        OtkrNakl,
+        [Display(Name = "Откр. настрой")]
+        OktrNastroi,
+        [Display(Name = "Шоу костюмы")]
+        ShowSuite,
+        [Display(Name = "Шоу зрелищ.")]
+        ShowZrel,
+        [Display(Name = "Шоу реакция")]
+        ShowReact,
+        [Display(Name = "Шоу настрой")]
+        ShowNastroi,
+        [Display(Name = "Каш. поддержка")]
+        CookSupport,
+        [Display(Name = "Каш. настрой")]
+        CookNastroi,
+        [Display(Name = "Ин. красочность")]
+        InKras,
+        [Display(Name = "Ин. зрелищ.")]
+        InZrel,
+        [Display(Name = "Ин. настрой")]
+        InNastroi,
+        [Display(Name = "Неадекват.")]
+        Neadekvat,
+        [Display(Name = "Ненорматив.")]
+        Nenorm,
+        
+    }
 }

@@ -15,9 +15,11 @@ namespace ManaSchedule.Views
             if (treePath.FirstNode == null)
             {
                 result.Add(new SummaryNode() { Text = "Сводный результат", Icon = Properties.Resources.chart_column });
+                result.Add(new ScheduleNode() { Text = "Расписание", Icon = Properties.Resources._1430704063_free_20_20 });
                 result.Add(new TeamNode() { Text = "Команды", Icon = Properties.Resources.users_family });
                 result.Add(new PersonNode() { Text = "Люди", Icon = Properties.Resources.user });
-
+                result.Add(new RefereeNode() { Text = "Судьи", Icon = Properties.Resources._1430497231_699907_icon_38_whistle_20 });
+                
                 using (var db = new Db())
                 {
                     foreach (var c in db.CompetitionSet.OrderBy(f => f.Type))
@@ -66,7 +68,12 @@ namespace ManaSchedule.Views
                     || treePath.LastNode is CookNode
                     || treePath.LastNode is TourRelayNode
                     || treePath.LastNode is SoloSongNode
-                    || treePath.LastNode is ShowSongNode)
+                    || treePath.LastNode is ShowSongNode
+                    || treePath.LastNode is LagerNode
+                    || treePath.LastNode is CarnivalNode
+                    
+                    
+                    )
 
                 {
                     result.Add(new ZherebNode() { Item = (treePath.LastNode as CompetitionNode).Item });
@@ -78,6 +85,27 @@ namespace ManaSchedule.Views
                 {
                     result.Add(new GameTableNode() { Item = (treePath.LastNode as CompetitionNode).Item });
                 }
+
+                if (treePath.LastNode is CookNode
+                    || treePath.LastNode is TourRelayNode
+                    || treePath.LastNode is SoloSongNode
+                    || treePath.LastNode is ShowSongNode
+                    || treePath.LastNode is LagerNode
+                    || treePath.LastNode is CarnivalNode
+                    
+                    )
+                {
+                    result.Add(new GameResultNode() { Item = (treePath.LastNode as CompetitionNode).Item });
+
+                }
+
+                if (treePath.LastNode is ScheduleNode)
+                {
+                    result.Add(new ScheduleGeneratorNode() { Text = "Генерация" });
+                }
+
+
+
             }
 
             return result;
@@ -86,7 +114,9 @@ namespace ManaSchedule.Views
 
         public bool IsLeaf(TreePath treePath)
         {
-            if (treePath.LastNode is CompetitionNode) return false;  
+            if (treePath.LastNode is CompetitionNode) return false;
+            if (treePath.LastNode is ScheduleNode) return false;  
+
             return true;
         }
 

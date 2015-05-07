@@ -9,11 +9,13 @@ using System.Windows.Forms;
 using ManaSchedule.DataModels;
 using System.Data.Entity;
 using Janus.Windows.GridEX;
+using ManaSchedule.Services;
 
 namespace ManaSchedule.Views
 {
     public partial class ZherebView : CompetitionView
     {
+        public bool ShowPastWiners { get; set; }
 
         public ZherebView()
         {
@@ -29,9 +31,7 @@ namespace ManaSchedule.Views
 
         public override void OnClosing()
         {
-            DbContext.ChangeTracker.DetectChanges();
 
-            DbContext.SaveChanges(); 
         }
 
         public bool IsCompetitionStarted { get; set; }
@@ -42,12 +42,15 @@ namespace ManaSchedule.Views
             ContentCaption.Text = "Жеребьёвка" + " - " + Competition.Name;
             DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).Load();
             GridEX.DataSource = DbContext.TeamCompetitionSet.Local.ToBindingList();
+            this.GridEX.RootTable.Columns["IsPastWinner"].Visible = ShowPastWiners;
             UpdateCompetition();
+
+           
         }
 
         public BindingList<TeamCompetition> Data { get; set; }
 
-
+     
         public void UpdateCompetition()
         {
             IsCompetitionStarted = DbContext.GameSet.Any(f => f.CompetitionId == Competition.Id);
@@ -97,15 +100,15 @@ namespace ManaSchedule.Views
 
         private void btGenerate_Click(object sender, EventArgs e)
         {
-            var gen = new Services.GameGenerator(Competition, DbContext);
-            gen.GenerateGames();
+            GameService.GenerateGames();
+            
         }
 
         private void btClearAll_Click(object sender, EventArgs e)
         {
-            DbContext.GameSet.RemoveRange(DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id));
-            DbContext.StageSet.RemoveRange(DbContext.StageSet.Where(f => f.CompetitionId == Competition.Id));
+            GameService.ClearAll();
             UpdateCompetition();
+            Init(Competition);
         }
   
     }

@@ -18,6 +18,8 @@ namespace ManaSchedule.DataModels
         {
             this.Name = "";
             this.Description = "";
+            this.PlacesCount = 1;
+            this.GameTime = 15;
             this.Game = new HashSet<Game>();
         }
     
@@ -26,6 +28,10 @@ namespace ManaSchedule.DataModels
         public string Description { get; set; }
         public int CompetitionId { get; set; }
         public ManaSchedule.DataModels.StageType Type { get; set; }
+        public int PlacesCount { get; set; }
+        public int GameTime { get; set; }
+        public Nullable<System.DateTime> From { get; set; }
+        public Nullable<System.DateTime> To { get; set; }
     
         public virtual Competition Competition { get; set; }
         public virtual Stage ParentStage { get; set; }

@@ -41,6 +41,7 @@ namespace ManaSchedule.Views
                 {
                     _contentView.Dock = DockStyle.Fill;
                     uiPanel2Container.Controls.Add(_contentView);
+                    uiPanel2.Text = _contentView.ContentCaption.Text;
                 }
             }
         }
@@ -48,6 +49,11 @@ namespace ManaSchedule.Views
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ContentView = null;
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            uiPanel1.Width = 200;
         }
     }
 }

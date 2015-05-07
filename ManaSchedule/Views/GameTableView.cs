@@ -45,12 +45,12 @@ namespace ManaSchedule.Views
                     if (game.Team1Missed == true) label += "[-] ";
                     if (game.Team1Win == true) label += "[✓] ";
                     if (game.ParentGame1 == null && game.Team != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team.Id].Order.ToString());
-                    if (game.Team != null)label += game.Team.Name;
+                    if (game.Team != null) label += game.Team.Name.Length < 20 ? game.Team.Name :  game.Team.Name.Substring(0,20);
                     label += Environment.NewLine;
                     if (game.Team2Missed == true) label += "[-] ";
                     if (game.Team2Win == true) label += "[✓] ";
                     if (game.ParentGame2 == null && game.Team2 != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team2.Id].Order.ToString());
-                    if (game.Team2 != null)label += game.Team2.Name;
+                    if (game.Team2 != null) label += game.Team2.Name.Length < 20 ? game.Team2.Name :  game.Team2.Name.Substring(0,20);
                    
                     switch (game.GetState())
                     { 
@@ -127,7 +127,8 @@ namespace ManaSchedule.Views
 
             var yStart = 60;
             var yStep = 40;
-            Stage lastStage = null; 
+            Stage lastStage = null;
+            
             foreach (var stage in stages.OrderByDescending(f=>f.Type))
             {
 
@@ -148,6 +149,11 @@ namespace ManaSchedule.Views
                 }
 
                 var yOffset = yStart;
+
+
+
+
+
                  foreach (var game  in stage.Game)
                  {
 
@@ -196,10 +202,10 @@ namespace ManaSchedule.Views
             diagram.Refresh();
 
 
-            GameUpdater = new GameUpdater(DbContext);
-
+   
         }
 
+     
         private void UpdateDiagram()
         {
             foreach (var item in ShapeDict)
@@ -211,8 +217,7 @@ namespace ManaSchedule.Views
             }
         }
 
-        public GameUpdater GameUpdater { get; set; }
-
+    
         private void diagram_ElementDoubleClick(object sender, EventArgs e)
         {
             var s = sender as Shape;
@@ -224,7 +229,7 @@ namespace ManaSchedule.Views
             {
                 if (form.ShowDialog(this) == DialogResult.OK )
                 {
-                    GameUpdater.UpdateGame(game);
+                    GameService.UpdateGame(game);
                     UpdateDiagram();
                     diagram.Refresh();
                 }

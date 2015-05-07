@@ -24,6 +24,28 @@ namespace ManaSchedule.Views
             return view;
         }
     }
+
+    public class ScheduleNode : ExplorerTreeNode
+    {
+        public override ContentView GetView()
+        {
+            var view = new ScheduleView();
+            view.Init();
+            return view;
+        }
+    }
+
+    public class ScheduleGeneratorNode : ExplorerTreeNode
+    {
+        public override ContentView GetView()
+        {
+            var view = new ScheduleGeneratorView();
+            view.Init();
+            return view;
+        }
+    }
+
+
     public class TeamNode : ExplorerTreeNode
     {
         public override ContentView GetView()
@@ -36,13 +58,24 @@ namespace ManaSchedule.Views
 
     public class PersonNode : ExplorerTreeNode
     {
-         public override ContentView GetView()
+        public override ContentView GetView()
         {
             var view = new PersonView();
             view.Init();
             return view;
         }
+    }    
+
+        public class RefereeNode : ExplorerTreeNode
+    {
+         public override ContentView GetView()
+        {
+            var view = new RefereeView();
+            view.Init();
+            return view;
+        }
     }
+
 
     public abstract class ItemNode<T> : ExplorerTreeNode
     {
@@ -194,7 +227,21 @@ namespace ManaSchedule.Views
 
 
 
+    public class GameResultNode : ItemNode<Competition>
+    {
+        public GameResultNode()
+        {
+            Text = "Результаты";
+        }
 
+        public override ContentView GetView()
+        {
+            var view = new GameResultView();
+         
+            view.Init(Item);
+            return view;
+        }
+    }
 
 
     public class GameListNode : ItemNode<Competition>
@@ -205,10 +252,20 @@ namespace ManaSchedule.Views
         }
         public override ContentView GetView()
         {
-            var view = new GameListView();
+            CompetitionView view = null;
+            switch (Item.Type)
+            {
+                case GameType.Rugby: view = new GameListView(); break;
+                case GameType.Soccer : view = new GameListView(); break;
+                case GameType.Volleyball : view = new GameListView(); break;
+                default: view = new GameListView2(); break;
+            }
+
             view.Init(Item);
             return view;
         }
+
+        
     }
 
     public class GameTableNode : ItemNode<Competition>
@@ -233,7 +290,7 @@ namespace ManaSchedule.Views
         }
         public override ContentView GetView()
         {
-            var view = new ZherebView();
+            var view = new ZherebView() { ShowPastWiners = Item.Type == GameType.Soccer || Item.Type == GameType.Volleyball || Item.Type == GameType.Rugby || Item.Type == GameType.TourRelay};
             view.Init(Item);
             return view;
         }

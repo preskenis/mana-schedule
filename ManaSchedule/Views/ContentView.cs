@@ -23,11 +23,14 @@ namespace ManaSchedule.Views
 
         void ContentView_Disposed(object sender, EventArgs e)
         {
+            DbContext.SaveChanges();
             DbContext.Dispose();
         }
 
         public virtual void OnClosing()
-        { }
+        {
+           
+        }
 
         
         

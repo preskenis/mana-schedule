@@ -29,8 +29,7 @@ namespace ManaSchedule.Views
 
         public override void OnClosing()
         {
-            DbContext.SaveChanges();
-         
+           
         }
 
         public void Init()

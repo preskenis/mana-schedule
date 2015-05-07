@@ -6,40 +6,16 @@ using System.Text;
 
 namespace ManaSchedule.Services
 {
-    public class GameGenerator
+    public class PlayoffGameService : GameService
     {
-        public Competition Competition { get; private set; }
-        public Db DbContext { get; private set; }
 
-        public GameGenerator(Competition competition, Db db)
+
+        
+
+        public override void GenerateGames()
         {
-            Competition = competition;
-            DbContext = db;
-        }
-
-        public void GenerateGames()
-        {
-            switch (Competition.Type)
-            {
-                case GameType.Soccer:
-                    GeneratePlayoffGames();
-                    break;
-                case GameType.Volleyball:
-                    GeneratePlayoffGames();
-                    break;
-                case GameType.Rugby:
-                    GeneratePlayoffGames();
-                    break;
-            }
-
-        }
-
-        private void GeneratePlayoffGames()
-        {
-            DbContext.SaveChanges();
-
-            DbContext.GameSet.RemoveRange(DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id));
-            DbContext.StageSet.RemoveRange(DbContext.StageSet.Where(f => f.CompetitionId == Competition.Id));
+            Stage finalStage = null;
+            ClearAll();
 
             var pastChamnpions = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && f.IsPastWinner).OrderBy(f => f.Team.Name).ToList();
             var teams = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && !f.IsPastWinner).OrderBy(f => f.Order).ToList();
@@ -103,16 +79,18 @@ namespace ManaSchedule.Services
                        Type = StageType.Final
                    });
 
-                    game = DbContext.GameSet.Add(new Game()
-                   {
-                       CompetitionId = Competition.Id,
-                       Stage = stage,
-                       Name = "Финал",
-                       ParentGame1 = game1,
-                       ParentGame2 = game2,
-                   });
+                    finalStage = stage;
 
-                    
+                    game = DbContext.GameSet.Add(new Game()
+                    {
+                        CompetitionId = Competition.Id,
+                        Stage = stage,
+                        Name = "Финал",
+                        ParentGame1 = game1,
+                        ParentGame2 = game2,
+                    });
+
+
                     break;
 
                 }
@@ -135,9 +113,9 @@ namespace ManaSchedule.Services
                     });
 
                     game.ParentGame1 = parentStage.Game.ElementAt(i);
-                    game.ParentGame2 = parentStage.Game.ElementAt(i+1);
+                    game.ParentGame2 = parentStage.Game.ElementAt(i + 1);
 
-                   
+
                 }
 
                 parentStage = stage1;
@@ -165,10 +143,10 @@ namespace ManaSchedule.Services
                     {
                         if (game.Team == null)
                             game.ParentGame1 = DbContext.GameSet.Add(new Game()
-                                 {
-                                     CompetitionId = Competition.Id,
-                                     Stage = stage,
-                                 });
+                            {
+                                CompetitionId = Competition.Id,
+                                Stage = stage,
+                            });
 
 
 
@@ -194,10 +172,10 @@ namespace ManaSchedule.Services
                 else
                 {
                     stage.Type = StageType.Otbor;
-                   
+
                     var otborTeams = teams.Count - nextStage.Game.Sum(f => 2 - f.GameTeams().Count);
                     var index = 0;
-                    
+
                     foreach (var game in nextStage.Game)
                     {
                         if (game.Team == null)
@@ -234,7 +212,7 @@ namespace ManaSchedule.Services
                     }
 
                     break;
-                    
+
                 }
 
                 nextStage = stage;
@@ -243,14 +221,85 @@ namespace ManaSchedule.Services
             var allTeams = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).ToList();
 
 
-            foreach (var game in DbContext.GameSet.Local.Where(f=>f.CompetitionId == Competition.Id))
+            foreach (var game in DbContext.GameSet.Local.Where(f => f.CompetitionId == Competition.Id))
             {
                 if (game.Team != null) allTeams.Remove(allTeams.First(f => f.Team.Id == game.Team.Id));
                 if (game.Team2 != null) allTeams.Remove(allTeams.First(f => f.Team.Id == game.Team2.Id));
             }
+
+
+            foreach (var stageType in EnumHelper<StageType>.GetValues(StageType.Final))
+            {
+                if (stageType == StageType.Third) continue;
+                if (finalStage == null) break;
+                finalStage.Type = stageType;
+                finalStage.Name = EnumHelper<StageType>.GetDisplayValue(stageType);
+                finalStage = finalStage.ParentStage;
+            }
+
         }
 
 
+        public override void UpdateGame(Game game)
+        {
+            var nextGames = DbContext.GameSet.Local.Where(f => f.ParentGame1 == game || f.ParentGame2 == game).ToList();
 
+            if (nextGames.Count == 0 || !game.Team1Missed.HasValue || !game.Team2Missed.HasValue)
+            {
+                DbContext.SaveChanges();
+                return;
+            }
+
+            if (game.IsMissing)
+                foreach (var nextGame in nextGames)
+                {
+                    if (nextGame.ParentGame1 == game) nextGame.Team1Missed = true;
+                    if (nextGame.ParentGame2 == game) nextGame.Team2Missed = true;
+                    UpdateGame(nextGame);
+                }
+            else
+            {
+                if (game.Winner != null)
+                    foreach (var nextGame in nextGames)
+                    {
+                        if (nextGame.ParentGame1 == game && nextGame.Stage.Type != StageType.Third)
+                        {
+                            nextGame.Team = game.Winner;
+                            UpdateGame(nextGame);
+                        }
+                        if (nextGame.ParentGame2 == game && nextGame.Stage.Type != StageType.Third)
+                        {
+                            nextGame.Team2 = game.Winner;
+                            UpdateGame(nextGame);
+                        }
+
+                        if (nextGame.ParentGame1 == game && nextGame.Stage.Type == StageType.Third)
+                        {
+                            nextGame.Team = game.Looser;
+                            nextGame.Team1Missed = game.Looser == null;
+                            UpdateGame(nextGame);
+                        }
+                        if (nextGame.ParentGame2 == game && nextGame.Stage.Type == StageType.Third)
+                        {
+                            nextGame.Team2 = game.Looser;
+                            nextGame.Team2Missed = game.Looser == null;
+                            UpdateGame(nextGame);
+                        }
+                    }
+            }
+           
+            DbContext.SaveChanges();
+        }
+
+        public void UpdateParents(Game game)
+        {
+            if (game.Stage.Type == StageType.Third)
+            {
+
+            }
+           
+
+
+        }
     }
 }

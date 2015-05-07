@@ -4,27 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="93b11e95afc6407daf02d9ecb7e93fb0" Name="Diagram1" ZoomLevel="81" >
-        <EntityTypeShape EntityType="DataModels.Team" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModels.Game" Width="1.5" PointX="5.25" PointY="7.75" />
-        <EntityTypeShape EntityType="DataModels.Person" Width="1.5" PointX="3" PointY="0.75" />
-        <EntityTypeShape EntityType="DataModels.Stage" Width="1.5" PointX="3" PointY="11.125" />
-        <EntityTypeShape EntityType="DataModels.Competition" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+      <Diagram DiagramId="93b11e95afc6407daf02d9ecb7e93fb0" Name="Diagram1" ZoomLevel="75" >
+        <EntityTypeShape EntityType="DataModels.Team" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataModels.Game" Width="1.5" PointX="5.25" PointY="16.5" />
+        <EntityTypeShape EntityType="DataModels.Person" Width="1.5" PointX="0.75" PointY="15.25" />
+        <EntityTypeShape EntityType="DataModels.Stage" Width="1.5" PointX="3" PointY="24.375" />
+        <EntityTypeShape EntityType="DataModels.Competition" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
         <AssociationConnector Association="DataModels.TeamPerson" />
         <AssociationConnector Association="DataModels.CompetitionStage" />
         <AssociationConnector Association="DataModels.ParentStage" />
         <AssociationConnector Association="DataModels.StageGame" />
-        <EntityTypeShape EntityType="DataModels.Place" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="DataModels.Place" Width="1.5" PointX="3" PointY="21.375" />
         <AssociationConnector Association="DataModels.CompetitionPlace" />
         <AssociationConnector Association="DataModels.PlaceGame" />
         <AssociationConnector Association="DataModels.Team1Game" />
-        <EntityTypeShape EntityType="DataModels.TeamCompetition" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="DataModels.TeamCompetition" Width="1.5" PointX="6" PointY="11.125" />
         <AssociationConnector Association="DataModels.TeamTeamCompetition" />
         <AssociationConnector Association="DataModels.CompetitionTeamCompetition" />
         <AssociationConnector Association="DataModels.CompetitionGame" />
         <AssociationConnector Association="DataModels.Team2Game" />
         <AssociationConnector Association="DataModels.ParentGame1" />
         <AssociationConnector Association="DataModels.ParentGame2" />
+        <EntityTypeShape EntityType="DataModels.CompetitionReferee" Width="1.5" PointX="3" PointY="15.125" />
+        <AssociationConnector Association="DataModels.PersonCompetitionReferee" />
+        <AssociationConnector Association="DataModels.CompetitionCompetitionReferee" />
+        <EntityTypeShape EntityType="DataModels.GameResult" Width="1.5" PointX="7.5" PointY="17.5" />
+        <AssociationConnector Association="DataModels.GameGameResult" />
+        <AssociationConnector Association="DataModels.CompetitionRefereeGameResult" />
+        <EntityTypeShape EntityType="DataModels.GameResultValue" Width="1.5" PointX="9.75" PointY="17.625" />
+        <AssociationConnector Association="DataModels.GameResultGameResultValue" />
+        <EntityTypeShape EntityType="DataModels.CompetitionScore" Width="1.5" PointX="3" PointY="11.125" />
+        <AssociationConnector Association="DataModels.CompetitionCompetitionScore" />
+        <AssociationConnector Association="DataModels.TeamCompetitionScore1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

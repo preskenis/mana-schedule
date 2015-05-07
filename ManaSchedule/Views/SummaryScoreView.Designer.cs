@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.GridEX = new Janus.Windows.GridEX.GridEX();
+            this.btExportToExcel = new Janus.Windows.EditControls.UIButton();
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,15 +53,30 @@
             this.GridEX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.GridEX.Location = new System.Drawing.Point(3, 84);
+            this.GridEX.Location = new System.Drawing.Point(3, 37);
             this.GridEX.Name = "GridEX";
-            this.GridEX.Size = new System.Drawing.Size(608, 424);
+            this.GridEX.RowHeaderContent = Janus.Windows.GridEX.RowHeaderContent.RowIndex;
+            this.GridEX.RowHeaders = Janus.Windows.GridEX.InheritableBoolean.True;
+            this.GridEX.Size = new System.Drawing.Size(608, 471);
             this.GridEX.TabIndex = 1;
+            this.GridEX.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2010;
             this.GridEX.VisualStyleManager = this.visualStyleManager;
+            // 
+            // btExportToExcel
+            // 
+            this.btExportToExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btExportToExcel.Location = new System.Drawing.Point(427, 8);
+            this.btExportToExcel.Name = "btExportToExcel";
+            this.btExportToExcel.Size = new System.Drawing.Size(184, 23);
+            this.btExportToExcel.TabIndex = 10;
+            this.btExportToExcel.Text = "Экспорт в Excel";
+            this.btExportToExcel.VisualStyleManager = this.visualStyleManager;
+            this.btExportToExcel.Click += new System.EventHandler(this.btExportToExcel_Click);
             // 
             // SummaryScoreView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.Controls.Add(this.btExportToExcel);
             this.Controls.Add(this.GridEX);
             this.Controls.Add(this.label1);
             this.Name = "SummaryScoreView";
@@ -68,6 +84,7 @@
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.GridEX, 0);
             this.Controls.SetChildIndex(this.ContentCaption, 0);
+            this.Controls.SetChildIndex(this.btExportToExcel, 0);
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -78,5 +95,6 @@
 
         private System.Windows.Forms.Label label1;
         private Janus.Windows.GridEX.GridEX GridEX;
+        private Janus.Windows.EditControls.UIButton btExportToExcel;
     }
 }

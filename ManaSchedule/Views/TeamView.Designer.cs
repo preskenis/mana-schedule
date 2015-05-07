@@ -36,15 +36,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
             this.SuspendLayout();
             // 
+            // ContentCaption
+            // 
+            this.ContentCaption.Size = new System.Drawing.Size(101, 30);
+            this.ContentCaption.Text = "Команды";
+            // 
             // GridEX
             // 
             this.GridEX.AllowAddNew = Janus.Windows.GridEX.InheritableBoolean.True;
+            this.GridEX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GridEX.ColumnAutoResize = true;
             GridEX_DesignTimeLayout.LayoutString = resources.GetString("GridEX_DesignTimeLayout.LayoutString");
             this.GridEX.DesignTimeLayout = GridEX_DesignTimeLayout;
-            this.GridEX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GridEX.Location = new System.Drawing.Point(0, 0);
+            this.GridEX.Location = new System.Drawing.Point(8, 33);
             this.GridEX.Name = "GridEX";
-            this.GridEX.Size = new System.Drawing.Size(614, 366);
+            this.GridEX.RowHeaderContent = Janus.Windows.GridEX.RowHeaderContent.RowIndex;
+            this.GridEX.RowHeaders = Janus.Windows.GridEX.InheritableBoolean.True;
+            this.GridEX.Size = new System.Drawing.Size(465, 330);
             this.GridEX.TabIndex = 2;
             this.GridEX.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2010;
             // 
@@ -53,9 +63,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.Controls.Add(this.GridEX);
             this.Name = "TeamView";
-            this.Size = new System.Drawing.Size(614, 366);
+            this.Size = new System.Drawing.Size(476, 366);
+            this.Controls.SetChildIndex(this.GridEX, 0);
+            this.Controls.SetChildIndex(this.ContentCaption, 0);
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

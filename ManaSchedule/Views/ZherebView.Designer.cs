@@ -43,22 +43,24 @@
             this.GridEX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.GridEX.ColumnAutoResize = true;
+            this.GridEX.ColumnAutoSizeMode = Janus.Windows.GridEX.ColumnAutoSizeMode.ColumnHeader;
             GridEX_DesignTimeLayout.LayoutString = resources.GetString("GridEX_DesignTimeLayout.LayoutString");
             this.GridEX.DesignTimeLayout = GridEX_DesignTimeLayout;
-            this.GridEX.Location = new System.Drawing.Point(3, 37);
+            this.GridEX.Location = new System.Drawing.Point(8, 37);
             this.GridEX.Name = "GridEX";
             this.GridEX.RowHeaderContent = Janus.Windows.GridEX.RowHeaderContent.RowPosition;
             this.GridEX.RowHeaders = Janus.Windows.GridEX.InheritableBoolean.True;
             this.GridEX.SelectionMode = Janus.Windows.GridEX.SelectionMode.MultipleSelection;
-            this.GridEX.Size = new System.Drawing.Size(532, 271);
+            this.GridEX.Size = new System.Drawing.Size(534, 271);
             this.GridEX.TabIndex = 0;
-            this.GridEX.VisualStyle = Janus.Windows.GridEX.VisualStyle.VS2010;
+            this.GridEX.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2010;
             this.GridEX.VisualStyleManager = this.visualStyleManager;
             // 
             // btLoadCompanies
             // 
             this.btLoadCompanies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btLoadCompanies.Location = new System.Drawing.Point(398, 8);
+            this.btLoadCompanies.Location = new System.Drawing.Point(405, 8);
             this.btLoadCompanies.Name = "btLoadCompanies";
             this.btLoadCompanies.Size = new System.Drawing.Size(137, 23);
             this.btLoadCompanies.TabIndex = 1;
@@ -69,7 +71,7 @@
             // btGenerate
             // 
             this.btGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btGenerate.Location = new System.Drawing.Point(3, 314);
+            this.btGenerate.Location = new System.Drawing.Point(8, 314);
             this.btGenerate.Name = "btGenerate";
             this.btGenerate.Size = new System.Drawing.Size(137, 23);
             this.btGenerate.TabIndex = 2;
@@ -80,7 +82,7 @@
             // btClearAll
             // 
             this.btClearAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClearAll.Location = new System.Drawing.Point(398, 314);
+            this.btClearAll.Location = new System.Drawing.Point(405, 314);
             this.btClearAll.Name = "btClearAll";
             this.btClearAll.Size = new System.Drawing.Size(137, 23);
             this.btClearAll.TabIndex = 3;
@@ -91,7 +93,7 @@
             // btRandom
             // 
             this.btRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btRandom.Location = new System.Drawing.Point(255, 8);
+            this.btRandom.Location = new System.Drawing.Point(262, 8);
             this.btRandom.Name = "btRandom";
             this.btRandom.Size = new System.Drawing.Size(137, 23);
             this.btRandom.TabIndex = 6;
@@ -109,7 +111,7 @@
             this.Controls.Add(this.btLoadCompanies);
             this.Controls.Add(this.GridEX);
             this.Name = "ZherebView";
-            this.Size = new System.Drawing.Size(538, 340);
+            this.Size = new System.Drawing.Size(545, 340);
             this.Controls.SetChildIndex(this.GridEX, 0);
             this.Controls.SetChildIndex(this.btLoadCompanies, 0);
             this.Controls.SetChildIndex(this.btGenerate, 0);
