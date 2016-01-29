@@ -23,7 +23,20 @@ namespace ManaSchedule.Views
         }
 
         public override void OnClosing()
-        { }
+        { 
+        
+            var a = DbContext.ChangeTracker.Entries<Game>();
+            
+            foreach(var g in a)
+            {
+                g.Entity.CompetitionId = Competition.Id;
+                
+
+
+            }
+
+        
+        }
 
         public override void Init(Competition content)
         {
@@ -33,8 +46,11 @@ namespace ManaSchedule.Views
 
             var teams = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).Select(f => f.TeamId).ToList();
             var stages = DbContext.StageSet.Where(f => f.CompetitionId == Competition.Id).Select(f => f.Id).ToList();
-
+            
+            DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id).Load();
+            
             DbContext.TeamSet.Where(f=>teams.Contains(f.Id)).Load();
+
             this.GridEX.RootTable.Columns["Team"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team"].EditType = EditType.Combo;
             this.GridEX.RootTable.Columns["Team"].ColumnType = ColumnType.Text;
@@ -58,13 +74,19 @@ namespace ManaSchedule.Views
             this.GridEX.RootTable.Columns["Stage"].GroupComparer = this;
             this.GridEX.RootTable.Columns["Stage"].SortComparer = this;
 
+            this.GridEX.RootTable.Columns["ParentGame1"].HasValueList = true;
+            this.GridEX.RootTable.Columns["ParentGame1"].EditType = EditType.Combo;
+            this.GridEX.RootTable.Columns["ParentGame1"].ColumnType = ColumnType.Text;
+            this.GridEX.RootTable.Columns["ParentGame1"].ValueList.PopulateValueList(DbContext.GameSet.Local.ToList(), "Name2");
+            this.GridEX.RootTable.Columns["ParentGame2"].HasValueList = true;
+            this.GridEX.RootTable.Columns["ParentGame2"].EditType = EditType.Combo;
+            this.GridEX.RootTable.Columns["ParentGame2"].ColumnType = ColumnType.Text;
+            this.GridEX.RootTable.Columns["ParentGame2"].ValueList.PopulateValueList(DbContext.GameSet.Local.ToList(), "Name2");
 
-            DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id).Load();
+
+
             GridEX.DataSource = DbContext.GameSet.Local.ToBindingList();
 
-            GridEX.AllowEdit = InheritableBoolean.False;
-            GridEX.AllowDelete = InheritableBoolean.False;
-            GridEX.AllowAddNew = InheritableBoolean.False;
         }
 
 

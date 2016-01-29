@@ -43,12 +43,15 @@ namespace ManaSchedule.Views
             Stage = content;
             Data = new Dictionary<CompetitionReferee, DataTable>();
 
+            var refereeIndex = 1;
+
             foreach (var referee in GameService.DbContext.CompetitionRefereeSet.Where(f=>f.CompetitionId == content.CompetitionId))
             {
-                var page = new Janus.Windows.UI.Tab.UITabPage(referee.SafeName)
+                var page = new Janus.Windows.UI.Tab.UITabPage(referee.IsMainReferee ? "Гл. судья" : "Судья №" + refereeIndex.ToString())
                      {
                          Tag = referee
-                     }; 
+                     };
+                if (!referee.IsMainReferee) refereeIndex++;
 
                 refereeTabs.TabPages.Add(page);
                 var grid = new GridEX() { Dock = DockStyle.Fill };
@@ -65,7 +68,18 @@ namespace ManaSchedule.Views
 
              
             }
-          
+
+            var analizPage = new Janus.Windows.UI.Tab.UITabPage("Анализ")
+            {
+              
+            };
+
+            refereeTabs.TabPages.Add(analizPage);
+            var analiz = new StageResultCalculatorView() { Dock = DockStyle.Fill, Stage = Stage };
+            analiz.Init(Stage.Competition);
+            analizPage.Controls.Add(analiz);
+            
+
         }
 
         private void btRandom_Click(object sender, EventArgs e)

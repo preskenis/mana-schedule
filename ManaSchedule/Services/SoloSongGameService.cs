@@ -90,8 +90,9 @@ GameValueType.BadBehaviour,
             var scores = new List<TeamScore>();
             foreach (var game in stageGames.Where(f => f.Stage.Id == stage.Id && f.Team1Missed == false && f.Team1Cancel == false))
             {
-                var score = GetGameScore(game).Value;
-                scores.Add(new TeamScore() { Team = game.Team, Score = score });
+                var log = new StringBuilder();
+                var score = GetGameScore(game, log).Value;
+                scores.Add(new TeamScore() { Team = game.Team, Score = score, Description = log.ToString() });
             }
 
             var nextPlace = 1;
@@ -106,10 +107,11 @@ GameValueType.BadBehaviour,
                 {
                     var s = DbContext.CompetitionScoreSet.Local.First(v => v.Team == f.Team);
                     s.Place = place;
-                    s.Description = "Игра в финале, проверьте место";
+                    s.Description = string.IsNullOrEmpty(f.Description) ? "Игра в финале, проверьте место" : f.Description;
                     s.Score = f.Score;
                 });
             }
+
 
             DbContext.SaveChanges();
         }
@@ -160,17 +162,17 @@ GameValueType.BadBehaviour,
         public override double? GetGameScore(Game game, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log)
         {
             if (values.Any(f => f.Value.Any(v => !v.Value.HasValue))) return null;
-            return SumOtsechka(GameValueType.Vocal, values)
-                + SumOtsechka(GameValueType.Music, values)
-                + SumOtsechka(GameValueType.Artist, values)
-                + SumOtsechka(GameValueType.WOW, values)
-                + SumOtsechka(GameValueType.Mana, values)
-                + SumOtsechka(GameValueType.Tourism, values)
-                + SumOtsechka(GameValueType.SelfSong, values)
-                + SumOtsechka(GameValueType.SelfMusic, values)
-                + SumOtsechka(GameValueType.FanSupport, values)
-                + Sum(GameValueType.BadBehaviour, values)
-                + Sum(GameValueType.MatShtraf, values);
+            return SumOtsechka(GameValueType.Vocal, values, log)
+                + SumOtsechka(GameValueType.Music, values, log)
+                + SumOtsechka(GameValueType.Artist, values, log)
+                + SumOtsechka(GameValueType.WOW, values, log)
+                + SumOtsechka(GameValueType.Mana, values, log)
+                + SumOtsechka(GameValueType.Tourism, values, log)
+                + SumOtsechka(GameValueType.SelfSong, values, log)
+                + SumOtsechka(GameValueType.SelfMusic, values, log)
+                + SumOtsechka(GameValueType.FanSupport, values, log)
+                + Sum(GameValueType.BadBehaviour, values, log)
+                + Sum(GameValueType.MatShtraf, values, log);
         }
     }
 }

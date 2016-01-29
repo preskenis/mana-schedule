@@ -34,6 +34,15 @@ namespace ManaSchedule.Views
         public override void OnClosing()
         {
 
+            var a = DbContext.ChangeTracker.Entries<TeamCompetition>();
+
+            foreach (var g in a)
+            {
+                g.Entity.CompetitionId = Competition.Id;
+
+            }
+
+
         }
 
         public bool IsCompetitionStarted { get; set; }
@@ -57,7 +66,8 @@ namespace ManaSchedule.Views
         {
             IsCompetitionStarted = DbContext.GameSet.Any(f => f.CompetitionId == Competition.Id);
 
-            var edit = IsCompetitionStarted ? InheritableBoolean.False : InheritableBoolean.True;
+            //var edit = IsCompetitionStarted ? InheritableBoolean.False : InheritableBoolean.True;
+            var edit = InheritableBoolean.True;
             GridEX.AllowAddNew = edit;
             GridEX.AllowDelete = edit;
             GridEX.AllowEdit = edit;

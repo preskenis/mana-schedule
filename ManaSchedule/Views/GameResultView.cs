@@ -35,8 +35,6 @@ namespace ManaSchedule.Views
             base.Init(content);
             ContentCaption.Text = "Результаты" + " - " + Competition.Name;
         
-            
-
             foreach (var stage in DbContext.StageSet.Where(f => f.CompetitionId == Competition.Id))
             {
 

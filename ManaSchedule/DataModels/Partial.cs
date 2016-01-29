@@ -92,9 +92,20 @@ namespace ManaSchedule.DataModels
         }
 
 
+
+
         public bool IsMissing
         {
             get { return Team1Missed == true && Team2Missed == true; }
+        }
+
+
+        public string Name2
+        {
+            get
+            {
+                return string.Format("{0} - {1}", Team != null ? Team.Name : "[-]", Team2 != null ? Team2.Name : "[-]");
+            }
         }
     }
 

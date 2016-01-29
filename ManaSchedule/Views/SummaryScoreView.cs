@@ -44,7 +44,8 @@ namespace ManaSchedule.Views
 
             _table = new DataTable();
             _table.Columns.Add("Команда", typeof(string));
-            _table.Columns.Add("Место", typeof(int));
+
+            _table.Columns.Add("Место", typeof(double));
             _table.Columns.Add("Баллы", typeof(double));
 
             var data = new Dictionary<Competition,Tuple<DataColumn,DataColumn>>();
@@ -56,6 +57,7 @@ namespace ManaSchedule.Views
                 _table.Columns.Add(c.Name + "- баллы", typeof(double))));    
             }
 
+            var teamScores = new List<TeamScore>();
             foreach (var team in teams)
             {
                 var row = _table.NewRow();
@@ -80,10 +82,39 @@ namespace ManaSchedule.Views
                 
                     row[data[c].Item1] = place;
                     row[data[c].Item2] = ball;  
+
                 }
                 row["Баллы"] = totalScore;
                 _table.Rows.Add(row);
+
+                teamScores.Add(new TeamScore() { Team = team, Score = totalScore });
+
             }
+
+
+            var nextPlace = 1;
+            foreach (var g in teamScores.GroupBy(f => f.Score).OrderBy(f => f.Key))
+            {
+                double place = 0;
+                for (int i = nextPlace; i < nextPlace + g.Count(); i++) place += i;
+                place = place / g.Count();
+                nextPlace += g.Count();
+
+                
+                g.ToList().ForEach(f =>
+                {
+                    f.Place = place;
+                });
+            }
+
+            foreach (var row in _table.Rows.Cast<DataRow>())
+            {
+                row["Место"] = teamScores.First(f => f.Team.Name == row["Команда"].ToString()).Place;
+            }
+
+
+
+
 
             GridEX.DataSource = _table;
             GridEX.RetrieveStructure();

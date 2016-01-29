@@ -101,18 +101,19 @@ namespace ManaSchedule.Services
             return result;
         }
 
-        public  double? GetGameScore (Game game)
+        public  double? GetGameScore (Game game, StringBuilder log)
         {
-            return GetGameScore(game, GetGameResultValues(game), new StringBuilder());
+            return GetGameScore(game, GetGameResultValues(game), log);
         }
         public virtual double? GetGameScore(Game game, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log)
         {
             return 0;
         }
 
-        public List<int> RemoveUpDown(IEnumerable<int> values)
+        public static List<int> RemoveUpDown(IEnumerable<int> values)
         {
-            if (values.Count() < 4) return values.ToList();
+            if (values.Count() < 4) 
+                return values.ToList();
             var v = values.OrderBy(f => f).ToList();
             return v.Skip(1).Take(v.Count - 2).ToList();
         }
@@ -122,14 +123,45 @@ namespace ManaSchedule.Services
             return values.Where(f => f.Value.ContainsKey(valueType)).Select(f => f.Value[valueType].Value).ToList();
         }
 
-        public int SumOtsechka(GameValueType valueType, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values)
+        public double SumOtsechka(GameValueType valueType, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values)
         {
-            return RemoveUpDown(values.Where(f => f.Value.ContainsKey(valueType)).Select(f => f.Value[valueType].Value)).Sum();
+            return SumOtsechka(valueType, values, new StringBuilder());
+        }
+
+        public double SumOtsechka(GameValueType valueType, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log)
+        {
+            var balls = values.Where(f => f.Value.ContainsKey(valueType)).Select(f => f.Value[valueType].Value).ToList();
+            var ballsStr = balls.Select(f => f.ToString()).ToList();
+            var otsechka = RemoveUpDown(balls).ToList();
+
+            var ballsOts = new List<int>(balls);
+            otsechka.ForEach(f => ballsOts.Remove(f));
+
+            foreach (var o in ballsOts)
+            {
+                for (int i = 0; i < ballsStr.Count; i++)
+                {
+                    if (ballsStr[i] == o.ToString())
+                    {
+                        ballsStr[i] = "\"" + o.ToString() + "\"";
+                        break;
+                    }
+                }
+            }
+
+            var resultString = string.Format("[{1} - {0}]", string.Join(" + ", ballsStr), EnumHelper<GameValueType>.GetDisplayValue(valueType));
+            log.Append(resultString);
+            return otsechka.Sum();
+        }
+
+        public int Sum(GameValueType valueType, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log)
+        {
+            return values.Where(f => f.Value.ContainsKey(valueType)).Select(f => f.Value[valueType].Value).Sum();
         }
 
         public int Sum(GameValueType valueType, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values)
         {
-            return values.Where(f => f.Value.ContainsKey(valueType)).Select(f => f.Value[valueType].Value).Sum();
+            return Sum(valueType, values, new StringBuilder());
         }
 
         public virtual int MinValue(Stage stage, GameValueType valueType)
@@ -167,8 +199,9 @@ namespace ManaSchedule.Services
                 var scores = new List<TeamScore>();
                 foreach (var game in stageGames.Where(f => f.Stage.Id == stage.Id && f.Team1Missed == false && f.Team1Cancel == false))
                 {
-                    var score = GetGameScore(game).Value;
-                    scores.Add(new TeamScore() { Team = game.Team, Score = score });
+                    var log = new StringBuilder();
+                    var score = GetGameScore(game, log).Value;
+                    scores.Add(new TeamScore() { Team = game.Team, Score = score, Description = log.ToString() });
                 }
 
                 var nextTeams = new List<Team>();
@@ -273,8 +306,9 @@ namespace ManaSchedule.Services
                 var scores = new List<TeamScore>();
                 foreach (var game in stageGames.Where(f => f.Stage.Id == stage.Id && f.Team1Missed == false && f.Team1Cancel == false))
                 {
-                    var score = GetGameScore(game).Value;
-                    scores.Add(new TeamScore() { Team = game.Team, Score = score });
+                    var log = new StringBuilder();
+                    var score = GetGameScore(game, log).Value;
+                    scores.Add(new TeamScore() { Team = game.Team, Score = score, Description = log.ToString() });
                 }
 
                 var nextPlace = 1;
@@ -289,7 +323,7 @@ namespace ManaSchedule.Services
                     {
                         var s = DbContext.CompetitionScoreSet.Local.First(v => v.Team == f.Team);
                         s.Place = place;
-                        s.Description = "Игра в финале, проверьте место";
+                        s.Description = string.IsNullOrEmpty(f.Description) ? "Игра в финале, проверьте место" : f.Description;
                         s.Score = f.Score;
                     });
                 }

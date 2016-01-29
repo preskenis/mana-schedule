@@ -156,8 +156,9 @@ namespace ManaSchedule.Services
             var scores = new List<TeamScore>();
             foreach (var game in stageGames.Where(f => f.Stage.Id == stage.Id && f.Team1Missed == false && f.Team1Cancel == false))
             {
-                var score = GetGameScore(game).Value;
-                scores.Add(new TeamScore() { Team = game.Team, Score = score });
+                var log = new StringBuilder();
+                var score = GetGameScore(game, log).Value;
+                scores.Add(new TeamScore() { Team = game.Team, Score = score, Description = log.ToString() });
             }
 
             var nextPlace = 1;

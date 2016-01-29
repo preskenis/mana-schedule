@@ -216,11 +216,11 @@
     <Compile Include="Views\NextStageTeamsForm.Designer.cs">
       <DependentUpon>NextStageTeamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\RefereeResultView.cs">
+    <Compile Include="Views\StageResultCalculatorView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\RefereeResultView.Designer.cs">
-      <DependentUpon>RefereeResultView.cs</DependentUpon>
+    <Compile Include="Views\StageResultCalculatorView.Designer.cs">
+      <DependentUpon>StageResultCalculatorView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ScheduleGeneratorView.cs">
       <SubType>UserControl</SubType>
@@ -352,8 +352,8 @@
     <EmbeddedResource Include="Views\NextStageTeamsForm.resx">
       <DependentUpon>NextStageTeamsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\RefereeResultView.resx">
-      <DependentUpon>RefereeResultView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\StageResultCalculatorView.resx">
+      <DependentUpon>StageResultCalculatorView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ScheduleGeneratorView.resx">
       <DependentUpon>ScheduleGeneratorView.cs</DependentUpon>
