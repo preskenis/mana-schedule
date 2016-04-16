@@ -16,9 +16,13 @@ namespace ManaSchedule
             using (var db = new Db())
             {
                 db.TeamSet.ToList();
+                db.GameSet.ToList();
             }
             MainForm = new Views.MainForm();
            
+            
+
+
         }
 
         public static Views.MainForm MainForm { get; set; }

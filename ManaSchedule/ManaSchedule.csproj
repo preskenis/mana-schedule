@@ -60,46 +60,57 @@
     <Reference Include="Janus.Data.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Data.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.ButtonBar.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.ButtonBar.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.CalendarCombo.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.CalendarCombo.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.Common.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.Common.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.ExplorerBar.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.ExplorerBar.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.FilterEditor.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.FilterEditor.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.GridEX.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.GridEX.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.Ribbon.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.Ribbon.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.Schedule.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.Schedule.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.TimeLine.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.TimeLine.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Janus.Windows.UI.v4, Version=4.0.47.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Janus.Windows.UI.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.2.0.0\lib\net40\NLog.dll</HintPath>
@@ -127,7 +138,9 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -524,7 +537,9 @@
     if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
     xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
     if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"
+
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
