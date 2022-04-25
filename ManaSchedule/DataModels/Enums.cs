@@ -64,6 +64,9 @@ namespace ManaSchedule.DataModels
         Finished,
     }
 
+    
+
+
     public enum GameValueType
     {
 
@@ -73,6 +76,8 @@ namespace ManaSchedule.DataModels
         Music,
         [Display(Name = "Артистичность")]
         Artist,
+        [Display(Name = "Раскрытие темы (ВОВ, Мана, Туризм)")]
+        RaskrTema,
         [Display(Name = "тема ВОВ")]
         WOW,
         [Display(Name = "тема Маны")]
@@ -168,7 +173,6 @@ namespace ManaSchedule.DataModels
         [Display(Name = "Итоговое место")]
         FinalPlace,
 
-
         [Display(Name = "Откр. ком. кост.")]
         OtkrTeamSuite,
         [Display(Name = "Откр. инд. кост.")]
@@ -178,29 +182,57 @@ namespace ManaSchedule.DataModels
         [Display(Name = "Откр. наклейки")]
         OtkrNakl,
         [Display(Name = "Откр. настрой")]
-        OktrNastroi,
-        [Display(Name = "Шоу костюмы")]
-        ShowSuite,
+        OtkrNastroi,
+
+        [Display(Name = "Откр.выст. красочность")]
+        OtkrShowKras,
+        [Display(Name = "Откр.выст. зрелищ.")]
+        OtkrShowZrel,
+        [Display(Name = "Откр.выст. реакция")]
+        OtkrShowReact,
+        [Display(Name = "Откр.выст. настрой")]
+        OtkrShowNastroi,
+
+        [Display(Name = "Шоу красочность")]
+        ShowKras,
         [Display(Name = "Шоу зрелищ.")]
         ShowZrel,
         [Display(Name = "Шоу реакция")]
         ShowReact,
         [Display(Name = "Шоу настрой")]
         ShowNastroi,
-        [Display(Name = "Каш. поддержка")]
-        CookSupport,
-        [Display(Name = "Каш. настрой")]
-        CookNastroi,
+
         [Display(Name = "Ин. красочность")]
         InKras,
         [Display(Name = "Ин. зрелищ.")]
         InZrel,
         [Display(Name = "Ин. настрой")]
         InNastroi,
+        
         [Display(Name = "Неадекват.")]
         Neadekvat,
         [Display(Name = "Ненорматив.")]
         Nenorm,
-        
+        [Display(Name = "Наруш. норм")]
+        Narush,
+
+
+        [Display(Name = "1. Спорт костюмы")]
+        SportSuite1,
+        [Display(Name = "1. Спорт кричалки")]
+        SportSongs1,
+        [Display(Name = "1. Спорт поддержка")]
+        SportSupport1,
+        [Display(Name = "1. Спорт неадекват")]
+        SportNeadekvat1,
+
+        [Display(Name = "2. Спорт костюмы")]
+        SportSuite2,
+        [Display(Name = "2. Спорт кричалки")]
+        SportSongs2,
+        [Display(Name = "2. Спорт поддержка")]
+        SportSupport2,
+        [Display(Name = "2. Спорт неадекват")]
+        SportNeadekvat2,
     }
 }

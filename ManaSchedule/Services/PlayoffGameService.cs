@@ -17,12 +17,18 @@ namespace ManaSchedule.Services
             Stage finalStage = null;
             ClearAll();
 
-            DbContext.TeamSet.Local.ToList().ForEach(f =>
+            Teams.ForEach(f =>
             {
                 DbContext.CompetitionScoreSet.Add(
                     new CompetitionScore() { Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе" });
             });
 
+
+
+            var mainReferee = DbContext.CompetitionRefereeSet.FirstOrDefault(f => f.CompetitionId == Competition.Id && f.IsMainReferee);
+
+            if (mainReferee == null)
+                throw new NullReferenceException("Не указан главный судья");
 
 
             var pastChamnpions = DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id && f.IsPastWinner).OrderBy(f => f.PastWinnerPlace).ToList();
@@ -243,6 +249,15 @@ namespace ManaSchedule.Services
 
             foreach (var game in DbContext.GameSet.Local.Where(f => f.CompetitionId == Competition.Id))
             {
+                // add carnival data
+                DbContext.GameResultSet.Add(new GameResult()
+                {
+                    Game = game,
+                    Referee = mainReferee
+                });
+
+
+
                 if (game.Team != null) allTeams.Remove(allTeams.First(f => f.Team.Id == game.Team.Id));
                 if (game.Team2 != null) allTeams.Remove(allTeams.First(f => f.Team.Id == game.Team2.Id));
             }
@@ -256,6 +271,10 @@ namespace ManaSchedule.Services
                 finalStage.Name = EnumHelper<StageType>.GetDisplayValue(stageType);
                 finalStage = finalStage.ParentStage;
             }
+
+           
+
+
 
         }
 

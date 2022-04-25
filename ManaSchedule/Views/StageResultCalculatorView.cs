@@ -38,11 +38,11 @@ namespace ManaSchedule.Views
         {
             InitializeComponent();
 
-            DbContext.TeamSet.Load();
+            DbContext.TeamSet.Where(f=>f.Used).Load();
             this.GridEX.RootTable.Columns["Team"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team"].EditType = EditType.NoEdit;
             this.GridEX.RootTable.Columns["Team"].ColumnType = ColumnType.Text;
-            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.Where(f => f.Used).ToList(), "Name");
 
             GridEX.RootTable.SortKeys.Add(GridEX.RootTable.Columns["Score"], Janus.Windows.GridEX.SortOrder.Descending);
         }

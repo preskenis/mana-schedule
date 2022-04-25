@@ -13,7 +13,7 @@ using ManaSchedule.Services;
 
 namespace ManaSchedule.Views
 {
-    public partial class StageResultView : UserControl
+    public partial class StageResultView : StageResultViewBase
     {
 
         public StageResultView()
@@ -22,30 +22,24 @@ namespace ManaSchedule.Views
         }
 
 
-        public void OnClosing()
-        {
-            
-        }
+        
 
-        public Stage Stage { get; set; }
-
-        public GameService GameService { get; set; }
-
+       
 
         public Dictionary<CompetitionReferee, DataTable> Data { get; set; }
 
 
-        public void Init(Stage content)
+        public override void Init()
         {
            
-            GameService.DbContext.GameResultValueSet.Where(f => f.GameResult.Game.StageId == content.Id).Load();
+            GameService.DbContext.GameResultValueSet.Where(f => f.GameResult.Game.StageId == Stage.Id).Load();
 
-            Stage = content;
+            
             Data = new Dictionary<CompetitionReferee, DataTable>();
 
             var refereeIndex = 1;
 
-            foreach (var referee in GameService.DbContext.CompetitionRefereeSet.Where(f=>f.CompetitionId == content.CompetitionId))
+            foreach (var referee in GameService.DbContext.CompetitionRefereeSet.Where(f=>f.CompetitionId == Stage.CompetitionId))
             {
                 var page = new Janus.Windows.UI.Tab.UITabPage(referee.IsMainReferee ? "Гл. судья" : "Судья №" + refereeIndex.ToString())
                      {
@@ -54,21 +48,62 @@ namespace ManaSchedule.Views
                 if (!referee.IsMainReferee) refereeIndex++;
 
                 refereeTabs.TabPages.Add(page);
-                var grid = new GridEX() { Dock = DockStyle.Fill };
+               
+                var grid = new GridEX() { Dock = DockStyle.Fill, Name = "gridReferee" };
                 page.Controls.Add(grid);
-                var dt = GetTable(content, referee);
+                var dt = GetTable(Stage, referee);
                 grid.DataSource = dt;
                 grid.RetrieveStructure();
                 grid.RootTable.Columns["Команда"].EditType = EditType.NoEdit;
+                
+                if (grid.RootTable.Columns.Contains("Жеребьевка"))
+                {
+                    grid.RootTable.Columns["Жеребьевка"].EditType = EditType.NoEdit;
+                    grid.RootTable.SortKeys.Add(grid.RootTable.Columns["Жеребьевка"], Janus.Windows.GridEX.SortOrder.Ascending);
+                    
+                }
+                else
+                    grid.RootTable.SortKeys.Add(grid.RootTable.Columns["Команда"], Janus.Windows.GridEX.SortOrder.Ascending);
+
+
+                grid.GroupByBoxVisible = false;
+
+                
                 grid.ColumnAutoSizeMode = ColumnAutoSizeMode.ColumnHeader;
                 grid.ColumnAutoResize = true;
 
+                grid.RootTable.Columns.Cast<GridEXColumn>().ToList().ForEach(f => 
+                {
+                    if (dt.Columns[f.DataMember].DataType == typeof(int))
+                    {
+                        var condition = new GridEXFormatCondition();
+                        condition.Column = f;
+
+                        condition.ConditionOperator = ConditionOperator.IsEmpty;
+                        condition.FormatStyle.BackColor = Color.LightBlue;
+
+                       
+                       
+                        condition.TargetColumn = f;
+
+                        grid.RootTable.FormatConditions.Add(condition);
+                    }
+                
+                });
+                
+
                 Data.Add(referee, dt);
+                
                 dt.RowChanged += dt_RowChanged;
 
-             
+                grid.RowHeaderContent = RowHeaderContent.RowPosition;
+                grid.RowHeaders = InheritableBoolean.True;
+
+                grid.EnsureVisible(1);
+                
             }
 
+            /*
             var analizPage = new Janus.Windows.UI.Tab.UITabPage("Анализ")
             {
               
@@ -78,7 +113,7 @@ namespace ManaSchedule.Views
             var analiz = new StageResultCalculatorView() { Dock = DockStyle.Fill, Stage = Stage };
             analiz.Init(Stage.Competition);
             analizPage.Controls.Add(analiz);
-            
+            */
 
         }
 
@@ -130,9 +165,11 @@ namespace ManaSchedule.Views
             GameService.DbContext.SaveChanges();
         }
 
+        public bool SkipRowChange = false;
 
-        void dt_RowChanged(object sender, DataRowChangeEventArgs e)
+        public void dt_RowChanged(object sender, DataRowChangeEventArgs e)
         {
+            if (SkipRowChange) return;
             var referee = Data.First(f => f.Value == e.Row.Table).Key;
             var valueTypes = GameService.GetValueTypes(Stage, referee);
             var team = e.Row.Field<string>(0);
@@ -141,7 +178,7 @@ namespace ManaSchedule.Views
 
             foreach (var valueType in valueTypes)
             {
-                var value = GameService.DbContext.GameResultValueSet.Local.FirstOrDefault(f => f.GameResult == gameResult && f.Type == valueType);
+                var value = gameResult.Values.FirstOrDefault(f => f.GameResult == gameResult && f.Type == valueType);
                 var val = e.Row.Field<int?>(e.Row.Table.Columns[EnumHelper<GameValueType>.GetDisplayValue(valueType)]);
 
                 if (val.HasValue)
@@ -193,22 +230,52 @@ namespace ManaSchedule.Views
             var table = new DataTable();
 
             var teamColumn = table.Columns.Add("Команда", typeof(string));
-  
+
+            DataColumn teamZherColumn = null;
+            if (GameService.HasZhereb(stage))
+            {
+               teamZherColumn = table.Columns.Add("Жеребьевка", typeof(int));
+            }
+            
+           
+
             var valueTypes = GameService.GetValueTypes(stage, referee);
             var dictTable = valueTypes.ToDictionary(f => f, f => table.Columns.Add(EnumHelper<GameValueType>.GetDisplayValue(f), typeof(int)));
 
-            GameService.DbContext.GameResultValueSet.Where(f => f.GameResult.Game.StageId == stage.Id).Load();
 
-            foreach (var gr in GameService.DbContext.GameResultSet.Where(f => f.Game.StageId == stage.Id && f.Referee.Id == referee.Id && f.Game.Team1Missed == false && f.Game.Team1Cancel == false))
+
+            var gamesIds = stage.Game.Where(f=>f.Team1Missed == false && !f.Team1Cancel).Select(f => f.Id).ToList();
+
+            var grs = GameService.DbContext.GameResultSet.Where(
+                f => f.CompetitionRefereeId == referee.Id &&
+                     gamesIds.Contains(f.GameId)).ToList();
+
+            var grIds = grs.Select(f => f.Id).ToList();
+
+            var allValues = GameService.DbContext.GameResultValueSet.Where(f => grIds.Contains(f.GameResultId)).ToList();
+            
+
+
+            foreach (
+                var gr in
+                grs)
             {
                 var row = table.NewRow();
                 row[teamColumn] = gr.Game.Team.Name;
+                if (teamZherColumn != null)
+                {
+                    row[teamZherColumn] = gr.Game.Team.Competitions.First(f => f.CompetitionId == stage.CompetitionId).Order.Value;
+                }
 
-                GameService.DbContext.GameResultValueSet.Where(f => f.GameResult.Id == gr.Id).ToList().ForEach(f => 
+                var values = allValues.Where(f => f.GameResultId == gr.Id).ToList();
+
+
+
+                values.ForEach(f =>
                 {
                     if (dictTable.ContainsKey(f.Type)) row[dictTable[f.Type]] = f.Value;
                 });
-            
+
                 table.Rows.Add(row);
             }
 
@@ -218,29 +285,83 @@ namespace ManaSchedule.Views
             return table;
         }
 
-        private void btFinishStage_Click(object sender, EventArgs e)
+      
+
+        public override void FinishStage()
         {
+            if (DialogResult.Yes != 
+                MessageBox.Show(this, string.Format("Завершить этап {0}:{1}?", Stage.Competition.Name, Stage.Name), "Подтвердите", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                return;
+
             foreach (var item in Data)
             {
                 foreach (var row in item.Value.Rows.Cast<DataRow>())
                 {
-                    if (row.ItemArray.Skip(1).Take(row.ItemArray.Length - 2).Any(f=>f == DBNull.Value))
+                    for (int i = 0; i < row.ItemArray.Length; i++ )
                     {
-                        MessageBox.Show("Не все результаты введены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        if (row.ItemArray[i] == DBNull.Value)
+                        {
+                            if (item.Value.Columns[i].DataType == typeof(int))
+                            {
+                                MessageBox.Show("Не все результаты введены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                            
+                        }
                     }
+
+                        
                 }
             }
 
             GameService.EndStage(Stage);
             MessageBox.Show("Этап завершен, места пересчитаны", "Готово", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void FillRandom()
+        {
 
         }
 
-    
+        internal override GridEX GetDataTable()
+        {
+            return refereeTabs.SelectedTab.Controls[0] as GridEX;
+        }
+        internal override string GetFileName()
+        {
+            return Stage.Name + "-" + refereeTabs.SelectedTab.Text;
+        }
 
-    
+        public override void ShowNames(bool showNames)
+        {
+              var refereeIndex = 1;
 
-      
+             foreach (var page in refereeTabs.TabPages.Cast<Janus.Windows.UI.Tab.UITabPage>())
+            {
+                var referee = page.Tag as CompetitionReferee;
+                if (referee == null) continue;
+
+                if (showNames && referee.Person != null)
+                {
+                    page.Text = string.Format("{0}", referee.Person.Name); 
+                }
+                else
+                {
+                    page.Text = referee.IsMainReferee ? "Гл. судья" : "Судья №" + refereeIndex.ToString();
+                }
+                
+                    if (!referee.IsMainReferee) refereeIndex++;
+            }
+        }
+
+        public Janus.Windows.UI.Tab.UITabPage CurrentReferee
+        {
+            get { return refereeTabs.SelectedTab; }
+        }
+
+        public override void OnClosing()
+        {
+            
+        }
     }
 }

@@ -31,5 +31,6 @@ namespace ManaSchedule.DataModels
         public virtual DbSet<GameResult> GameResultSet { get; set; }
         public virtual DbSet<GameResultValue> GameResultValueSet { get; set; }
         public virtual DbSet<CompetitionScore> CompetitionScoreSet { get; set; }
+        public virtual DbSet<StageGen> StageGenSet { get; set; }
     }
 }

@@ -28,7 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CompetitionView));
+            this.ribbonGroup1 = new Janus.Windows.Ribbon.RibbonGroup();
             this.SuspendLayout();
+            // 
+            // ViewRibbon
+            // 
+            // 
+            // 
+            // 
+            // 
+            // ribbonGroup1
+            // 
+            this.ribbonGroup1.DialogButtonSuperTipSettings.ImageListProvider = this.ribbonGroup1;
+            this.ribbonGroup1.Key = "ribbonGroup1";
+            this.ribbonGroup1.Name = "ribbonGroup1";
+            this.ribbonGroup1.Text = "Group 0";
             // 
             // CompetitionView
             // 
@@ -42,5 +57,7 @@
         }
 
         #endregion
+
+        private Janus.Windows.Ribbon.RibbonGroup ribbonGroup1;
     }
 }

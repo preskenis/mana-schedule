@@ -19,6 +19,9 @@ namespace ManaSchedule.Views
         {
             InitializeComponent();
 
+            GridEX.AllowEdit = btEdit.Checked.ToInheritableBoolean();
+            GridEX.AllowDelete = btEdit.Checked.ToInheritableBoolean(); ;
+            GridEX.AllowAddNew = btEdit.Checked.ToInheritableBoolean();
          
         }
 
@@ -42,29 +45,29 @@ namespace ManaSchedule.Views
         {
             base.Init(content);
 
-            ContentCaption.Text = Competition.Name + "- Список Игр";
+            ContentCaption = string.Format("{0} - Список Игр", Competition.Name);
 
             var teams = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).Select(f => f.TeamId).ToList();
             var stages = DbContext.StageSet.Where(f => f.CompetitionId == Competition.Id).Select(f => f.Id).ToList();
             
             DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id).Load();
             
-            DbContext.TeamSet.Where(f=>teams.Contains(f.Id)).Load();
+            DbContext.TeamSet.Where(f=>f.Used && teams.Contains(f.Id)).Load();
 
             this.GridEX.RootTable.Columns["Team"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team"].EditType = EditType.Combo;
             this.GridEX.RootTable.Columns["Team"].ColumnType = ColumnType.Text;
-            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.Where(f => f.Used).ToList(), "Name");
             
             this.GridEX.RootTable.Columns["Team2"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team2"].EditType = EditType.Combo;
             this.GridEX.RootTable.Columns["Team2"].ColumnType = ColumnType.Text;
-            this.GridEX.RootTable.Columns["Team2"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            this.GridEX.RootTable.Columns["Team2"].ValueList.PopulateValueList(DbContext.TeamSet.Local.Where(f => f.Used).ToList(), "Name");
             
             this.GridEX.RootTable.Columns["Winner"].HasValueList = true;
             this.GridEX.RootTable.Columns["Winner"].EditType = EditType.NoEdit;
             this.GridEX.RootTable.Columns["Winner"].ColumnType = ColumnType.Text;
-            this.GridEX.RootTable.Columns["Winner"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            this.GridEX.RootTable.Columns["Winner"].ValueList.PopulateValueList(DbContext.TeamSet.Local.Where(f => f.Used).ToList(), "Name");
 
             DbContext.StageSet.Where(f => stages.Contains(f.Id)).Load();
             this.GridEX.RootTable.Columns["Stage"].HasValueList = true;
@@ -87,6 +90,7 @@ namespace ManaSchedule.Views
 
             GridEX.DataSource = DbContext.GameSet.Local.ToBindingList();
 
+            GridEX.SetReadonly(!App.AdminMode);
         }
 
 
@@ -110,6 +114,23 @@ namespace ManaSchedule.Views
                 }
             }
           
+        }
+
+        private void btManualEdit_CheckedChanged(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
+        {
+
+            GridEX.AllowEdit =  btEdit.Checked.ToInheritableBoolean();
+            GridEX.AllowDelete = btEdit.Checked.ToInheritableBoolean(); ;
+            GridEX.AllowAddNew = btEdit.Checked.ToInheritableBoolean();
+       
+        }
+
+        public override Janus.Windows.Ribbon.Ribbon RibbonControl
+        {
+            get
+            {
+                return ribbon1;
+            }
         }
     }
 }

@@ -34,22 +34,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
             this.SuspendLayout();
             // 
-            // ContentCaption
-            // 
-            this.ContentCaption.Size = new System.Drawing.Size(125, 30);
-            this.ContentCaption.Text = "Наши люди";
-            // 
             // GridEX
             // 
             this.GridEX.AllowAddNew = Janus.Windows.GridEX.InheritableBoolean.True;
-            this.GridEX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             GridEX_DesignTimeLayout.LayoutString = resources.GetString("GridEX_DesignTimeLayout.LayoutString");
             this.GridEX.DesignTimeLayout = GridEX_DesignTimeLayout;
-            this.GridEX.Location = new System.Drawing.Point(8, 33);
+            this.GridEX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GridEX.Location = new System.Drawing.Point(0, 0);
             this.GridEX.Name = "GridEX";
-            this.GridEX.Size = new System.Drawing.Size(603, 330);
+            this.GridEX.Size = new System.Drawing.Size(614, 366);
             this.GridEX.TabIndex = 2;
             this.GridEX.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2010;
             this.GridEX.VisualStyleManager = this.visualStyleManager;
@@ -57,14 +50,12 @@
             // PersonView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ContentCaption = "Наши люди";
             this.Controls.Add(this.GridEX);
             this.Name = "PersonView";
             this.Size = new System.Drawing.Size(614, 366);
-            this.Controls.SetChildIndex(this.GridEX, 0);
-            this.Controls.SetChildIndex(this.ContentCaption, 0);
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

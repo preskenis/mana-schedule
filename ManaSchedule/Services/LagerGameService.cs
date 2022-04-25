@@ -12,60 +12,67 @@ namespace ManaSchedule.Services
     {
         public LagerGameService()
         {
-            MinMaxValues = new Dictionary<StageType, Dictionary<GameValueType, Tuple<int, int>>>() 
+            StageScores = new Dictionary<StageType, Dictionary<GameValueType, StageScoreSettings>>()
             {
             {
-                StageType.Otbor, new Dictionary<GameValueType, Tuple<int, int>>()
+                StageType.Otbor, new Dictionary<GameValueType, StageScoreSettings>()
             {
-               
-                  {GameValueType.Flag, new Tuple<int, int>(0, 1) } ,
-        {GameValueType.Territory, new Tuple<int, int>(0, 2) } ,
-        {GameValueType.Dezhur, new Tuple<int, int>(0, 1) } ,
-        {GameValueType.FireHoz, new Tuple<int, int>(0, 1) } ,
-        {GameValueType.FirePlace, new Tuple<int, int>(0, 2) } ,
-        {GameValueType.Medicine, new Tuple<int, int>(0, 1) } ,
-        {GameValueType.Znaki, new Tuple<int, int>(0, 2) } ,
-        {GameValueType.Tent, new Tuple<int, int>(0, 1) } ,
-        {GameValueType.DrovaZone, new Tuple<int, int>(0, 2) } ,
-        {GameValueType.TrashZone, new Tuple<int, int>(0, 1) } ,
-        {GameValueType.EatZone, new Tuple<int, int>(0, 1) } ,
-        {GameValueType.Clean, new Tuple<int, int>(-2, 2) } ,
-        {GameValueType.Oformlenie, new Tuple<int, int>(0, 3) } ,
-        {GameValueType.Stend, new Tuple<int, int>(0, 2) } ,
-        {GameValueType.Fishki, new Tuple<int, int>(0, 3) } ,
-        {GameValueType.Lapnik, new Tuple<int, int>(-10, 0) } ,
-        {GameValueType.BadPovedenie, new Tuple<int, int>(-5, 0) } ,
-        {GameValueType.FireDanger, new Tuple<int, int>(-3, 0) } ,
 
-              
+                  {GameValueType.Flag, new StageScoreSettings(0, 1) } ,
+        {GameValueType.Territory, new StageScoreSettings(0, 2) } ,
+        {GameValueType.Dezhur, new StageScoreSettings(0, 1) } ,
+        {GameValueType.FireHoz, new StageScoreSettings(0, 1) } ,
+        {GameValueType.FirePlace, new StageScoreSettings(0, 2) } ,
+        {GameValueType.Medicine, new StageScoreSettings(0, 1) } ,
+        {GameValueType.Znaki, new StageScoreSettings(0, 2) } ,
+        {GameValueType.Tent, new StageScoreSettings(0, 1) } ,
+        {GameValueType.DrovaZone, new StageScoreSettings(0, 2) } ,
+        {GameValueType.TrashZone, new StageScoreSettings(0, 1) } ,
+        {GameValueType.EatZone, new StageScoreSettings(0, 1) } ,
+        {GameValueType.Clean, new StageScoreSettings(-2, 2) } ,
+        {GameValueType.Oformlenie, new StageScoreSettings(0, 3) } ,
+        {GameValueType.Stend, new StageScoreSettings(0, 2) } ,
+        {GameValueType.Fishki, new StageScoreSettings(0, 3) } ,
+        {GameValueType.Lapnik, new StageScoreSettings(-10, 0) } ,
+        {GameValueType.BadPovedenie, new StageScoreSettings(-5, 0) } ,
+        {GameValueType.FireDanger, new StageScoreSettings(-3, 0) } ,
+
+
             }
 
 
             },
 
             {
-                StageType.Final, new Dictionary<GameValueType, Tuple<int, int>>()
+                StageType.Final, new Dictionary<GameValueType, StageScoreSettings>()
             {
-                { GameValueType.FinalPlace, new Tuple<int, int>(0, 20) } ,
-              
-               
-              
+                { GameValueType.FinalPlace, new StageScoreSettings(0, 20) } ,
+
+
+
             }
 
 
             }
-            
+
             };
 
         }
-        
+
+        public override StageResultViewBase GetStageView(Stage stage)
+        {
+            if (stage.Type == StageType.Otbor)
+                return new LagerStageResultView() { Stage = stage, GameService = this };
+            return base.GetStageView(stage);
+        }
+
 
         public override List<GameValueType> GetValueTypes(Stage stage, CompetitionReferee referee)
         {
             switch (stage.Type)
             {
                 case StageType.Otbor:
-                    return new List<GameValueType>() 
+                    return new List<GameValueType>()
                     {
           GameValueType.Flag,
         GameValueType.Territory,
@@ -94,11 +101,18 @@ namespace ManaSchedule.Services
                     return new List<GameValueType>()
                         {
                             GameValueType.FinalPlace,
-                            
+
                         };
                 default: throw new NotImplementedException();
             }
 
+        }
+
+        public override bool HasZhereb(Stage stage)
+        {
+            if (stage.Type == StageType.Otbor)
+                return true;
+            return base.HasZhereb(stage);
         }
 
         public override void GenerateGames()
@@ -108,8 +122,7 @@ namespace ManaSchedule.Services
             DbContext.Configuration.AutoDetectChangesEnabled = false;
             DbContext.Configuration.ValidateOnSaveEnabled = false;
 
-            var refereees = DbContext.CompetitionRefereeSet.Where(f => f.CompetitionId == Competition.Id).ToList();
-
+           
             var stage = DbContext.StageSet.Add(new Stage()
             {
                 Competition = Competition,
@@ -117,7 +130,10 @@ namespace ManaSchedule.Services
                 Name = "Отборочный"
             });
 
-            DbContext.TeamSet.Local.ToList().ForEach(f =>
+            var refereees = GetStageReferees(stage);
+
+
+            Teams.ForEach(f =>
             {
                 DbContext.CompetitionScoreSet.Add(
                     new CompetitionScore() { Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе" });
@@ -135,16 +151,18 @@ namespace ManaSchedule.Services
                     Team1Missed = false,
                     Description = string.Format("Игра по жеребъевке №{0}", tc.Order),
                 });
-                refereees.ForEach(f =>
-                    {
-                        var gr = DbContext.GameResultSet.Add(new GameResult() { Game = game, Referee = f });
-                        GetValueTypes(stage, f).ForEach(v => DbContext.GameResultValueSet.Local.Add(new GameResultValue()
-                        {
-                            GameResult = gr,
-                            Type = v,
-                            Value = 0
-                        }));
-                    }
+
+
+                refereees.ToList().ForEach(f =>
+                      {
+                          var gr = DbContext.GameResultSet.Add(new GameResult() { Game = game, Referee = f });
+                          GetValueTypes(stage, f).ForEach(v => DbContext.GameResultValueSet.Local.Add(new GameResultValue()
+                          {
+                              GameResult = gr,
+                              Type = v,
+                              Value = null
+                          }));
+                      }
                     );
 
                 var score = DbContext.CompetitionScoreSet.Local.First(f => Competition == Competition && f.Team == tc.Team);
@@ -319,39 +337,54 @@ namespace ManaSchedule.Services
             DbContext.SaveChanges();
         }
 
-
         public override double? GetGameScore(Game game, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log)
         {
-            if (values.Any(f => f.Value.Any(v => !v.Value.HasValue))) return null;
+            return GetGameScore(game, values, log, false);
+
+        }
+        public override List<CompetitionReferee> GetStageReferees(Stage stage)
+        {
+            if (stage.Type == StageType.Otbor)
+                return DbContext.CompetitionRefereeSet.Where(f => f.CompetitionId == stage.CompetitionId).OrderBy(f => f.Id).Take(2).ToList();
+
+            return base.GetStageReferees(stage);
+        }
+
+
+        public double? GetGameScore(Game game, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log, bool skipErrors)
+        {
+            if (!skipErrors && values.Any(f => f.Value.Any(v => !v.Value.HasValue))) return null;
 
             switch (game.Stage.Type)
             {
                 case StageType.Otbor:
-                    return 
+                    return
         Sum(GameValueType.Flag, values)
-        +Sum(GameValueType.Territory, values)
-        +Sum(GameValueType.Dezhur, values)
-        +Sum(GameValueType.FireHoz, values)
-        +Sum(GameValueType.FirePlace, values)
-        +Sum(GameValueType.Medicine, values)
-        +Sum(GameValueType.Znaki, values)
-        +Sum(GameValueType.Tent, values)
-        +Sum(GameValueType.DrovaZone, values)
-        +Sum(GameValueType.TrashZone, values)
-        +Sum(GameValueType.EatZone, values)
-        +Sum(GameValueType.Clean, values)
-        +Sum(GameValueType.Oformlenie, values)
-        +Sum(GameValueType.Stend, values)
-        +Sum(GameValueType.Fishki, values)
-        +Sum(GameValueType.Lapnik, values)
-        +Sum(GameValueType.BadPovedenie, values)
-        +Sum(GameValueType.FireDanger, values);
+        + Sum(GameValueType.Territory, values)
+        + Sum(GameValueType.Dezhur, values)
+        + Sum(GameValueType.FireHoz, values)
+        + Sum(GameValueType.FirePlace, values)
+        + Sum(GameValueType.Medicine, values)
+        + Sum(GameValueType.Znaki, values)
+        + Sum(GameValueType.Tent, values)
+        + Sum(GameValueType.DrovaZone, values)
+        + Sum(GameValueType.TrashZone, values)
+        + Sum(GameValueType.EatZone, values)
+        + Sum(GameValueType.Clean, values)
+        + Sum(GameValueType.Oformlenie, values)
+        + Sum(GameValueType.Stend, values)
+        + Sum(GameValueType.Fishki, values)
+        + Sum(GameValueType.Lapnik, values)
+        + Sum(GameValueType.BadPovedenie, values)
+        + Sum(GameValueType.FireDanger, values);
 
-                case StageType.Final: return Sum(GameValueType.FinalPlace, values);
-              
+                case StageType.Final:
+                    var vals = values.Where(f => f.Value.ContainsKey(GameValueType.FinalPlace)).Select(f => f.Value[GameValueType.FinalPlace]).Where(f => f.HasValue && f.Value > 0).ToList();
+
+                    return vals.Count > 0 ? vals.Average(f => f.Value) : 0;
+
                 default: throw new NotSupportedException();
             }
-            
         }
 
 

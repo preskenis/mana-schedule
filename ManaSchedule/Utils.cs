@@ -22,18 +22,58 @@ namespace ManaSchedule
 
             for (int i = 0; i < grid.RootTable.Columns.Count; i++)
             {
-                hdr.CreateCell(i).SetCellValue(grid.RootTable.Columns[i].Caption);
+                var cell = hdr.CreateCell(i);
+                cell.SetCellValue(grid.RootTable.Columns[i].Caption);
+                cell.CellStyle.WrapText = true;
+                cell.CellStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
+
             }
 
             foreach (var r in grid.GetRows())
             {
                 var sr = sheet.CreateRow(index++);
-                
+
                 for (int i = 0; i < r.Cells.Count; i++)
                 {
-                    sr.CreateCell(i).SetCellValue(r.Cells[i].Text);
+                    if (r.Cells[i] == null || r.Cells[i].Value == null) continue;
+
+                    if (r.Cells[i].Value.GetType() == typeof(string))
+                    {
+                        var cell = sr.CreateCell(i);
+                        cell.SetCellType(NPOI.SS.UserModel.CellType.String);
+                        cell.SetCellValue((string)r.Cells[i].Value);
+                    }
+                    else if (r.Cells[i].Value.GetType() == typeof(short))
+                    {
+                        var cell = sr.CreateCell(i);
+                        cell.SetCellType(NPOI.SS.UserModel.CellType.Numeric);
+                        cell.SetCellValue((short)r.Cells[i].Value);
+                    }
+                    else if (r.Cells[i].Value.GetType() == typeof(int))
+                    {
+                        var cell = sr.CreateCell(i);
+                        cell.SetCellType(NPOI.SS.UserModel.CellType.Numeric);
+                        cell.SetCellValue((int)r.Cells[i].Value);
+                    }
+                    else if (r.Cells[i].Value.GetType() == typeof(double))
+                    {
+                        var cell = sr.CreateCell(i);
+                        cell.SetCellType(NPOI.SS.UserModel.CellType.Numeric);
+                        cell.SetCellValue((double)r.Cells[i].Value);
+                    }
+                    else
+                    {
+                        sr.CreateCell(i).SetCellValue(r.Cells[i].Text);
+                    }
+
+
+                    sheet.AutoSizeColumn(i);
+
+
                 }
             }
+
+            
 
         }
 
@@ -92,6 +132,18 @@ namespace ManaSchedule
 
     public static class EnumHelper<T>
     {
+
+        public static IList<T> GetValues()
+        {
+            var enumValues = new List<T>();
+
+            foreach (FieldInfo fi in typeof(T).GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                enumValues.Add((T)Enum.Parse(typeof(T), fi.Name, false));
+            }
+            return enumValues;
+        }
+
         public static IList<T> GetValues(Enum value)
         {
             var enumValues = new List<T>();
@@ -116,6 +168,11 @@ namespace ManaSchedule
         public static IList<string> GetDisplayValues(Enum value)
         {
             return GetNames(value).Select(obj => GetDisplayValue(Parse(obj))).ToList();
+        }
+
+        public static T GetValueByDisplayValue(string displayValue)
+        {
+            return GetValues().First(f => GetDisplayValue(f) == displayValue);
         }
 
         public static string GetDisplayValue(T value)

@@ -121,7 +121,21 @@
     <value>17, 17</value>
   </metadata>
   <data name="GridEX_DesignTimeLayout.LayoutString" xml:space="preserve">
-    <value>&lt;GridEXLayoutData&gt;&lt;RootTable&gt;&lt;Columns Collection="true" ElementName="Column"&gt;&lt;Column0 ID="Competition"&gt;&lt;Caption&gt;Конкурс&lt;/Caption&gt;&lt;DataMember&gt;Competition&lt;/DataMember&gt;&lt;EditType&gt;Combo&lt;/EditType&gt;&lt;Key&gt;Competition&lt;/Key&gt;&lt;Position&gt;0&lt;/Position&gt;&lt;Width&gt;187&lt;/Width&gt;&lt;/Column0&gt;&lt;Column1 ID="IsMainReferee"&gt;&lt;Caption&gt;Главный судья&lt;/Caption&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;DataMember&gt;IsMainReferee&lt;/DataMember&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;IsMainReferee&lt;/Key&gt;&lt;Position&gt;1&lt;/Position&gt;&lt;Width&gt;112&lt;/Width&gt;&lt;/Column1&gt;&lt;Column2 ID="Name"&gt;&lt;Caption&gt;Псевдоним&lt;/Caption&gt;&lt;DataMember&gt;Name&lt;/DataMember&gt;&lt;Key&gt;Name&lt;/Key&gt;&lt;Position&gt;2&lt;/Position&gt;&lt;Width&gt;112&lt;/Width&gt;&lt;/Column2&gt;&lt;Column3 ID="Person"&gt;&lt;Caption&gt;Персона&lt;/Caption&gt;&lt;DataMember&gt;Person&lt;/DataMember&gt;&lt;EditType&gt;Combo&lt;/EditType&gt;&lt;Key&gt;Person&lt;/Key&gt;&lt;Position&gt;3&lt;/Position&gt;&lt;Width&gt;190&lt;/Width&gt;&lt;/Column3&gt;&lt;/Columns&gt;&lt;GroupCondition /&gt;&lt;/RootTable&gt;&lt;/GridEXLayoutData&gt;</value>
+    <value>&lt;GridEXLayoutData&gt;&lt;RootTable&gt;&lt;Columns Collection="true" ElementName="Column"&gt;&lt;Column0 ID="Competition"&gt;&lt;Caption&gt;Конкурс&lt;/Caption&gt;&lt;DataMember&gt;Competition&lt;/DataMember&gt;&lt;EditType&gt;Combo&lt;/EditType&gt;&lt;Key&gt;Competition&lt;/Key&gt;&lt;Position&gt;0&lt;/Position&gt;&lt;Width&gt;171&lt;/Width&gt;&lt;/Column0&gt;&lt;Column1 ID="IsMainReferee"&gt;&lt;Caption&gt;Главный судья&lt;/Caption&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;DataMember&gt;IsMainReferee&lt;/DataMember&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;IsMainReferee&lt;/Key&gt;&lt;Position&gt;1&lt;/Position&gt;&lt;Width&gt;102&lt;/Width&gt;&lt;/Column1&gt;&lt;Column2 ID="Name"&gt;&lt;Caption&gt;Псевдоним&lt;/Caption&gt;&lt;DataMember&gt;Name&lt;/DataMember&gt;&lt;Key&gt;Name&lt;/Key&gt;&lt;Position&gt;2&lt;/Position&gt;&lt;Width&gt;101&lt;/Width&gt;&lt;/Column2&gt;&lt;Column3 ID="Person"&gt;&lt;Caption&gt;Персона&lt;/Caption&gt;&lt;DataMember&gt;Person&lt;/DataMember&gt;&lt;EditType&gt;Combo&lt;/EditType&gt;&lt;Key&gt;Person&lt;/Key&gt;&lt;Position&gt;3&lt;/Position&gt;&lt;Width&gt;172&lt;/Width&gt;&lt;/Column3&gt;&lt;/Columns&gt;&lt;SortKeys Collection="true" ElementName="SortKey"&gt;&lt;SortKey0 ID="SortKey0"&gt;&lt;ColIndex&gt;0&lt;/ColIndex&gt;&lt;/SortKey0&gt;&lt;/SortKeys&gt;&lt;GroupCondition /&gt;&lt;Groups Collection="true" ElementName="Group"&gt;&lt;Group0 ID="Group0"&gt;&lt;ColIndex&gt;0&lt;/ColIndex&gt;&lt;/Group0&gt;&lt;/Groups&gt;&lt;/RootTable&gt;&lt;/GridEXLayoutData&gt;</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ribbon1.HelpButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAZRJREFUOE91k71Lw1AUxfNX1bVLCypCtkDB2qGloFUCFnWyrURRkRqtQzcjODhJ
+        IYsQhUdLoCKVOAiOGR0zul3vfR9tEp8PDjQhv3PPuUkN3dl0Z2AdTaHU9qG064PVC6DZn4Bz/wHyEf3Z
+        upohNIbaaQQ1FzWUwt9mN4JSy4fm+URv0rh446CNgD2MudyREN3jhtyIgeWwrEnreiZhAXoshuQnyWg0
+        jTMm62fjhUkZY88newuYfSU8QZKIa/dBmuCwAtY59CIwdgbv2ukEq4k0fZ6C9oMqHsgUFeeVP6QMeN9U
+        Z1L8LRJ0KQHCJglrLLcDwPg+B3RwN1XHe0rB3ABr1P20QRYmqe7ZyUpMGFScFwHkYBJFZxHu4g8sdrBC
+        FeybkN/QGRCYjy3EoGjjEh1c4uDxE8rbWEMDq/4LUMAmTqf4nVt8jXRsl1KwDEyiCqQ8TNOrTu6TruI7
+        5SYS1sVWsNXJfcrqNC5DWMI6tCAOSJCuCSw0fNg4/ufPlD71fghr+88cIK3uBVA7mUDvTnaeH8P4Bdjb
+        WXNay2zUAAAAAElFTkSuQmCC
+</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>141</value>

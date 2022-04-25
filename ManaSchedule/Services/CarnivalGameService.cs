@@ -2,6 +2,7 @@
 using ManaSchedule.Views;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
@@ -10,38 +11,100 @@ namespace ManaSchedule.Services
 {
     public class CarnivalGameService : GameService
     {
+        public static DataTable GetSportCarnivalTable(Game game, Db db)
+        {
+            var result = new DataTable();
+
+            var gameResultSet = db.GameResultSet.FirstOrDefault(f => f.GameId == game.Id);
+            var gameResultValues = gameResultSet.Values.ToList();
+
+
+            result.Columns.Add("Параметр", typeof(string));
+            result.Columns.Add("Оценка", typeof(int));
+
+            foreach (var items in SportMinMaxValues)
+            {
+                var row = result.NewRow();
+                row[0] = EnumHelper<GameValueType>.GetDisplayValue(items.Key);
+
+                var value = gameResultValues.FirstOrDefault(f => f.Type == items.Key);
+                if (value!= null)
+                {
+                    row[1] = value.Value;
+                }
+                result.Rows.Add(row);
+            }
+
+
+                
+
+            return result;
+        }
+
+        public static HashSet<GameValueType> Team1CarnivalValues = new HashSet<GameValueType>() 
+        {
+        GameValueType.SportSuite1, 
+        GameValueType.SportSongs1, 
+        GameValueType.SportSupport1, 
+        GameValueType.SportNeadekvat1 
+        };
+
+        public static HashSet<GameValueType> Team2CarnivalValues = new HashSet<GameValueType>() 
+        {
+        GameValueType.SportSuite2, 
+        GameValueType.SportSongs2, 
+        GameValueType.SportSupport2, 
+        GameValueType.SportNeadekvat2 
+        };
+
+
+        public static Dictionary<GameValueType, StageScoreSettings> SportMinMaxValues = new Dictionary
+            <GameValueType, StageScoreSettings>()
+            {
+                {GameValueType.SportSuite1, new StageScoreSettings(0, 1)},
+                {GameValueType.SportSongs1, new StageScoreSettings(0, 2)},
+                {GameValueType.SportSupport1, new StageScoreSettings(0, 1)},
+                {GameValueType.SportNeadekvat1, new StageScoreSettings(-1, 0)},
+                {GameValueType.SportSuite2, new StageScoreSettings(0, 1)},
+                {GameValueType.SportSongs2, new StageScoreSettings(0, 2)},
+                {GameValueType.SportSupport2, new StageScoreSettings(0, 1)},
+                {GameValueType.SportNeadekvat2, new StageScoreSettings(-1, 0)},
+            };
+
+
         public CarnivalGameService()
         {
-            MinMaxValues = new Dictionary<StageType, Dictionary<GameValueType, Tuple<int, int>>>() 
+            StageScores = new Dictionary<StageType, Dictionary<GameValueType, StageScoreSettings>>() 
             {
             {
-                StageType.Final, new Dictionary<GameValueType, Tuple<int, int>>()
+                StageType.Final, new Dictionary<GameValueType, StageScoreSettings>()
             {
-               
-                  {GameValueType.Flag, new Tuple<int, int>(0, 1) } ,
-      
-                   {GameValueType.OtkrTeamSuite, new Tuple<int, int>(0, 3) } ,
-         {GameValueType.OtkrManSuite, new Tuple<int, int>(0, 5) } ,
-         {GameValueType.OtkrFlag, new Tuple<int, int>(0, 2) } ,
-         {GameValueType.OtkrNakl, new Tuple<int, int>(0, 3) } ,
-        {GameValueType.OktrNastroi, new Tuple<int, int>(0, 3) } ,
-         {GameValueType.ShowSuite, new Tuple<int, int>(0, 5) } ,
-         {GameValueType.ShowZrel, new Tuple<int, int>(0, 5) } ,
-         {GameValueType.ShowReact, new Tuple<int, int>(0, 3) } ,
-         {GameValueType.ShowNastroi, new Tuple<int, int>(0, 3) } ,
-        {GameValueType.CookSupport, new Tuple<int, int>(0, 2) } ,
-         {GameValueType.CookNastroi, new Tuple<int, int>(0, 3) } ,
-        {GameValueType.InKras, new Tuple<int, int>(0, 5) } ,
-         {GameValueType.InZrel, new Tuple<int, int>(0, 5) } ,
-         {GameValueType.InNastroi, new Tuple<int, int>(0, 3) } ,
-         {GameValueType.Neadekvat, new Tuple<int, int>(-10, 0) } ,
-         {GameValueType.Nenorm, new Tuple<int, int>(-10, 0) } ,
-              
+     
+                {GameValueType.OtkrTeamSuite, new StageScoreSettings(0, 3) } ,
+                {GameValueType.OtkrManSuite, new StageScoreSettings(0, 5) } ,
+                {GameValueType.OtkrFlag, new StageScoreSettings(0, 2) } ,
+                {GameValueType.OtkrNakl, new StageScoreSettings(0, 3) } ,
+                {GameValueType.OtkrNastroi, new StageScoreSettings(0, 1) } ,
+                
+                {GameValueType.OtkrShowKras, new StageScoreSettings(0, 5) } ,
+                {GameValueType.OtkrShowZrel, new StageScoreSettings(0, 5) } ,
+                {GameValueType.OtkrShowReact, new StageScoreSettings(0, 3) } ,
+                {GameValueType.OtkrShowNastroi, new StageScoreSettings(0, 1) } ,
+                
+                {GameValueType.ShowKras, new StageScoreSettings(0, 5) } ,
+                {GameValueType.ShowZrel, new StageScoreSettings(0, 5) } ,
+                {GameValueType.ShowReact, new StageScoreSettings(0, 3) } ,
+                {GameValueType.ShowNastroi, new StageScoreSettings(0, 1) } ,
+                
+                {GameValueType.InKras, new StageScoreSettings(0, 5) } ,
+                {GameValueType.InZrel, new StageScoreSettings(0, 5) } ,
+                {GameValueType.InNastroi, new StageScoreSettings(0, 1) } ,
+                
+                {GameValueType.Neadekvat, new StageScoreSettings(-10, 0) } ,
+                {GameValueType.Nenorm, new StageScoreSettings(-10, 0) } ,
+                {GameValueType.Narush, new StageScoreSettings(-10, 0) } ,
             }
-
-
             }
-
             };
 
         }
@@ -54,27 +117,41 @@ namespace ManaSchedule.Services
                 case StageType.Final:
                     return new List<GameValueType>() 
                     {
-           GameValueType.OtkrTeamSuite,
-         GameValueType.OtkrManSuite,
-         GameValueType.OtkrFlag,
-         GameValueType.OtkrNakl,
-        GameValueType.OktrNastroi,
-         GameValueType.ShowSuite,
-         GameValueType.ShowZrel,
-         GameValueType.ShowReact,
-         GameValueType.ShowNastroi,
-        GameValueType.CookSupport,
-         GameValueType.CookNastroi,
-        GameValueType.InKras,
-         GameValueType.InZrel,
-         GameValueType.InNastroi,
-         GameValueType.Neadekvat,
-         GameValueType.Nenorm,
+                        GameValueType.OtkrTeamSuite,  
+                        GameValueType.OtkrManSuite, 
+                        GameValueType.OtkrFlag,  
+                        GameValueType.OtkrNakl,  
+                        GameValueType.OtkrNastroi,  
+                
+                        GameValueType.OtkrShowKras,  
+                        GameValueType.OtkrShowZrel,  
+                        GameValueType.OtkrShowReact, 
+                        GameValueType.OtkrShowNastroi,  
+                
+                        GameValueType.ShowKras, 
+                        GameValueType.ShowZrel,  
+                        GameValueType.ShowReact,  
+                        GameValueType.ShowNastroi,  
+                
+                        GameValueType.InKras, 
+                        GameValueType.InZrel,  
+                        GameValueType.InNastroi,  
+                
+                        GameValueType.Neadekvat,  
+                        GameValueType.Nenorm,  
+                        GameValueType.Narush,  
                     };
 
                 default: throw new NotImplementedException();
             }
 
+        }
+
+        public override bool HasZhereb(Stage stage)
+        {
+           
+                return true;
+            
         }
 
         public override void GenerateGames()
@@ -86,7 +163,7 @@ namespace ManaSchedule.Services
             DbContext.Configuration.ValidateOnSaveEnabled = false;
 
 
-            DbContext.TeamSet.Local.ToList().ForEach(f =>
+            Teams.ForEach(f =>
             {
                 DbContext.CompetitionScoreSet.Add(
                     new CompetitionScore() { Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе" });
@@ -173,7 +250,7 @@ namespace ManaSchedule.Services
                 {
                     var s = DbContext.CompetitionScoreSet.Local.First(v => v.Team == f.Team);
                     s.Place = place;
-                    s.Description = "Игра в финале, проверьте место";
+                    s.Description = f.Description;
                     s.Score = f.Score;
                 });
             }
@@ -186,22 +263,111 @@ namespace ManaSchedule.Services
         {
             if (values.Any(f => f.Value.Any(v => !v.Value.HasValue))) return null;
 
-            return SumOtsechka(GameValueType.OtkrTeamSuite, values)
-         + SumOtsechka(GameValueType.OtkrManSuite, values)
-         + SumOtsechka(GameValueType.OtkrFlag, values)
-         + SumOtsechka(GameValueType.OtkrNakl, values)
-        + SumOtsechka(GameValueType.OktrNastroi, values)
-         + SumOtsechka(GameValueType.ShowSuite, values)
-         + SumOtsechka(GameValueType.ShowZrel, values)
-         + SumOtsechka(GameValueType.ShowReact, values)
-         + SumOtsechka(GameValueType.ShowNastroi, values)
-        + SumOtsechka(GameValueType.CookSupport, values)
-         + SumOtsechka(GameValueType.CookNastroi, values)
-        + SumOtsechka(GameValueType.InKras, values)
-         + SumOtsechka(GameValueType.InZrel, values)
-         + SumOtsechka(GameValueType.InNastroi, values)
-         + Sum(GameValueType.Neadekvat, values)
-         + Sum(GameValueType.Nenorm, values);
+            var vals = new Dictionary<string, double>();
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrShowKras), SumOtsechka(GameValueType.OtkrShowKras, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrShowZrel), SumOtsechka(GameValueType.OtkrShowZrel, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrShowReact), SumOtsechka(GameValueType.OtkrShowReact, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrShowNastroi), SumOtsechka(GameValueType.OtkrShowNastroi, values));
+
+
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.ShowKras), SumOtsechka(GameValueType.ShowKras, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.ShowZrel), SumOtsechka(GameValueType.ShowZrel, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.ShowReact), SumOtsechka(GameValueType.ShowReact, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.ShowNastroi), SumOtsechka(GameValueType.ShowNastroi, values));
+
+
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrTeamSuite), SumOtsechka(GameValueType.OtkrTeamSuite, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrManSuite), SumOtsechka(GameValueType.OtkrManSuite, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrFlag), SumOtsechka(GameValueType.OtkrFlag, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrNakl), SumOtsechka(GameValueType.OtkrNakl, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrNastroi), SumOtsechka(GameValueType.OtkrNastroi, values));
+
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.InKras), SumOtsechka(GameValueType.InKras, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.InZrel), SumOtsechka(GameValueType.InZrel, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.InNastroi), SumOtsechka(GameValueType.InNastroi, values));
+
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.Neadekvat), SumOtsechka(GameValueType.Neadekvat, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.Nenorm), SumOtsechka(GameValueType.Nenorm, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.Narush), SumOtsechka(GameValueType.Narush, values));
+
+            vals.Add("Футбол", GetSportCarnivalScore(GameType.Soccer, game.Team));
+            vals.Add("Регби", GetSportCarnivalScore(GameType.Rugby, game.Team));
+            vals.Add("Волейбол", GetSportCarnivalScore(GameType.Volleyball, game.Team));
+
+            log.Append(string.Join("; ", vals.Select(f => string.Format("{0}:{1}", f.Key, f.Value))));
+
+
+            var sumOtkr = SumOtsechka(GameValueType.OtkrShowKras, values)
+                    + SumOtsechka(GameValueType.OtkrShowZrel, values)
+                    + SumOtsechka(GameValueType.OtkrShowReact, values)
+                    + SumOtsechka(GameValueType.OtkrShowNastroi, values);
+
+            var sumShow = SumOtsechka(GameValueType.ShowKras, values)
+                    + SumOtsechka(GameValueType.ShowZrel, values)
+                    + SumOtsechka(GameValueType.ShowReact, values)
+                    + SumOtsechka(GameValueType.ShowNastroi, values);
+
+            var result = SumOtsechka(GameValueType.OtkrTeamSuite, values)
+                + SumOtsechka(GameValueType.OtkrManSuite, values)
+                + SumOtsechka(GameValueType.OtkrFlag, values)
+                + SumOtsechka(GameValueType.OtkrNakl, values)
+                + SumOtsechka(GameValueType.OtkrNastroi, values)
+
+                + Math.Max(sumOtkr, sumShow)
+
+                + SumOtsechka(GameValueType.InKras, values)
+                + SumOtsechka(GameValueType.InZrel, values)
+                + SumOtsechka(GameValueType.InNastroi, values)
+
+                + Sum(GameValueType.Neadekvat, values)
+                + Sum(GameValueType.Nenorm, values)
+                + Sum(GameValueType.Narush, values);
+
+            result += GetSportCarnivalScore(GameType.Soccer, game.Team);
+            result += GetSportCarnivalScore(GameType.Rugby, game.Team);
+            result += GetSportCarnivalScore(GameType.Volleyball, game.Team);
+
+
+
+            return result;
+        }
+
+        private double GetSportCarnivalScore(GameType gameType, Team team)
+        {
+            var result = 0;
+
+            if (team.Name == "Мандраж")
+            {
+
+            }
+
+            var competition = DbContext.CompetitionSet.First(f => f.Type == gameType);
+            var games = DbContext.GameSet.Where(f => f.CompetitionId == competition.Id
+                && !f.Team1Cancel && f.Team1Missed == false
+                && !f.Team2Cancel && f.Team2Missed == false).ToList().Where(f => f.Team == team || f.Team2 == team).ToList();
+
+
+
+            if (games.Count == 0) return result;
+
+            foreach (var game in games)
+            {
+                var values = game.GameResults.First().Values.ToList();
+
+                if (team == game.Team)
+                {
+                    result += values.Where(f => Team1CarnivalValues.Contains(f.Type) && f.Value.HasValue).Sum(f => f.Value.Value);
+                }
+
+                if (team == game.Team2)
+                {
+                    result += values.Where(f => Team2CarnivalValues.Contains(f.Type) && f.Value.HasValue).Sum(f => f.Value.Value);
+                }
+
+            }
+
+            return result / games.Count;
+            
         }
 
 

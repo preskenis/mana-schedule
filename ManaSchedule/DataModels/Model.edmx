@@ -123,6 +123,15 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
             <End Role="Team" EntitySet="TeamSet" />
             <End Role="CompetitionScore" EntitySet="CompetitionScoreSet" />
           </AssociationSet>
+          <AssociationSet Name="CompetitionRefereeGame" Association="DataModels.CompetitionRefereeGame">
+            <End Role="CompetitionReferee" EntitySet="CompetitionRefereeSet" />
+            <End Role="Game" EntitySet="GameSet" />
+          </AssociationSet>
+          <EntitySet Name="StageGenSet" EntityType="DataModels.StageGen" />
+          <AssociationSet Name="StageStageGen" Association="DataModels.StageStageGen">
+            <End Role="Stage" EntitySet="StageSet" />
+            <End Role="StageGen" EntitySet="StageGenSet" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Team">
           <Key>
@@ -133,6 +142,8 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           <Property Name="Description" Type="String" Nullable="false" DefaultValue="" />
           <NavigationProperty Name="Person" Relationship="DataModels.TeamPerson" FromRole="Team" ToRole="Person" />
           <NavigationProperty Name="Competitions" Relationship="DataModels.TeamTeamCompetition" FromRole="Team" ToRole="TeamCompetition" />
+          <Property Name="Used" Type="Boolean" Nullable="false" DefaultValue="True" />
+          <Property Name="AlternativeNames" Type="String" Nullable="false" DefaultValue="" />
         </EntityType>
         <EntityType Name="Game">
           <Key>
@@ -165,6 +176,8 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           <Property Name="Team1Cancel" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="Team2Cancel" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="PlaceName" Type="String" Nullable="false" />
+          <NavigationProperty Name="CompetitionReferee" Relationship="DataModels.CompetitionRefereeGame" FromRole="Game" ToRole="CompetitionReferee" />
+          <Property Name="CompetitionRefereeId" Type="Int32" Nullable="true" />
           </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -376,6 +389,7 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
           <NavigationProperty Name="Competition" Relationship="DataModels.CompetitionCompetitionReferee" FromRole="CompetitionReferee" ToRole="Competition" />
           <Property Name="CompetitionId" Type="Int32" Nullable="false" />
           <Property Name="IsMainReferee" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <NavigationProperty Name="Game" Relationship="DataModels.CompetitionRefereeGame" FromRole="CompetitionReferee" ToRole="Game" />
         </EntityType>
         <Association Name="PersonCompetitionReferee">
           <End Type="DataModels.Person" Role="Person" Multiplicity="0..1" />
@@ -494,6 +508,41 @@ warning 6002: The table/view 'manatest.dbo.СooksStage1GameResult' does not have
             </Principal>
             <Dependent Role="CompetitionScore">
               <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompetitionRefereeGame">
+          <End Type="DataModels.CompetitionReferee" Role="CompetitionReferee" Multiplicity="0..1" />
+          <End Type="DataModels.Game" Role="Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompetitionReferee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="CompetitionRefereeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StageGen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Stage" Relationship="DataModels.StageStageGen" FromRole="StageGen" ToRole="Stage" />
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="From" Type="String" Nullable="false" />
+          <Property Name="To" Type="String" Nullable="false" />
+          <Property Name="Places" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="StageStageGen">
+          <End Type="DataModels.Stage" Role="Stage" Multiplicity="1" />
+          <End Type="DataModels.StageGen" Role="StageGen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StageGen">
+              <PropertyRef Name="StageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

@@ -231,7 +231,7 @@ namespace ManaSchedule.Views
     {
         public GameResultNode()
         {
-            Text = "Результаты";
+            Text = "Баллы";
         }
 
         public override ContentView GetView()

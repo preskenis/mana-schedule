@@ -23,12 +23,13 @@ namespace ManaSchedule.Views
         {
             InitializeComponent();
 
-            DbContext.TeamSet.Load();
+            DbContext.TeamSet.Where(f=>f.Used).Load();
             this.GridEX.RootTable.Columns["Team"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team"].EditType = EditType.Combo;
             this.GridEX.RootTable.Columns["Team"].ColumnType = ColumnType.Text;
-            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.Where(f => f.Used).ToList(), "Name");
             
+
         }
 
         public override void OnClosing()
@@ -50,7 +51,7 @@ namespace ManaSchedule.Views
         public override void Init(Competition content)
         {
             base.Init(content);
-            ContentCaption.Text = "Жеребьёвка" + " - " + Competition.Name;
+            ContentCaption = Competition.Name + " - " + "Жеребьёвка"; 
             DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).Load();
             GridEX.DataSource = DbContext.TeamCompetitionSet.Local.ToBindingList();
             this.GridEX.RootTable.Columns["IsPastWinner"].Visible = ShowPastWiners;
@@ -77,11 +78,11 @@ namespace ManaSchedule.Views
         }
 
 
-        private void btLoadCompanies_Click(object sender, EventArgs e)
+        private void btLoadCompanies_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
             var tc = DbContext.TeamCompetitionSet.Local.Where(f => f.Competition.Id == Competition.Id).Select(f => f.TeamId).ToList();
 
-            foreach (var team in DbContext.TeamSet.Where(f => !tc.Contains(f.Id)))
+            foreach (var team in DbContext.TeamSet.Where(f=>f.Used).Where(f => !tc.Contains(f.Id)))
             {
                 DbContext.TeamCompetitionSet.Add(new TeamCompetition()
                 {
@@ -91,7 +92,7 @@ namespace ManaSchedule.Views
             }
         }
 
-        private void btRandom_Click(object sender, EventArgs e)
+        private void btRandom_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
             var r = new Random();
             var numbers = new List<int>();
@@ -110,37 +111,78 @@ namespace ManaSchedule.Views
             GridEX.Refetch();
         }
 
-        private void btGenerate_Click(object sender, EventArgs e)
+        private void btGenerate_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show(this,"Уверены что хотите создать игры? Убедитесь, что количество судей правильное и жеребьевка вся забита.", "Подтвердите", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                return;
+            }
+
             GameService.GenerateGames();
             MessageBox.Show("Игры созданы");
             Init(Competition);
         }
 
-        private void btClearAll_Click(object sender, EventArgs e)
+        private void btClearAll_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
-            GameService.ClearAll();
-            UpdateCompetition();
-            Init(Competition);
+            if (DialogResult.OK == MessageBox.Show("Стереть все игры?", "Подтвердите", MessageBoxButtons.OKCancel ))
+            {
+                GameService.ClearAll();
+                UpdateCompetition();
+                Init(Competition);
+            }
+          
         }
 
         private void btExportToExcel_Click(object sender, EventArgs e)
         {
-            using (var fs = new SaveFileDialog() { Filter = "Excel (*.xls)|*.xls" })
-
-                if (fs.ShowDialog(this) == DialogResult.OK)
-                {
-                    var workbook = new HSSFWorkbook();
-                    Utils.ExportToExcel(GridEX, workbook, ContentCaption.Text);
-                    using (var s = File.Create(fs.FileName))
-                        workbook.Write(s);
-                }
+           
         }
 
         private void ZherebView_Load(object sender, EventArgs e)
         {
 
         }
-  
+
+        private void btExport_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
+        {
+            using (var fs = new SaveFileDialog() { FileName = ContentCaption + ".xls", Filter = "Excel (*.xls)|*.xls" })
+
+                if (fs.ShowDialog(this) == DialogResult.OK)
+                {
+                    var workbook = new HSSFWorkbook();
+                    Utils.ExportToExcel(GridEX, workbook, ContentCaption);
+                    using (var s = File.Create(fs.FileName))
+                        workbook.Write(s);
+                }
+        }
+
+        public override Janus.Windows.Ribbon.Ribbon RibbonControl
+        {
+            get
+            {
+                return ribbon1;
+            }
+        }
+
+        private void btImportExcel_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
+        {
+            if (DialogResult.OK == MessageBox.Show("Стереть все игры?", "Подтвердите", MessageBoxButtons.OKCancel))
+            {
+                GameService.ClearAll();
+                UpdateCompetition();
+                Init(Competition);
+            }
+            else
+                return;
+         
+            using (var form = new ZherebExcelImportForm(DbContext,Competition))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    Init(Competition);
+                }
+            }
+        }
     }
 }

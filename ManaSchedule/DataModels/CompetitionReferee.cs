@@ -18,6 +18,7 @@ namespace ManaSchedule.DataModels
         {
             this.Name = "";
             this.IsMainReferee = false;
+            this.Game = new HashSet<Game>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,6 @@ namespace ManaSchedule.DataModels
     
         public virtual Person Person { get; set; }
         public virtual Competition Competition { get; set; }
+        public virtual ICollection<Game> Game { get; set; }
     }
 }

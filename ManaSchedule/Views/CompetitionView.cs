@@ -35,5 +35,6 @@ namespace ManaSchedule.Views
             GameService = GameService.GetGameService(Competition, DbContext);
         }
 
+      
     }
 }

@@ -29,30 +29,37 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Janus.Windows.Common.JanusColorScheme janusColorScheme1 = new Janus.Windows.Common.JanusColorScheme();
+            Janus.Windows.Common.JanusColorScheme janusColorScheme2 = new Janus.Windows.Common.JanusColorScheme();
             this.btSave = new Janus.Windows.EditControls.UIButton();
+            this.visualStyleManager1 = new Janus.Windows.Common.VisualStyleManager(this.components);
             this.btCancel = new Janus.Windows.EditControls.UIButton();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tbTeam1 = new Janus.Windows.GridEX.EditControls.EditBox();
             this.tbTeam2 = new Janus.Windows.GridEX.EditControls.EditBox();
-            this.uiGroupBox1 = new Janus.Windows.EditControls.UIGroupBox();
             this.uiGroupBox2 = new Janus.Windows.EditControls.UIGroupBox();
             this.tbDescription = new Janus.Windows.GridEX.EditControls.EditBox();
             this.cbTeam1Missing = new Janus.Windows.EditControls.UICheckBox();
             this.cbTeam2Missing = new Janus.Windows.EditControls.UICheckBox();
             this.rbTeam1Win = new Janus.Windows.EditControls.UIRadioButton();
             this.rbTeam2Win = new Janus.Windows.EditControls.UIRadioButton();
-            this.visualStyleManager1 = new Janus.Windows.Common.VisualStyleManager(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox1)).BeginInit();
+            this.uiGroupBox3 = new Janus.Windows.EditControls.UIGroupBox();
+            this.listReferee = new System.Windows.Forms.ListBox();
+            this.gridCarnival = new Janus.Windows.GridEX.GridEX();
+            this.uiGroupBox4 = new Janus.Windows.EditControls.UIGroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox2)).BeginInit();
             this.uiGroupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox3)).BeginInit();
+            this.uiGroupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCarnival)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox4)).BeginInit();
+            this.uiGroupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btSave
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSave.Location = new System.Drawing.Point(239, 341);
+            this.btSave.Location = new System.Drawing.Point(239, 500);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(75, 23);
             this.btSave.TabIndex = 0;
@@ -60,11 +67,19 @@
             this.btSave.VisualStyleManager = this.visualStyleManager1;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
+            // visualStyleManager1
+            // 
+            janusColorScheme2.HighlightTextColor = System.Drawing.SystemColors.HighlightText;
+            janusColorScheme2.Name = "Scheme0";
+            janusColorScheme2.OfficeCustomColor = System.Drawing.Color.Empty;
+            janusColorScheme2.VisualStyle = Janus.Windows.Common.VisualStyle.Office2010;
+            this.visualStyleManager1.ColorSchemes.Add(janusColorScheme2);
+            // 
             // btCancel
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(320, 341);
+            this.btCancel.Location = new System.Drawing.Point(320, 500);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 1;
@@ -107,25 +122,14 @@
             this.tbTeam2.TabIndex = 5;
             this.tbTeam2.VisualStyleManager = this.visualStyleManager1;
             // 
-            // uiGroupBox1
-            // 
-            this.uiGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uiGroupBox1.Location = new System.Drawing.Point(12, 124);
-            this.uiGroupBox1.Name = "uiGroupBox1";
-            this.uiGroupBox1.Size = new System.Drawing.Size(381, 51);
-            this.uiGroupBox1.TabIndex = 6;
-            this.uiGroupBox1.Text = "Результат";
-            this.uiGroupBox1.VisualStyleManager = this.visualStyleManager1;
-            // 
             // uiGroupBox2
             // 
             this.uiGroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uiGroupBox2.Controls.Add(this.tbDescription);
-            this.uiGroupBox2.Location = new System.Drawing.Point(12, 181);
+            this.uiGroupBox2.Location = new System.Drawing.Point(12, 400);
             this.uiGroupBox2.Name = "uiGroupBox2";
-            this.uiGroupBox2.Size = new System.Drawing.Size(381, 154);
+            this.uiGroupBox2.Size = new System.Drawing.Size(381, 94);
             this.uiGroupBox2.TabIndex = 7;
             this.uiGroupBox2.Text = "Примечания";
             this.uiGroupBox2.VisualStyleManager = this.visualStyleManager1;
@@ -136,7 +140,7 @@
             this.tbDescription.Location = new System.Drawing.Point(3, 16);
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Size = new System.Drawing.Size(375, 135);
+            this.tbDescription.Size = new System.Drawing.Size(375, 75);
             this.tbDescription.TabIndex = 0;
             this.tbDescription.VisualStyleManager = this.visualStyleManager1;
             // 
@@ -185,25 +189,61 @@
             this.rbTeam2Win.VisualStyleManager = this.visualStyleManager1;
             this.rbTeam2Win.CheckedChanged += new System.EventHandler(this.UpdateButtons);
             // 
-            // visualStyleManager1
+            // uiGroupBox3
             // 
-            janusColorScheme1.HighlightTextColor = System.Drawing.SystemColors.HighlightText;
-            janusColorScheme1.Name = "Scheme0";
-            janusColorScheme1.OfficeCustomColor = System.Drawing.Color.Empty;
-            janusColorScheme1.VisualStyle = Janus.Windows.Common.VisualStyle.Office2010;
-            this.visualStyleManager1.ColorSchemes.Add(janusColorScheme1);
+            this.uiGroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uiGroupBox3.Controls.Add(this.listReferee);
+            this.uiGroupBox3.Location = new System.Drawing.Point(12, 312);
+            this.uiGroupBox3.Name = "uiGroupBox3";
+            this.uiGroupBox3.Size = new System.Drawing.Size(381, 82);
+            this.uiGroupBox3.TabIndex = 7;
+            this.uiGroupBox3.Text = "Судья";
+            this.uiGroupBox3.VisualStyleManager = this.visualStyleManager1;
+            // 
+            // listReferee
+            // 
+            this.listReferee.DisplayMember = "SafeName";
+            this.listReferee.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listReferee.FormattingEnabled = true;
+            this.listReferee.Location = new System.Drawing.Point(3, 16);
+            this.listReferee.Name = "listReferee";
+            this.listReferee.Size = new System.Drawing.Size(375, 63);
+            this.listReferee.TabIndex = 0;
+            // 
+            // gridCarnival
+            // 
+            this.gridCarnival.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridCarnival.Location = new System.Drawing.Point(3, 16);
+            this.gridCarnival.Name = "gridCarnival";
+            this.gridCarnival.Size = new System.Drawing.Size(375, 178);
+            this.gridCarnival.TabIndex = 14;
+            // 
+            // uiGroupBox4
+            // 
+            this.uiGroupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uiGroupBox4.Controls.Add(this.gridCarnival);
+            this.uiGroupBox4.Location = new System.Drawing.Point(12, 109);
+            this.uiGroupBox4.Name = "uiGroupBox4";
+            this.uiGroupBox4.Size = new System.Drawing.Size(381, 197);
+            this.uiGroupBox4.TabIndex = 15;
+            this.uiGroupBox4.Text = "Карнавальность";
+            this.uiGroupBox4.VisualStyleManager = this.visualStyleManager1;
             // 
             // GameEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(407, 376);
+            this.ClientSize = new System.Drawing.Size(407, 535);
+            this.Controls.Add(this.uiGroupBox4);
+            this.Controls.Add(this.uiGroupBox3);
             this.Controls.Add(this.rbTeam2Win);
             this.Controls.Add(this.rbTeam1Win);
             this.Controls.Add(this.cbTeam2Missing);
             this.Controls.Add(this.cbTeam1Missing);
             this.Controls.Add(this.uiGroupBox2);
-            this.Controls.Add(this.uiGroupBox1);
             this.Controls.Add(this.tbTeam2);
             this.Controls.Add(this.tbTeam1);
             this.Controls.Add(this.label2);
@@ -214,10 +254,14 @@
             this.Name = "GameEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование игры";
-            ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox2)).EndInit();
             this.uiGroupBox2.ResumeLayout(false);
             this.uiGroupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox3)).EndInit();
+            this.uiGroupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridCarnival)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox4)).EndInit();
+            this.uiGroupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,7 +275,6 @@
         private System.Windows.Forms.Label label2;
         private Janus.Windows.GridEX.EditControls.EditBox tbTeam1;
         private Janus.Windows.GridEX.EditControls.EditBox tbTeam2;
-        private Janus.Windows.EditControls.UIGroupBox uiGroupBox1;
         private Janus.Windows.EditControls.UIGroupBox uiGroupBox2;
         private Janus.Windows.GridEX.EditControls.EditBox tbDescription;
         private Janus.Windows.EditControls.UICheckBox cbTeam1Missing;
@@ -239,5 +282,9 @@
         private Janus.Windows.EditControls.UIRadioButton rbTeam1Win;
         private Janus.Windows.EditControls.UIRadioButton rbTeam2Win;
         private Janus.Windows.Common.VisualStyleManager visualStyleManager1;
+        private Janus.Windows.EditControls.UIGroupBox uiGroupBox3;
+        private System.Windows.Forms.ListBox listReferee;
+        private Janus.Windows.GridEX.GridEX gridCarnival;
+        private Janus.Windows.EditControls.UIGroupBox uiGroupBox4;
     }
 }

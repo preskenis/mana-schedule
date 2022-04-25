@@ -18,6 +18,8 @@ namespace ManaSchedule.DataModels
         {
             this.Name = "";
             this.Description = "";
+            this.Used = true;
+            this.AlternativeNames = "";
             this.Person = new HashSet<Person>();
             this.Competitions = new HashSet<TeamCompetition>();
         }
@@ -25,6 +27,8 @@ namespace ManaSchedule.DataModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool Used { get; set; }
+        public string AlternativeNames { get; set; }
     
         public virtual ICollection<Person> Person { get; set; }
         public virtual ICollection<TeamCompetition> Competitions { get; set; }

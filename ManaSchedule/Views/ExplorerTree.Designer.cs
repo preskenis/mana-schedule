@@ -80,8 +80,8 @@
 
         #endregion
 
-        private Aga.Controls.Tree.TreeViewAdv treeViewAdv1;
         private Aga.Controls.Tree.NodeControls.NodeIcon nodeIcon1;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox1;
+        internal Aga.Controls.Tree.TreeViewAdv treeViewAdv1;
     }
 }

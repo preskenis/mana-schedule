@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,10 +27,29 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aga.Controls">
@@ -38,12 +57,6 @@
     </Reference>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Crainiate.Diagramming">
-      <HintPath>..\lib\Crainiate.Diagramming.dll</HintPath>
-    </Reference>
-    <Reference Include="Crainiate.Diagramming.Forms">
-      <HintPath>..\lib\Crainiate.Diagramming.Forms.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
@@ -194,6 +207,10 @@
     <Compile Include="DataModels\Stage.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\StageGen.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\StageScoreSettings.cs" />
     <Compile Include="DataModels\Team.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -203,7 +220,9 @@
     <Compile Include="DataModels\TeamScore.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Services\CarnivalGameService.cs" />
+    <Compile Include="Services\Comparers.cs" />
     <Compile Include="Services\CookGameService.cs" />
+    <Compile Include="Services\ExcelService.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\LagerGameService.cs" />
     <Compile Include="Services\PlayoffGameService.cs" />
@@ -211,6 +230,60 @@
     <Compile Include="Services\SoloSongGameService.cs" />
     <Compile Include="Services\TourRelayGameService.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="Views\AdminMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AdminMode.Designer.cs">
+      <DependentUpon>AdminMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LagerStageResultView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\LagerStageResultView.Designer.cs">
+      <DependentUpon>LagerStageResultView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExcelDataImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ExcelDataImportForm.Designer.cs">
+      <DependentUpon>ExcelDataImportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StageRefereeResultView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\StageRefereeResultView.Designer.cs">
+      <DependentUpon>StageRefereeResultView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CookStageResultView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CookStageResultView.Designer.cs">
+      <DependentUpon>CookStageResultView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StageResultViewBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\StageResultViewBase.Designer.cs">
+      <DependentUpon>StageResultViewBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ZherebExcelImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ZherebExcelImportForm.Designer.cs">
+      <DependentUpon>ZherebExcelImportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExcelImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ExcelImportForm.Designer.cs">
+      <DependentUpon>ExcelImportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\GameEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +295,12 @@
     </Compile>
     <Compile Include="Views\GameResultView.Designer.cs">
       <DependentUpon>GameResultView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\NextStageTeamsForm.cs">
       <SubType>Form</SubType>
@@ -353,14 +432,41 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\AdminMode.resx">
+      <DependentUpon>AdminMode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ContentView.resx">
       <DependentUpon>ContentView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LagerStageResultView.resx">
+      <DependentUpon>LagerStageResultView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ExcelDataImportForm.resx">
+      <DependentUpon>ExcelDataImportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StageRefereeResultView.resx">
+      <DependentUpon>StageRefereeResultView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CookStageResultView.resx">
+      <DependentUpon>CookStageResultView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ZherebExcelImportForm.resx">
+      <DependentUpon>ZherebExcelImportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ExcelImportForm.resx">
+      <DependentUpon>ExcelImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\GameEditForm.resx">
       <DependentUpon>GameEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\GameResultView.resx">
       <DependentUpon>GameResultView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\NextStageTeamsForm.resx">
       <DependentUpon>NextStageTeamsForm.cs</DependentUpon>
@@ -530,6 +636,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1430704063_free-20-20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lib\Crainiate.Diagramming.Forms\Crainiate.Diagramming.Forms.csproj">
+      <Project>{86fbcbda-52fd-4111-99f0-f6ebcc00ab06}</Project>
+      <Name>Crainiate.Diagramming.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\Crainiate.Diagramming\Crainiate.Diagramming.csproj">
+      <Project>{8feedda0-185d-4f31-9920-503c014f5526}</Project>
+      <Name>Crainiate.Diagramming</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo02-curve.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1460804436_Boss-3.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

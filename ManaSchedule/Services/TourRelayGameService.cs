@@ -12,21 +12,28 @@ namespace ManaSchedule.Services
     {
         public TourRelayGameService()
         {
-            MinMaxValues = new Dictionary<StageType, Dictionary<GameValueType, Tuple<int, int>>>() 
+            StageScores = new Dictionary<StageType, Dictionary<GameValueType, StageScoreSettings>>()
             {
             {
-                StageType.Otbor, new Dictionary<GameValueType, Tuple<int, int>>()
+                StageType.Otbor, new Dictionary<GameValueType, StageScoreSettings>()
             {
-                { GameValueType.Time, new Tuple<int, int>(0, 10000) } ,
+                { GameValueType.Time, new StageScoreSettings(0, 10000)
+                {
+                    ViewFormat = (f) => string.Format("{0}:{1}", f / 60, f%60)
+                }
+                    } ,
             }
 
 
             },
-            
+
             {
-                StageType.Final, new Dictionary<GameValueType, Tuple<int, int>>()
+                StageType.Final, new Dictionary<GameValueType, StageScoreSettings>()
             {
-                { GameValueType.Time, new Tuple<int, int>(0, 10000) } ,
+                { GameValueType.Time, new StageScoreSettings(0, 10000)
+                {
+                     ViewFormat = (f) => string.Format("{0}:{1}", f / 60, f%60)
+                } } ,
             }
 
 
@@ -41,12 +48,18 @@ namespace ManaSchedule.Services
             return new List<GameValueType>() { GameValueType.Time };
         }
 
+        public override bool HasZhereb(Stage stage)
+        {
+            if (stage.Type == StageType.Otbor)
+            return true;
+            return base.HasZhereb(stage);
+        }
 
         public override void GenerateGames()
         {
             var refereees = DbContext.CompetitionRefereeSet.Where(f => f.CompetitionId == Competition.Id).ToList();
 
-            DbContext.TeamSet.Local.ToList().ForEach(f =>
+            Teams.ForEach(f =>
             {
                 DbContext.CompetitionScoreSet.Add(
                     new CompetitionScore() { Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе" });
@@ -107,7 +120,7 @@ namespace ManaSchedule.Services
 
         public override void EndStage(Stage stage)
         {
-            EndStage2(stage);
+            EndStage3(stage);
         }
 
         public override double? GetGameScore(Game game, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log)

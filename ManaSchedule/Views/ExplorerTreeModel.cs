@@ -14,7 +14,7 @@ namespace ManaSchedule.Views
             var result = new List<object>();
             if (treePath.FirstNode == null)
             {
-                result.Add(new SummaryNode() { Text = "Сводный результат", Icon = Properties.Resources.chart_column });
+                result.Add(new SummaryNode() { Text = "Общий итог", Icon = Properties.Resources.chart_column });
                 result.Add(new ScheduleNode() { Text = "Расписание", Icon = Properties.Resources._1430704063_free_20_20 });
                 result.Add(new TeamNode() { Text = "Команды", Icon = Properties.Resources.users_family });
                 result.Add(new PersonNode() { Text = "Люди", Icon = Properties.Resources.user });

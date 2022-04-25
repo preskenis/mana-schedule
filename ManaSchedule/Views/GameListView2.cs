@@ -31,16 +31,16 @@ namespace ManaSchedule.Views
         {
             base.Init(content);
 
-            ContentCaption.Text = Competition.Name + "- Список Игр";
+            ContentCaption = Competition.Name + " - Список Игр";
 
             var teams = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).Select(f => f.TeamId).ToList();
             var stages = DbContext.StageSet.Where(f => f.CompetitionId == Competition.Id).Select(f => f.Id).ToList();
 
-            DbContext.TeamSet.Where(f=>teams.Contains(f.Id)).Load();
+            DbContext.TeamSet.Where(f=>f.Used && teams.Contains(f.Id)).Load();
             this.GridEX.RootTable.Columns["Team"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team"].EditType = EditType.NoEdit;
             this.GridEX.RootTable.Columns["Team"].ColumnType = ColumnType.Text;
-            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.ToList(), "Name");
+            this.GridEX.RootTable.Columns["Team"].ValueList.PopulateValueList(DbContext.TeamSet.Local.Where(f => f.Used).ToList(), "Name");
             
             DbContext.StageSet.Where(f => stages.Contains(f.Id)).Load();
             this.GridEX.RootTable.Columns["Stage"].HasValueList = true;
@@ -66,6 +66,14 @@ namespace ManaSchedule.Views
             if (x == null) return 1;
             if (y == null) return -1;
             return (x as Stage).Type.CompareTo((y as Stage).Type);
+        }
+
+        public override Janus.Windows.Ribbon.Ribbon RibbonControl
+        {
+            get
+            {
+                return ribbon1;
+            }
         }
     }
 }

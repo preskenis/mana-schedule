@@ -12,7 +12,7 @@ namespace ManaSchedule.Views
 {
     public partial class ContentView : UserControl
     {
-        public Db DbContext { get; set; }
+        public Db DbContext { get; private set; }
 
         public ContentView()
         {
@@ -23,8 +23,6 @@ namespace ManaSchedule.Views
 
         void ContentView_Disposed(object sender, EventArgs e)
         {
-            
-
             DbContext.SaveChanges();
             DbContext.Dispose();
         }
@@ -34,6 +32,15 @@ namespace ManaSchedule.Views
            
         }
 
+        public virtual Janus.Windows.Ribbon.Ribbon RibbonControl
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public string ContentCaption { get; set; }
         
         
     }

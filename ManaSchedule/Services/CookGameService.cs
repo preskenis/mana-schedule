@@ -13,22 +13,22 @@ namespace ManaSchedule.Services
     {
         public CookGameService()
         {
-            MinMaxValues = new Dictionary<StageType, Dictionary<GameValueType, Tuple<int, int>>>() 
+            StageScores = new Dictionary<StageType, Dictionary<GameValueType, StageScoreSettings>>() 
             {
             {
-                StageType.Otbor, new Dictionary<GameValueType, Tuple<int, int>>()
+                StageType.Otbor, new Dictionary<GameValueType, StageScoreSettings>()
             {
-                { GameValueType.Taste, new Tuple<int, int>(0, 10) } ,
-                { GameValueType.Visual, new Tuple<int, int>(0, 7) } ,
-                { GameValueType.CookShow, new Tuple<int, int>(0, 3) } ,
-                { GameValueType.CommandSupport, new Tuple<int, int>(0, 1) } ,
-                { GameValueType.NonUsedIngredients, new Tuple<int, int>(-50, 0) } ,
-                { GameValueType.UncleanTerritory, new Tuple<int, int>(-2, 0) } ,
-                { GameValueType.LongCook, new Tuple<int, int>(-50, 0) } ,
-                { GameValueType.FireBenzin, new Tuple<int, int>(-1, 0) } ,
-                { GameValueType.CookWithCooked, new Tuple<int, int>(-1, 0) } ,
-               { GameValueType.HelpOther, new Tuple<int, int>(-1, 0) } ,
-               { GameValueType.Prepatstvie, new Tuple<int, int>(-1, 0) } ,
+                { GameValueType.Taste, new StageScoreSettings(0, 10) } ,
+                { GameValueType.Visual, new StageScoreSettings(0, 7) } ,
+                { GameValueType.CookShow, new StageScoreSettings(0, 3) } ,
+                { GameValueType.CommandSupport, new StageScoreSettings(0, 1) } ,
+                { GameValueType.NonUsedIngredients, new StageScoreSettings(-50, 0) } ,
+                { GameValueType.UncleanTerritory, new StageScoreSettings(-2, 0) } ,
+                { GameValueType.LongCook, new StageScoreSettings(-50, 0) } ,
+                { GameValueType.FireBenzin, new StageScoreSettings(-1, 0) } ,
+                { GameValueType.CookWithCooked, new StageScoreSettings(-1, 0) } ,
+               { GameValueType.HelpOther, new StageScoreSettings(-1, 0) } ,
+               { GameValueType.Prepatstvie, new StageScoreSettings(-1, 0) } ,
               
             }
 
@@ -36,12 +36,12 @@ namespace ManaSchedule.Services
             },
 
             {
-                StageType.Final, new Dictionary<GameValueType, Tuple<int, int>>()
+                StageType.Final, new Dictionary<GameValueType, StageScoreSettings>()
             {
-                { GameValueType.Taste, new Tuple<int, int>(0, 10) } ,
-                { GameValueType.CookIdea, new Tuple<int, int>(0, 7) } ,
-                { GameValueType.CookVisualShow, new Tuple<int, int>(0, 7) } ,
-                { GameValueType.Interactive, new Tuple<int, int>(0, 2) } ,
+                { GameValueType.Taste, new StageScoreSettings(0, 10) } ,
+                { GameValueType.CookIdea, new StageScoreSettings(0, 7) } ,
+                { GameValueType.CookVisualShow, new StageScoreSettings(0, 7) } ,
+                { GameValueType.Interactive, new StageScoreSettings(0, 3) } ,
                
               
             }
@@ -53,17 +53,29 @@ namespace ManaSchedule.Services
 
         }
 
+        public override StageResultViewBase GetStageView(Stage stage)
+        {
+            if (stage.Type == StageType.Otbor)
+                return new CookStageResultView() { GameService = this, Stage = stage };
+            return base.GetStageView(stage);
+        }
+
 
         public override List<GameValueType> GetValueTypes(Stage stage, CompetitionReferee referee)
         {
             switch (stage.Type)
             {
                 case StageType.Otbor:
-                    return new List<GameValueType>() 
+                    if (!referee.IsMainReferee)
+                        return new List<GameValueType>() 
                     {
         GameValueType.Taste,
         GameValueType.Visual,
         GameValueType.CookShow,
+                     };
+                    else
+                        return new List<GameValueType>() 
+                    {
         GameValueType.CommandSupport,
         GameValueType.NonUsedIngredients,
         GameValueType.UncleanTerritory,
@@ -102,7 +114,7 @@ namespace ManaSchedule.Services
                     return SumOtsechka(GameValueType.Taste, values)
                + SumOtsechka(GameValueType.Visual, values)
                + SumOtsechka(GameValueType.CookShow, values)
-               + SumOtsechka(GameValueType.CommandSupport, values)
+               + Sum(GameValueType.CommandSupport, values)
                + Sum(GameValueType.NonUsedIngredients, values)
                + Sum(GameValueType.UncleanTerritory, values)
                + Sum(GameValueType.LongCook, values)
@@ -118,7 +130,13 @@ namespace ManaSchedule.Services
             }
             
         }
-        
+
+        public override bool HasZhereb(Stage stage)
+        {
+            if (stage.Type == StageType.Otbor)
+                return true;
+            return base.HasZhereb(stage);
+        }
 
         public override void GenerateGames()
         {
@@ -132,7 +150,8 @@ namespace ManaSchedule.Services
                 Name = EnumHelper<StageType>.GetDisplayValue(StageType.Otbor),
             });
 
-            DbContext.TeamSet.Local.ToList().ForEach(f => {
+            Teams.ForEach(f =>
+            {
                 DbContext.CompetitionScoreSet.Add(
                     new CompetitionScore() { Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе" });
             });

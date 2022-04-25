@@ -20,7 +20,7 @@ namespace ManaSchedule.Views
         {
             InitializeComponent();
         
-            DbContext.TeamSet.Load();
+            DbContext.TeamSet.Where(f=>f.Used).Load();
             this.GridEX.RootTable.Columns["Team"].HasValueList = true;
             this.GridEX.RootTable.Columns["Team"].EditType = EditType.Combo;
             this.GridEX.RootTable.Columns["Team"].ColumnType = ColumnType.Text;

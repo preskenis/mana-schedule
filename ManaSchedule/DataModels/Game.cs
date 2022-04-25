@@ -44,6 +44,7 @@ namespace ManaSchedule.DataModels
         public bool Team1Cancel { get; set; }
         public bool Team2Cancel { get; set; }
         public string PlaceName { get; set; }
+        public Nullable<int> CompetitionRefereeId { get; set; }
     
         public virtual Stage Stage { get; set; }
         public virtual Place Place { get; set; }
@@ -53,5 +54,6 @@ namespace ManaSchedule.DataModels
         public virtual Game ParentGame1 { get; set; }
         public virtual Game ParentGame2 { get; set; }
         public virtual ICollection<GameResult> GameResults { get; set; }
+        public virtual CompetitionReferee CompetitionReferee { get; set; }
     }
 }

@@ -28,6 +28,13 @@ namespace ManaSchedule.Views
           
         }
 
+        public override Janus.Windows.Ribbon.Ribbon RibbonControl
+        {
+            get
+            {
+                return ribbon1;
+            }
+        }
 
     }
 }

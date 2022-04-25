@@ -118,64 +118,70 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="object_ball" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\object_ball.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="soccer_ball" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\soccer_ball.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="user" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Teams" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Teams.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
   <data name="users_family" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\users_family.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="chart_column" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\chart_column.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="splash1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\splash1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430183903_rugby_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430183903_rugby-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430183930_699881_icon_22_volleyball_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430183930_699881-icon-22-volleyball-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430184782_sport_soccer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430184782_sport_soccer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430319865_microphone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430319865_microphone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430319956_acoustic_guitar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430319956_acoustic_guitar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="_1430319987_hamburger" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1430319987_hamburger.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430320065_Tent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430320065_Tent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430320145_circus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430320145_circus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_1430320271_user_clown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430320271_user_clown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="_1430320339_animation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1430320339_animation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="_1430497231_699907_icon_38_whistle_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1430497231_699907-icon-38-whistle-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="chart_column" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chart_column.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430183930_699881_icon_22_volleyball_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430183930_699881-icon-22-volleyball-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430319956_acoustic_guitar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430319956_acoustic_guitar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430184782_sport_soccer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430184782_sport_soccer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="_1430704063_free_20_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1430704063_free-20-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="user" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430183903_rugby_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430183903_rugby-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="soccer_ball" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\soccer_ball.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430497231_699907_icon_38_whistle_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430497231_699907-icon-38-whistle-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430320271_user_clown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430320271_user_clown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430320065_Tent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430320065_Tent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="splash1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\splash1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="object_ball" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\object_ball.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430320145_circus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430320145_circus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1430319865_microphone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1430319865_microphone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo02-curve" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo02-curve.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1460804436_Boss-3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1460804436_Boss-3.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

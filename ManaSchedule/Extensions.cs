@@ -8,6 +8,20 @@ namespace ManaSchedule
 {
     public static class Extensions
     {
+        public static Janus.Windows.GridEX.InheritableBoolean ToInheritableBoolean (this bool value)
+        {
+            return value ? Janus.Windows.GridEX.InheritableBoolean.True : Janus.Windows.GridEX.InheritableBoolean.False;
+        }
+
+        public static void SetReadonly(this Janus.Windows.GridEX.GridEX grid, bool readOnly )
+        {
+            var value = (!readOnly).ToInheritableBoolean();
+            grid.AllowAddNew = value;
+            grid.AllowDelete = value;
+            grid.AllowEdit = value;
+        }
+
+
         public static void Shuffle<T>(this IList<T> list)
         {
             Random rng = new Random();
@@ -51,7 +65,37 @@ namespace ManaSchedule
             if (game.Team1Missed == true) return GameState.Team1Missed;
             if (game.Team2Missed == true) return GameState.Team2Missed;
             return GameState.Finished;
-           
         }
+
+        public static string EnsureDirectoryExist(string format, params object[] args)
+        {
+            var path = string.Format(format,args);
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            return path;
+        }
+
+
+        public static string Fmt(this string text, params object[] args)
+        {
+            return string.Format(text, args);
+        }
+
+        public static string Fmt(this string text, object arg1)
+        {
+            return string.Format(text, arg1);
+        }
+
+        public static string Fmt(this string text, object arg1, object arg2)
+        {
+            return string.Format(text, arg1, arg2);
+        }
+
+        public static string Fmt(this string text, object arg1, object arg2, object arg3)
+        {
+            return string.Format(text, arg1, arg2, arg3);
+        }
+
+
     }
 }

@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Janus.Windows.GridEX;
+using ManaSchedule.Services;
 
 namespace ManaSchedule.Views
 {
@@ -16,6 +18,8 @@ namespace ManaSchedule.Views
         {
             InitializeComponent();
         }
+
+       
 
         public GameEditForm(Game game, Db db)
         {
@@ -34,7 +38,51 @@ namespace ManaSchedule.Views
             if (Game.Team1Win) rbTeam1Win.Checked = true;
             if (Game.Team2Win) rbTeam2Win.Checked = true;
             tbDescription.Text = game.Description;
+
+            listReferee.Items.AddRange(db.CompetitionRefereeSet.Where(f => f.CompetitionId == game.CompetitionId).ToArray());
+            listReferee.SelectedIndex = -1;
+
+            if (Game.CompetitionRefereeId.HasValue)
+            {
+                listReferee.SelectedItem = db.CompetitionRefereeSet.FirstOrDefault(f => f.Id == Game.CompetitionRefereeId);
+            }
+
+            var dt = CarnivalGameService.GetSportCarnivalTable(Game, DbContext);
+
+            gridCarnival.DataSource = dt;
+            gridCarnival.FrozenColumns = 1;
+            gridCarnival.RetrieveStructure();
+
+            gridCarnival.RootTable.Columns["Параметр"].EditType = EditType.NoEdit;
+            gridCarnival.RootTable.SortKeys.Add(gridCarnival.RootTable.Columns["Параметр"]);
+            gridCarnival.GroupByBoxVisible = false;
+
+
+            gridCarnival.ColumnAutoSizeMode = ColumnAutoSizeMode.ColumnHeader;
+            gridCarnival.ColumnAutoResize = true;
+
+            dt.RowChanged += dt_RowChanged;
+
         }
+
+        void dt_RowChanged(object sender, DataRowChangeEventArgs e)
+        {
+            var gameValueType = EnumHelper<GameValueType>.GetValueByDisplayValue(e.Row[0] as string);
+
+           
+
+            if (e.Row[1] != System.DBNull.Value)
+            {
+                var val = (int)e.Row[1];
+
+                var range = CarnivalGameService.SportMinMaxValues[gameValueType];
+                if (val < range.Min   || val > range.Max )
+                    e.Row[1] = DBNull.Value;
+            }
+            UpdateButtons(sender, e);
+        }
+
+        
 
         protected void UpdateButtons(object sender, EventArgs e)
         {
@@ -87,6 +135,16 @@ namespace ManaSchedule.Views
                 btSave.Enabled = false;
            if ((cbTeam1Missing.CheckState != cbTeam2Missing.CheckState) && (cbTeam1Missing.CheckState == CheckState.Indeterminate || cbTeam2Missing.CheckState == CheckState.Indeterminate) )
                btSave.Enabled = false;
+
+           if (btSave.Enabled && (cbTeam1Missing.CheckState == cbTeam2Missing.CheckState) && cbTeam1Missing.CheckState == CheckState.Unchecked && gridCarnival.DataSource != null)
+           {
+
+               if ((gridCarnival.DataSource as DataTable).Rows.Cast<DataRow>().Any(f=>f[1] == DBNull.Value))
+               {
+                   btSave.Enabled = false;
+               }
+           }
+
            }
 
         public Game Game { get; set; }
@@ -113,11 +171,56 @@ namespace ManaSchedule.Views
 
         private void btSave_Click(object sender, EventArgs e)
         {
+            if (listReferee.SelectedIndex < 0 && DialogResult.Yes != MessageBox.Show(this, "Не указан судья, продолжить?", "Не достаточно данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                return;
+
+            if (listReferee.SelectedIndex >= 0)
+            {
+                Game.CompetitionRefereeId = (listReferee.SelectedItem as CompetitionReferee).Id;
+            }
+
+            
+
+
             Game.Team1Missed = ToNullable(cbTeam1Missing.CheckState);
             Game.Team2Missed = ToNullable(cbTeam2Missing.CheckState);
             Game.Description = tbDescription.Text;
             Game.Team1Win = rbTeam1Win.Checked;
             Game.Team2Win = rbTeam2Win.Checked;
+            
+            if (Game.Team1Missed==false && Game.Team2Missed == false)
+            {
+                var dataValues = (gridCarnival.DataSource as DataTable).Rows.Cast<DataRow>().ToDictionary(f=>EnumHelper<GameValueType>.GetValueByDisplayValue(f[0] as string), f=>(int)f[1]);
+                var gameResult = DbContext.GameResultSet.FirstOrDefault(f => f.GameId == Game.Id);
+                foreach (var value in dataValues)
+                {
+                    var v = gameResult.Values.FirstOrDefault(f=>f.Type == value.Key);
+                    if (v != null)
+                    {
+                        v.Value = value.Value;
+                    }
+                    else
+                    {
+                        gameResult.Values.Add(new GameResultValue()
+                        {
+                            Type = value.Key,
+                            Value = value.Value,
+                            GameResult = gameResult
+                        });
+                    }
+
+                }
+                
+                
+
+            }
+            else
+            {
+                var gameResult = DbContext.GameResultSet.FirstOrDefault(f => f.GameId == Game.Id);
+                DbContext.GameResultValueSet.Where(f => f.GameResultId == gameResult.Id).ToList().ForEach(f => DbContext.GameResultValueSet.Remove(f));
+
+            }
+
 
             DialogResult = System.Windows.Forms.DialogResult.OK;
         }

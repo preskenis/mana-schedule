@@ -3443,6 +3443,46 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.Check">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.chevronDown2010">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.chevronUp2010">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.groupglyph">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.help">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.help10">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.help2010">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Janus.Windows.Ribbon.ResourceFile.PIN2010">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
         <member name="T:Janus.Windows.Ribbon.Design.ObjectTypeEditor">
             <summary>
             Summary description for ObjectTypeEditor.

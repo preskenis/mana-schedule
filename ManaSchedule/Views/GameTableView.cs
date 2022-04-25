@@ -10,6 +10,7 @@ using ManaSchedule.DataModels;
 using Crainiate.Diagramming;
 using ManaSchedule.Services;
 using Crainiate.Diagramming.Forms.Rendering;
+using Crainiate.Diagramming.Forms;
 
 namespace ManaSchedule.Views
 {
@@ -125,7 +126,7 @@ namespace ManaSchedule.Views
         {
             base.Init(content);
 
-            ContentCaption.Text = string.Format("{0} - Турнирная таблица", content.Name);
+            ContentCaption = string.Format("{0} - Турнирная таблица", content.Name);
 
             var tt = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).GroupBy(f=>f.Team).Where(f=>f.Count() > 1).ToList();
             if (tt.Count > 0)
@@ -135,7 +136,7 @@ namespace ManaSchedule.Views
 
             TeamCompetitions = DbContext.TeamCompetitionSet.Where(f => f.CompetitionId == Competition.Id).ToDictionary(f => f.TeamId, f => f);
 
-            var teams = DbContext.TeamSet.ToList();
+            var teams = DbContext.TeamSet.Where(f=>f.Used).ToList();
 
             var games = DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id).ToList();
 
@@ -255,28 +256,59 @@ namespace ManaSchedule.Views
             }
         }
 
-        private void btExportToExcel_Click(object sender, EventArgs e)
+      
+        public override Janus.Windows.Ribbon.Ribbon RibbonControl
         {
-            using (var fs = new SaveFileDialog() { Filter = "png (*.png)|*.png" })
+            get
+            {
+                return ribbon1;
+            }
+        }
 
+        private void btExportToExcel_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
+        {
+           
+        }
+
+        private void btExportToImage_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
+        {
+            using (var fs = new SaveFileDialog() { FileName = string.Format("{0}.png", Competition.Name), Filter = "png (*.png)|*.png" })
                 if (fs.ShowDialog(this) == DialogResult.OK)
                 {
 
-                
-                    using (var bitmap = new System.Drawing.Bitmap(diagram.Width, diagram.Height))
-                    {
-                        Rectangle bounds = new Rectangle(Left, Top, Width, Height);
+                    Render render = new Render();
 
-                        diagram.DrawToBitmap(bitmap, diagram.ClientRectangle);
-                        bitmap.Save(fs.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                    render.AddRenderer(typeof(GameShape), new GameShapeRenderer(this));
+
+                    Rectangle renderRect = new Rectangle(new Point(0, 0), Size.Round(diagram.Model.Size));
+
+                    //Get the bounds of the renderlist
+                    if (Singleton.Instance.ClipExport)
+                    {
+                        renderRect = System.Drawing.Rectangle.Round(diagram.Model.Elements.GetBounds());
+                        renderRect.Inflate(20, 20);
+
+                        if (renderRect.X < 0) renderRect.X = 0;
+                        if (renderRect.Y < 0) renderRect.Y = 0;
                     }
 
+                    //Set the render rectangle
+                    render.Zoom = 100;
+                    render.RenderRectangle = renderRect;
+                    render.Layers = diagram.Model.Layers;
+                    render.Elements = diagram.Model.Elements;
 
+                    //Use a default paging
+                    render.RenderDiagram(renderRect, new Paging());
+
+                    using (var s = fs.OpenFile())
+                    {
+                        render.Bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Png);
+                    }
+                    
                 }
-
+                    
         }
-         
-
           
         
         

@@ -28,39 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScheduleView));
             this.uiTab1 = new Janus.Windows.UI.Tab.UITab();
             this.uiTabPage1 = new Janus.Windows.UI.Tab.UITabPage();
             this.uiTabPage2 = new Janus.Windows.UI.Tab.UITabPage();
             this.schedule = new Janus.Windows.Schedule.Schedule();
+            this.ribbon1 = new Janus.Windows.Ribbon.Ribbon();
+            this.ribbonTab1 = new Janus.Windows.Ribbon.RibbonTab();
             ((System.ComponentModel.ISupportInitialize)(this.uiTab1)).BeginInit();
             this.uiTab1.SuspendLayout();
             this.uiTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.schedule)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbon1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ContentCaption
-            // 
-            this.ContentCaption.Size = new System.Drawing.Size(126, 30);
-            this.ContentCaption.Text = "Расписание";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Общий зачёт";
             // 
             // uiTab1
             // 
-            this.uiTab1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uiTab1.Location = new System.Drawing.Point(8, 33);
+            this.uiTab1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiTab1.Location = new System.Drawing.Point(0, 142);
             this.uiTab1.Name = "uiTab1";
-            this.uiTab1.Size = new System.Drawing.Size(642, 479);
+            this.uiTab1.Size = new System.Drawing.Size(653, 373);
             this.uiTab1.TabIndex = 6;
             this.uiTab1.TabPages.AddRange(new Janus.Windows.UI.Tab.UITabPage[] {
             this.uiTabPage1,
@@ -70,7 +57,7 @@
             // 
             this.uiTabPage1.Location = new System.Drawing.Point(1, 21);
             this.uiTabPage1.Name = "uiTabPage1";
-            this.uiTabPage1.Size = new System.Drawing.Size(638, 455);
+            this.uiTabPage1.Size = new System.Drawing.Size(649, 349);
             this.uiTabPage1.TabStop = true;
             this.uiTabPage1.Text = "Список";
             // 
@@ -79,7 +66,7 @@
             this.uiTabPage2.Controls.Add(this.schedule);
             this.uiTabPage2.Location = new System.Drawing.Point(1, 21);
             this.uiTabPage2.Name = "uiTabPage2";
-            this.uiTabPage2.Size = new System.Drawing.Size(638, 455);
+            this.uiTabPage2.Size = new System.Drawing.Size(649, 349);
             this.uiTabPage2.TabStop = true;
             this.uiTabPage2.Text = "Календарь";
             // 
@@ -92,37 +79,65 @@
             this.schedule.Dock = System.Windows.Forms.DockStyle.Fill;
             this.schedule.Location = new System.Drawing.Point(0, 0);
             this.schedule.Name = "schedule";
-            this.schedule.Size = new System.Drawing.Size(638, 455);
+            this.schedule.Size = new System.Drawing.Size(649, 349);
             this.schedule.TabIndex = 0;
             this.schedule.TimeFormat = Janus.Windows.Schedule.TimeFormat.TwentyFourHours;
             this.schedule.VerticalScrollPosition = 16;
             this.schedule.WorkEndTime = System.TimeSpan.Parse("24.00:00:00");
             // 
+            // ribbon1
+            // 
+            this.ribbon1.BackstageMenuData = "<?xml version=\"1.0\" encoding=\"utf-8\"?><BackstageMenu><ImageKey /><Key /><Text>Fil" +
+    "e</Text></BackstageMenu>";
+            // 
+            // 
+            // 
+            this.ribbon1.HelpButton.Image = ((System.Drawing.Image)(resources.GetObject("ribbon1.HelpButton.Image")));
+            this.ribbon1.HelpButton.Key = "HelpButton";
+            this.ribbon1.Location = new System.Drawing.Point(0, 0);
+            this.ribbon1.Name = "ribbon1";
+            this.ribbon1.Size = new System.Drawing.Size(653, 142);
+            // 
+            // 
+            // 
+            this.ribbon1.SuperTipComponent.AutoPopDelay = 2000;
+            this.ribbon1.SuperTipComponent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ribbon1.SuperTipComponent.ImageList = null;
+            this.ribbon1.TabIndex = 7;
+            this.ribbon1.Tabs.AddRange(new Janus.Windows.Ribbon.RibbonTab[] {
+            this.ribbonTab1});
+            this.ribbon1.Text = "";
+            // 
+            // ribbonTab1
+            // 
+            this.ribbonTab1.Key = "ribbonTab1";
+            this.ribbonTab1.Name = "ribbonTab1";
+            this.ribbonTab1.Text = "Главная";
+            // 
             // ScheduleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ContentCaption = "Расписание";
             this.Controls.Add(this.uiTab1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ribbon1);
             this.Name = "ScheduleView";
             this.Size = new System.Drawing.Size(653, 515);
-            this.Controls.SetChildIndex(this.label1, 0);
-            this.Controls.SetChildIndex(this.ContentCaption, 0);
-            this.Controls.SetChildIndex(this.uiTab1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.uiTab1)).EndInit();
             this.uiTab1.ResumeLayout(false);
             this.uiTabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.schedule)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbon1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private Janus.Windows.UI.Tab.UITab uiTab1;
         private Janus.Windows.UI.Tab.UITabPage uiTabPage1;
         private Janus.Windows.UI.Tab.UITabPage uiTabPage2;
         private Janus.Windows.Schedule.Schedule schedule;
+        private Janus.Windows.Ribbon.Ribbon ribbon1;
+        private Janus.Windows.Ribbon.RibbonTab ribbonTab1;
     }
 }

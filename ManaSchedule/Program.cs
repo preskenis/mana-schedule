@@ -22,16 +22,18 @@ namespace ManaSchedule
             {
 
               //  File.Delete(@"h:\Mana\mana-schedule\mana-schedule\ManaSchedule\bin\Debug\mana.sdf");
-            }
-            catch (Exception)
-            {
-             
-            }
            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            _splash = new SplashForm();
+                //using (var s = new TestForm())
+                //{
+                    
+                //    s.ShowDialog();
+                //}
+
+
+                    _splash = new SplashForm();
             _splash.Show();
             App.LogSplash = new Action<string>((f) => 
             {
@@ -49,9 +51,18 @@ namespace ManaSchedule
                 }
             });
             App.Init();
+            
+            App.AdminMode = false;
 
             Application.Idle += Application_Idle;
             Application.Run(App.MainForm);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        
         }
 
         static void Application_Idle(object sender, EventArgs e)
@@ -62,6 +73,10 @@ namespace ManaSchedule
             _splash = null;
         }
 
-        
+
+
+
+
+      
     }
 }
