@@ -36,6 +36,16 @@ namespace ManaSchedule.DataModels
         }
     }
 
+    partial class Team
+    {
+        public override string ToString()
+        {
+            return this.Name;
+        }
+    }
+
+
+
     public partial class Person
     {
         public string NameTeam

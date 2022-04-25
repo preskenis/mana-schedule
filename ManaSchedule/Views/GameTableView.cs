@@ -51,7 +51,7 @@ namespace ManaSchedule.Views
                         if (game.ParentGame1 == null && game.Team != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team.Id].Order.ToString());
                     }
 
-                    if (game.Team != null) label += game.Team.Name.Length < 20 ? game.Team.Name :  game.Team.Name.Substring(0,20);
+                    if (game.Team != null) label += game.Team.Name.Length < 15 ? game.Team.Name :  game.Team.Name.Substring(0,15);
                     label += Environment.NewLine;
                     if (game.Team2Missed == true) label += "[-] ";
                     if (game.Team2Win == true) label += "[✓] ";
@@ -62,7 +62,7 @@ namespace ManaSchedule.Views
                     }
                     else
                         if (game.ParentGame2 == null && game.Team2 != null) label += string.Format("({0}) ", View.TeamCompetitions[game.Team2.Id].Order.ToString());
-                    if (game.Team2 != null) label += game.Team2.Name.Length < 20 ? game.Team2.Name :  game.Team2.Name.Substring(0,20);
+                    if (game.Team2 != null) label += game.Team2.Name.Length < 15 ? game.Team2.Name :  game.Team2.Name.Substring(0,15);
                    
                     switch (game.GetState())
                     { 
@@ -250,6 +250,24 @@ namespace ManaSchedule.Views
                 if (form.ShowDialog(this) == DialogResult.OK )
                 {
                     GameService.UpdateGame(game);
+
+                    foreach (var prevGames in DbContext.GameSet.Where(f => f.CompetitionId == game.CompetitionId && (int)f.Stage.Type <= (int)game.Stage.Type).OrderByDescending(f=>(int)f.Stage.Type))
+                    {
+                        GameService.UpdateGame(game);
+                    }
+
+
+                    //if (game.ParentGame1 != null)
+                    //{
+                    //    GameService.UpdateGame(game.ParentGame1);
+                    //}
+
+                    //if (game.ParentGame2 != null)
+                    //{
+                    //    GameService.UpdateGame(game.ParentGame2);
+                    //}
+
+                    
                     UpdateDiagram();
                     diagram.Refresh();
                 }

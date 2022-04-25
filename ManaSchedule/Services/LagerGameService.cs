@@ -12,48 +12,47 @@ namespace ManaSchedule.Services
     {
         public LagerGameService()
         {
-            StageScores = new Dictionary<StageType, Dictionary<GameValueType, StageScoreSettings>>()
-            {
-            {
-                StageType.Otbor, new Dictionary<GameValueType, StageScoreSettings>()
-            {
+            StageScores = new Dictionary<StageType, Dictionary<GameValueType, StageScoreSettings>>() {
+                {
+                    StageType.Otbor, new Dictionary<GameValueType, StageScoreSettings>() {
 
-                  {GameValueType.Flag, new StageScoreSettings(0, 1) } ,
-        {GameValueType.Territory, new StageScoreSettings(0, 2) } ,
-        {GameValueType.Dezhur, new StageScoreSettings(0, 1) } ,
-        {GameValueType.FireHoz, new StageScoreSettings(0, 1) } ,
-        {GameValueType.FirePlace, new StageScoreSettings(0, 2) } ,
-        {GameValueType.Medicine, new StageScoreSettings(0, 1) } ,
-        {GameValueType.Znaki, new StageScoreSettings(0, 2) } ,
-        {GameValueType.Tent, new StageScoreSettings(0, 1) } ,
-        {GameValueType.DrovaZone, new StageScoreSettings(0, 2) } ,
-        {GameValueType.TrashZone, new StageScoreSettings(0, 1) } ,
-        {GameValueType.EatZone, new StageScoreSettings(0, 1) } ,
-        {GameValueType.Clean, new StageScoreSettings(-2, 2) } ,
-        {GameValueType.Oformlenie, new StageScoreSettings(0, 3) } ,
-        {GameValueType.Stend, new StageScoreSettings(0, 2) } ,
-        {GameValueType.Fishki, new StageScoreSettings(0, 3) } ,
-        {GameValueType.Lapnik, new StageScoreSettings(-10, 0) } ,
-        {GameValueType.BadPovedenie, new StageScoreSettings(-5, 0) } ,
-        {GameValueType.FireDanger, new StageScoreSettings(-3, 0) } ,
+                        {GameValueType.Flag, new StageScoreSettings(0, 1)},
+                        {GameValueType.GlavVhod, new StageScoreSettings(0, 1)},
+                        {GameValueType.Territory, new StageScoreSettings(0, 1)},
+                        {GameValueType.Dezhur, new StageScoreSettings(0, 1)},
+                        {GameValueType.FireHoz, new StageScoreSettings(0, 1)},
+                        {GameValueType.FirePlace, new StageScoreSettings(0, 2)},
+                        {GameValueType.Medicine, new StageScoreSettings(0, 1)},
+                        {GameValueType.Znaki, new StageScoreSettings(0, 2)},
+                        {GameValueType.Tent, new StageScoreSettings(0, 1)},
+                        {GameValueType.DrovaZone, new StageScoreSettings(0, 2)},
+                        {GameValueType.TrashZone, new StageScoreSettings(0, 1)},
+                        {GameValueType.EatZone, new StageScoreSettings(0, 1)},
+                        {GameValueType.Clean, new StageScoreSettings(-2, 2)},
+                        {GameValueType.Oformlenie, new StageScoreSettings(0, 3)},
+                        {GameValueType.Stend, new StageScoreSettings(0, 2)},
+                        {GameValueType.Fishki, new StageScoreSettings(0, 3)},
+                        {GameValueType.Tema45, new StageScoreSettings(0, 2)},
+                        {GameValueType.Beidj, new StageScoreSettings(0, 1)},
 
-
-            }
-
-
-            },
-
-            {
-                StageType.Final, new Dictionary<GameValueType, StageScoreSettings>()
-            {
-                { GameValueType.FinalPlace, new StageScoreSettings(0, 20) } ,
+                        {GameValueType.Lapnik, new StageScoreSettings(-10, 0)},
+                        {GameValueType.BadPovedenie, new StageScoreSettings(-5, 0)},
+                        {GameValueType.FireDanger, new StageScoreSettings(-3, 0)},
 
 
+                    }
 
-            }
+
+                }, {
+                    StageType.Final, new Dictionary<GameValueType, StageScoreSettings>() {
+                        {GameValueType.FinalPlace, new StageScoreSettings(0, 20)},
 
 
-            }
+
+                    }
+
+
+                }
 
             };
 
@@ -62,7 +61,7 @@ namespace ManaSchedule.Services
         public override StageResultViewBase GetStageView(Stage stage)
         {
             if (stage.Type == StageType.Otbor)
-                return new LagerStageResultView() { Stage = stage, GameService = this };
+                return new LagerStageResultView() {Stage = stage, GameService = this};
             return base.GetStageView(stage);
         }
 
@@ -72,37 +71,38 @@ namespace ManaSchedule.Services
             switch (stage.Type)
             {
                 case StageType.Otbor:
-                    return new List<GameValueType>()
-                    {
-          GameValueType.Flag,
-        GameValueType.Territory,
-        GameValueType.Dezhur,
-        GameValueType.FireHoz,
-        GameValueType.FirePlace,
-        GameValueType.Medicine,
-        GameValueType.Znaki,
-        GameValueType.Tent,
-        GameValueType.DrovaZone,
-        GameValueType.TrashZone,
-        GameValueType.EatZone,
-        GameValueType.Clean,
-        GameValueType.Oformlenie,
-        GameValueType.Stend,
-        GameValueType.Fishki,
-        GameValueType.Lapnik,
-        GameValueType.BadPovedenie,
-        GameValueType.FireDanger,
+                    return new List<GameValueType>() {
+                        GameValueType.Flag,
+                        GameValueType.GlavVhod,
+                        GameValueType.Territory,
+                        GameValueType.Dezhur,
+                        GameValueType.FireHoz,
+                        GameValueType.FirePlace,
+                        GameValueType.Medicine,
+                        GameValueType.Znaki,
+                        GameValueType.Tent,
+                        GameValueType.DrovaZone,
+                        GameValueType.TrashZone,
+                        GameValueType.EatZone,
+                        GameValueType.Clean,
+                        GameValueType.Oformlenie,
+                        GameValueType.Stend,
+                        GameValueType.Fishki,
+                        GameValueType.Tema45,
+                        GameValueType.Beidj,
+                        GameValueType.Lapnik,
+                        GameValueType.BadPovedenie,
+                        GameValueType.FireDanger,
                     };
 
 
 
 
                 case StageType.Final:
-                    return new List<GameValueType>()
-                        {
-                            GameValueType.FinalPlace,
+                    return new List<GameValueType>() {
+                        GameValueType.FinalPlace,
 
-                        };
+                    };
                 default: throw new NotImplementedException();
             }
 
@@ -122,9 +122,8 @@ namespace ManaSchedule.Services
             DbContext.Configuration.AutoDetectChangesEnabled = false;
             DbContext.Configuration.ValidateOnSaveEnabled = false;
 
-           
-            var stage = DbContext.StageSet.Add(new Stage()
-            {
+
+            var stage = DbContext.StageSet.Add(new Stage() {
                 Competition = Competition,
                 Type = StageType.Otbor,
                 Name = "Отборочный"
@@ -136,15 +135,14 @@ namespace ManaSchedule.Services
             Teams.ForEach(f =>
             {
                 DbContext.CompetitionScoreSet.Add(
-                    new CompetitionScore() { Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе" });
+                    new CompetitionScore() {Competition = Competition, Team = f, Place = TeamsCount, Description = "Неучастие в конкурсе"});
             });
 
 
 
             foreach (var tc in DbContext.TeamCompetitionSet.Local.Where(f => f.CompetitionId == Competition.Id).OrderBy(f => f.Order))
             {
-                var game = DbContext.GameSet.Add(new Game()
-                {
+                var game = DbContext.GameSet.Add(new Game() {
                     CompetitionId = Competition.Id,
                     Stage = stage,
                     Team = tc.Team,
@@ -154,16 +152,15 @@ namespace ManaSchedule.Services
 
 
                 refereees.ToList().ForEach(f =>
-                      {
-                          var gr = DbContext.GameResultSet.Add(new GameResult() { Game = game, Referee = f });
-                          GetValueTypes(stage, f).ForEach(v => DbContext.GameResultValueSet.Local.Add(new GameResultValue()
-                          {
-                              GameResult = gr,
-                              Type = v,
-                              Value = null
-                          }));
-                      }
-                    );
+                    {
+                        var gr = DbContext.GameResultSet.Add(new GameResult() {Game = game, Referee = f});
+                        GetValueTypes(stage, f).ForEach(v => DbContext.GameResultValueSet.Local.Add(new GameResultValue() {
+                            GameResult = gr,
+                            Type = v,
+                            Value = null
+                        }));
+                    }
+                );
 
                 var score = DbContext.CompetitionScoreSet.Local.First(f => Competition == Competition && f.Team == tc.Team);
                 score.Place = DbContext.TeamCompetitionSet.Local.Count;
@@ -171,8 +168,7 @@ namespace ManaSchedule.Services
                 score.Description = "Заявка на участие";
             }
 
-            stage = DbContext.StageSet.Add(new Stage()
-            {
+            stage = DbContext.StageSet.Add(new Stage() {
                 Competition = Competition,
                 Type = StageType.Final,
                 Name = "Финал"
@@ -204,7 +200,7 @@ namespace ManaSchedule.Services
                 {
                     var log = new StringBuilder();
                     var score = GetGameScore(game, log).Value;
-                    scores.Add(new TeamScore() { Team = game.Team, Score = score });
+                    scores.Add(new TeamScore() {Team = game.Team, Score = score});
                 }
 
                 var nextTeams = new List<Team>();
@@ -231,10 +227,7 @@ namespace ManaSchedule.Services
                     s.Score = scores.First(v => v.Team == f).Score;
                 });
 
-                scores.Where(f => nextTeams.Any(v => v == f.Team)).ToList().ForEach(f =>
-                {
-                    scores.Remove(f);
-                });
+                scores.Where(f => nextTeams.Any(v => v == f.Team)).ToList().ForEach(f => { scores.Remove(f); });
 
                 var nextPlace = nextTeams.Count + 1 + DbContext.TeamCompetitionSet.Count(f => f.CompetitionId == Competition.Id && f.IsPastWinner);
                 foreach (var g in scores.GroupBy(f => f.Score).OrderByDescending(f => f.Key))
@@ -256,13 +249,13 @@ namespace ManaSchedule.Services
 
 
                 var nextStage = DbContext.StageSet.FirstOrDefault(f => f.CompetitionId == Competition.Id && f.Type == StageType.Final);
-                if (nextStage == null) nextStage = DbContext.StageSet.Add(new Stage()
-                {
-                    ParentStage = stage,
-                    Type = StageType.Final,
-                    CompetitionId = Competition.Id,
-                    Name = EnumHelper<StageType>.GetDisplayValue(StageType.Final),
-                });
+                if (nextStage == null)
+                    nextStage = DbContext.StageSet.Add(new Stage() {
+                        ParentStage = stage,
+                        Type = StageType.Final,
+                        CompetitionId = Competition.Id,
+                        Name = EnumHelper<StageType>.GetDisplayValue(StageType.Final),
+                    });
 
                 var refereees = DbContext.CompetitionRefereeSet.Where(f => f.CompetitionId == Competition.Id).ToList();
 
@@ -270,15 +263,14 @@ namespace ManaSchedule.Services
                 {
                     if (!nextStage.Game.Any(f => f.TeamId == team.Id))
                     {
-                        var game = DbContext.GameSet.Add(new Game()
-                        {
+                        var game = DbContext.GameSet.Add(new Game() {
                             CompetitionId = Competition.Id,
                             Stage = nextStage,
                             Team = team,
                             Team1Missed = false,
                             Description = string.Format("Победитель отборочного тура"),
                         });
-                        refereees.ForEach(f => DbContext.GameResultSet.Add(new GameResult() { Game = game, Referee = f }));
+                        refereees.ForEach(f => DbContext.GameResultSet.Add(new GameResult() {Game = game, Referee = f}));
                     }
 
                     nextStage.Game.Where(f => !nextTeams.Any(v => v.Id == f.Team.Id)).ToList().ForEach(f =>
@@ -311,7 +303,7 @@ namespace ManaSchedule.Services
                 {
                     var log = new StringBuilder();
                     var score = GetGameScore(game, log).Value;
-                    scores.Add(new TeamScore() { Team = game.Team, Score = score });
+                    scores.Add(new TeamScore() {Team = game.Team, Score = score});
                 }
 
                 var nextPlace = 1;
@@ -342,6 +334,7 @@ namespace ManaSchedule.Services
             return GetGameScore(game, values, log, false);
 
         }
+
         public override List<CompetitionReferee> GetStageReferees(Stage stage)
         {
             if (stage.Type == StageType.Otbor)
@@ -359,24 +352,27 @@ namespace ManaSchedule.Services
             {
                 case StageType.Otbor:
                     return
-        Sum(GameValueType.Flag, values)
-        + Sum(GameValueType.Territory, values)
-        + Sum(GameValueType.Dezhur, values)
-        + Sum(GameValueType.FireHoz, values)
-        + Sum(GameValueType.FirePlace, values)
-        + Sum(GameValueType.Medicine, values)
-        + Sum(GameValueType.Znaki, values)
-        + Sum(GameValueType.Tent, values)
-        + Sum(GameValueType.DrovaZone, values)
-        + Sum(GameValueType.TrashZone, values)
-        + Sum(GameValueType.EatZone, values)
-        + Sum(GameValueType.Clean, values)
-        + Sum(GameValueType.Oformlenie, values)
-        + Sum(GameValueType.Stend, values)
-        + Sum(GameValueType.Fishki, values)
-        + Sum(GameValueType.Lapnik, values)
-        + Sum(GameValueType.BadPovedenie, values)
-        + Sum(GameValueType.FireDanger, values);
+                        Sum(GameValueType.Flag, values)
+                        + Sum(GameValueType.GlavVhod, values)
+                        + Sum(GameValueType.Territory, values)
+                        + Sum(GameValueType.Dezhur, values)
+                        + Sum(GameValueType.FireHoz, values)
+                        + Sum(GameValueType.FirePlace, values)
+                        + Sum(GameValueType.Medicine, values)
+                        + Sum(GameValueType.Znaki, values)
+                        + Sum(GameValueType.Tent, values)
+                        + Sum(GameValueType.DrovaZone, values)
+                        + Sum(GameValueType.TrashZone, values)
+                        + Sum(GameValueType.EatZone, values)
+                        + Sum(GameValueType.Clean, values)
+                        + Sum(GameValueType.Oformlenie, values)
+                        + Sum(GameValueType.Stend, values)
+                        + Sum(GameValueType.Fishki, values)
+                        + Sum(GameValueType.Tema45, values)
+                        + Sum(GameValueType.Beidj, values)
+                        + Sum(GameValueType.Lapnik, values)
+                        + Sum(GameValueType.BadPovedenie, values)
+                        + Sum(GameValueType.FireDanger, values);
 
                 case StageType.Final:
                     var vals = values.Where(f => f.Value.ContainsKey(GameValueType.FinalPlace)).Select(f => f.Value[GameValueType.FinalPlace]).Where(f => f.HasValue && f.Value > 0).ToList();

@@ -21,10 +21,7 @@ namespace ManaSchedule.Views
             InitializeComponent();
 
             DbContext.CompetitionSet.Load();
-            this.GridEX.RootTable.Columns["Competition"].HasValueList = true;
-            this.GridEX.RootTable.Columns["Competition"].EditType = EditType.NoEdit;
-            this.GridEX.RootTable.Columns["Competition"].ColumnType = ColumnType.Text;
-            this.GridEX.RootTable.Columns["Competition"].ValueList.PopulateValueList(DbContext.CompetitionSet.Local.ToList(), "Name");
+          
 
         }
 
@@ -41,13 +38,17 @@ namespace ManaSchedule.Views
             DbContext.TeamSet.Load();
             
 
-            GridEX.DataSource = DbContext.StageSet.Local.ToBindingList();
+         
 
 
         }
 
         private void btGenerate_Click(object sender, EventArgs e)
         {
+           
+
+
+
 
         }
 
@@ -112,6 +113,9 @@ namespace ManaSchedule.Views
         
         }
 
+        private void uiTab1_SelectedTabChanged(object sender, Janus.Windows.UI.Tab.TabEventArgs e)
+        {
 
+        }
     }
 }

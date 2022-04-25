@@ -28,16 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Janus.Windows.GridEX.GridEXLayout GridEX_DesignTimeLayout = new Janus.Windows.GridEX.GridEXLayout();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScheduleGeneratorView));
-            Janus.Windows.GridEX.GridEXLayout gridEX1_DesignTimeLayout = new Janus.Windows.GridEX.GridEXLayout();
             this.uiTab1 = new Janus.Windows.UI.Tab.UITab();
             this.uiTabPage1 = new Janus.Windows.UI.Tab.UITabPage();
             this.uiButton1 = new Janus.Windows.EditControls.UIButton();
             this.uiGroupBox2 = new Janus.Windows.EditControls.UIGroupBox();
-            this.GridEX = new Janus.Windows.GridEX.GridEX();
             this.uiGroupBox1 = new Janus.Windows.EditControls.UIGroupBox();
-            this.gridEX1 = new Janus.Windows.GridEX.GridEX();
             this.btGenerate = new Janus.Windows.EditControls.UIButton();
             this.uiTabPage2 = new Janus.Windows.UI.Tab.UITabPage();
             this.schedule = new Janus.Windows.Schedule.Schedule();
@@ -47,11 +43,7 @@
             this.uiTab1.SuspendLayout();
             this.uiTabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox2)).BeginInit();
-            this.uiGroupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox1)).BeginInit();
-            this.uiGroupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridEX1)).BeginInit();
             this.uiTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.schedule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon1)).BeginInit();
@@ -68,6 +60,7 @@
             this.uiTabPage1,
             this.uiTabPage2});
             this.uiTab1.VisualStyleManager = this.visualStyleManager;
+            this.uiTab1.SelectedTabChanged += new Janus.Windows.UI.Tab.TabEventHandler(this.uiTab1_SelectedTabChanged);
             // 
             // uiTabPage1
             // 
@@ -83,7 +76,7 @@
             // 
             // uiButton1
             // 
-            this.uiButton1.Location = new System.Drawing.Point(271, 109);
+            this.uiButton1.Location = new System.Drawing.Point(308, 367);
             this.uiButton1.Name = "uiButton1";
             this.uiButton1.Size = new System.Drawing.Size(66, 23);
             this.uiButton1.TabIndex = 5;
@@ -91,55 +84,25 @@
             // 
             // uiGroupBox2
             // 
-            this.uiGroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.uiGroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.uiGroupBox2.Controls.Add(this.GridEX);
             this.uiGroupBox2.Location = new System.Drawing.Point(3, 3);
             this.uiGroupBox2.Name = "uiGroupBox2";
-            this.uiGroupBox2.Size = new System.Drawing.Size(262, 358);
+            this.uiGroupBox2.Size = new System.Drawing.Size(299, 358);
             this.uiGroupBox2.TabIndex = 4;
             this.uiGroupBox2.Text = "Доступные этапы";
-            // 
-            // GridEX
-            // 
-            this.GridEX.ColumnAutoResize = true;
-            GridEX_DesignTimeLayout.LayoutString = resources.GetString("GridEX_DesignTimeLayout.LayoutString");
-            this.GridEX.DesignTimeLayout = GridEX_DesignTimeLayout;
-            this.GridEX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GridEX.GroupByBoxVisible = false;
-            this.GridEX.Location = new System.Drawing.Point(3, 16);
-            this.GridEX.Name = "GridEX";
-            this.GridEX.Size = new System.Drawing.Size(256, 339);
-            this.GridEX.TabIndex = 0;
-            this.GridEX.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2010;
-            this.GridEX.VisualStyleManager = this.visualStyleManager;
             // 
             // uiGroupBox1
             // 
             this.uiGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.uiGroupBox1.Controls.Add(this.gridEX1);
-            this.uiGroupBox1.Location = new System.Drawing.Point(343, 3);
+            this.uiGroupBox1.Location = new System.Drawing.Point(305, 3);
             this.uiGroupBox1.Name = "uiGroupBox1";
-            this.uiGroupBox1.Size = new System.Drawing.Size(693, 355);
+            this.uiGroupBox1.Size = new System.Drawing.Size(731, 358);
             this.uiGroupBox1.TabIndex = 3;
             this.uiGroupBox1.Text = "Набор для генерации";
-            // 
-            // gridEX1
-            // 
-            this.gridEX1.AllowDelete = Janus.Windows.GridEX.InheritableBoolean.True;
-            this.gridEX1.ColumnAutoResize = true;
-            gridEX1_DesignTimeLayout.LayoutString = resources.GetString("gridEX1_DesignTimeLayout.LayoutString");
-            this.gridEX1.DesignTimeLayout = gridEX1_DesignTimeLayout;
-            this.gridEX1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridEX1.GroupByBoxVisible = false;
-            this.gridEX1.Location = new System.Drawing.Point(3, 16);
-            this.gridEX1.Name = "gridEX1";
-            this.gridEX1.Size = new System.Drawing.Size(687, 336);
-            this.gridEX1.TabIndex = 2;
-            this.gridEX1.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2010;
-            this.gridEX1.VisualStyleManager = this.visualStyleManager;
             // 
             // btGenerate
             // 
@@ -219,11 +182,7 @@
             this.uiTab1.ResumeLayout(false);
             this.uiTabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox2)).EndInit();
-            this.uiGroupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiGroupBox1)).EndInit();
-            this.uiGroupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridEX1)).EndInit();
             this.uiTabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.schedule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon1)).EndInit();
@@ -237,13 +196,11 @@
         private Janus.Windows.UI.Tab.UITabPage uiTabPage1;
         private Janus.Windows.UI.Tab.UITabPage uiTabPage2;
         private Janus.Windows.Schedule.Schedule schedule;
-        private Janus.Windows.GridEX.GridEX GridEX;
         private Janus.Windows.EditControls.UIButton btGenerate;
         private Janus.Windows.Ribbon.Ribbon ribbon1;
         private Janus.Windows.Ribbon.RibbonTab ribbonTab1;
         private Janus.Windows.EditControls.UIButton uiButton1;
         private Janus.Windows.EditControls.UIGroupBox uiGroupBox2;
         private Janus.Windows.EditControls.UIGroupBox uiGroupBox1;
-        private Janus.Windows.GridEX.GridEX gridEX1;
     }
 }

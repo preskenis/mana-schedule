@@ -107,7 +107,7 @@
             this.btImport.Image = ((System.Drawing.Image)(resources.GetObject("btImport.Image")));
             this.btImport.Key = "buttonCommand1";
             this.btImport.Name = "btImport";
-            this.btImport.Text = "Импорт команд из Excel";
+            this.btImport.Text = "Импорт команд из буфера обмена";
             this.btImport.Click += new Janus.Windows.Ribbon.CommandEventHandler(this.btImport_Click);
             // 
             // btImportAkkr
@@ -115,7 +115,7 @@
             this.btImportAkkr.Image = ((System.Drawing.Image)(resources.GetObject("btImportAkkr.Image")));
             this.btImportAkkr.Key = "buttonCommand1";
             this.btImportAkkr.Name = "btImportAkkr";
-            this.btImportAkkr.Text = "Импорт аккредитации";
+            this.btImportAkkr.Text = "Импорт аккредитации из буфера обмена";
             this.btImportAkkr.Click += new Janus.Windows.Ribbon.CommandEventHandler(this.btImportAkkr_Click);
             // 
             // ribbonGroup2

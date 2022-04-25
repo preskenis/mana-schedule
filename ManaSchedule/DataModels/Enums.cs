@@ -136,6 +136,8 @@ namespace ManaSchedule.DataModels
 
         [Display(Name = "Флаг")]
         Flag,
+        [Display(Name = "Главный вход")]
+        GlavVhod,
         [Display(Name = "Обозн. территории")]
         Territory,
         [Display(Name = "Дежурный")]
@@ -164,6 +166,11 @@ namespace ManaSchedule.DataModels
         Stend,
         [Display(Name = "Фишки")]
         Fishki,
+        [Display(Name = "Тема 45")]
+        Tema45,
+        [Display(Name = "Бейджик")]
+        Beidj,
+
         [Display(Name = "Лапник")]
         Lapnik,
         [Display(Name = "Плохое повед.")]

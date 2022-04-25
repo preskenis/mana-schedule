@@ -24,6 +24,7 @@ namespace ManaSchedule.Services
         }
 
 
+
         public void SetTeamScore(Team team, double place, double score, string description)
         {
             if (team == null) return;
@@ -33,6 +34,14 @@ namespace ManaSchedule.Services
             sc.Place = place;
             sc.Description = description;
         }
+
+        public CompetitionScore GetCurrentTeamScore(Team team)
+        {
+            if (team == null) return null;
+
+            return DbContext.CompetitionScoreSet.FirstOrDefault(f => f.CompetitionId == Competition.Id && f.TeamId == team.Id);
+        }
+
 
         public static GameService GetGameService(Competition competition, Db dbContext)
         {

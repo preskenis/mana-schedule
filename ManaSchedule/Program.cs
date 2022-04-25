@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ManaSchedule.Services;
 
 namespace ManaSchedule
 {
@@ -20,6 +21,9 @@ namespace ManaSchedule
         {
             try
             {
+
+                var a = ExcelService.GetTableFromClipboard();
+
 
               //  File.Delete(@"h:\Mana\mana-schedule\mana-schedule\ManaSchedule\bin\Debug\mana.sdf");
            

@@ -84,9 +84,9 @@
             // Design Time Panel Info:
             // 
             this.uiPanelManager1.BeginPanelInfo();
-            this.uiPanelManager1.AddDockPanelInfo(new System.Guid("63dc40c2-d4b2-4ddd-83e0-e88625addc58"), Janus.Windows.UI.Dock.PanelDockStyle.Left, new System.Drawing.Size(200, 200), true);
-            this.uiPanelManager1.AddDockPanelInfo(new System.Guid("c1b7d686-bfcd-4319-b2f4-6720029833eb"), Janus.Windows.UI.Dock.PanelDockStyle.Fill, new System.Drawing.Size(415, 200), true);
-            this.uiPanelManager1.AddDockPanelInfo(new System.Guid("9e72db4a-8475-4359-ada8-cc5348174d31"), Janus.Windows.UI.Dock.PanelDockStyle.Right, new System.Drawing.Size(200, 200), true);
+            this.uiPanelManager1.AddDockPanelInfo(new System.Guid("63dc40c2-d4b2-4ddd-83e0-e88625addc58"), Janus.Windows.UI.Dock.PanelDockStyle.Left, new System.Drawing.Size(200, 188), true);
+            this.uiPanelManager1.AddDockPanelInfo(new System.Guid("c1b7d686-bfcd-4319-b2f4-6720029833eb"), Janus.Windows.UI.Dock.PanelDockStyle.Fill, new System.Drawing.Size(415, 188), true);
+            this.uiPanelManager1.AddDockPanelInfo(new System.Guid("9e72db4a-8475-4359-ada8-cc5348174d31"), Janus.Windows.UI.Dock.PanelDockStyle.Right, new System.Drawing.Size(200, 188), true);
             this.uiPanelManager1.AddFloatingPanelInfo(new System.Guid("63dc40c2-d4b2-4ddd-83e0-e88625addc58"), new System.Drawing.Point(-1, -1), new System.Drawing.Size(-1, -1), false);
             this.uiPanelManager1.AddFloatingPanelInfo(new System.Guid("9e72db4a-8475-4359-ada8-cc5348174d31"), new System.Drawing.Point(-1, -1), new System.Drawing.Size(-1, -1), false);
             this.uiPanelManager1.AddFloatingPanelInfo(new System.Guid("c1b7d686-bfcd-4319-b2f4-6720029833eb"), new System.Drawing.Point(-1, -1), new System.Drawing.Size(-1, -1), false);
@@ -98,7 +98,7 @@
             this.uiPanel1.InnerContainer = this.uiPanel1Container;
             this.uiPanel1.Location = new System.Drawing.Point(3, 147);
             this.uiPanel1.Name = "uiPanel1";
-            this.uiPanel1.Size = new System.Drawing.Size(200, 200);
+            this.uiPanel1.Size = new System.Drawing.Size(200, 188);
             this.uiPanel1.TabIndex = 4;
             this.uiPanel1.Text = "Игры";
             // 
@@ -107,7 +107,7 @@
             this.uiPanel1Container.Controls.Add(this.Explorer);
             this.uiPanel1Container.Location = new System.Drawing.Point(1, 23);
             this.uiPanel1Container.Name = "uiPanel1Container";
-            this.uiPanel1Container.Size = new System.Drawing.Size(194, 176);
+            this.uiPanel1Container.Size = new System.Drawing.Size(194, 164);
             this.uiPanel1Container.TabIndex = 0;
             // 
             // Explorer
@@ -116,7 +116,7 @@
             this.Explorer.Location = new System.Drawing.Point(0, 0);
             this.Explorer.Model = null;
             this.Explorer.Name = "Explorer";
-            this.Explorer.Size = new System.Drawing.Size(194, 176);
+            this.Explorer.Size = new System.Drawing.Size(194, 164);
             this.Explorer.TabIndex = 0;
             this.Explorer.SelectionChanged += new System.EventHandler(this.Explorer_SelectionChanged);
             // 
@@ -127,7 +127,7 @@
             this.uiPanel3.InnerContainer = this.uiPanel3Container;
             this.uiPanel3.Location = new System.Drawing.Point(618, 147);
             this.uiPanel3.Name = "uiPanel3";
-            this.uiPanel3.Size = new System.Drawing.Size(200, 200);
+            this.uiPanel3.Size = new System.Drawing.Size(200, 188);
             this.uiPanel3.TabIndex = 4;
             this.uiPanel3.Text = "Справка";
             // 
@@ -136,7 +136,7 @@
             this.uiPanel3Container.Controls.Add(this.rtfHelp);
             this.uiPanel3Container.Location = new System.Drawing.Point(5, 23);
             this.uiPanel3Container.Name = "uiPanel3Container";
-            this.uiPanel3Container.Size = new System.Drawing.Size(194, 176);
+            this.uiPanel3Container.Size = new System.Drawing.Size(194, 164);
             this.uiPanel3Container.TabIndex = 0;
             // 
             // rtfHelp
@@ -144,7 +144,7 @@
             this.rtfHelp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtfHelp.Location = new System.Drawing.Point(0, 0);
             this.rtfHelp.Name = "rtfHelp";
-            this.rtfHelp.Size = new System.Drawing.Size(194, 176);
+            this.rtfHelp.Size = new System.Drawing.Size(194, 164);
             this.rtfHelp.TabIndex = 0;
             this.rtfHelp.Text = "";
             // 
@@ -154,7 +154,7 @@
             this.uiPanel2.InnerContainer = this.uiPanel2Container;
             this.uiPanel2.Location = new System.Drawing.Point(203, 147);
             this.uiPanel2.Name = "uiPanel2";
-            this.uiPanel2.Size = new System.Drawing.Size(415, 200);
+            this.uiPanel2.Size = new System.Drawing.Size(415, 188);
             this.uiPanel2.TabIndex = 4;
             this.uiPanel2.Text = "Panel 2";
             // 
@@ -162,7 +162,7 @@
             // 
             this.uiPanel2Container.Location = new System.Drawing.Point(1, 23);
             this.uiPanel2Container.Name = "uiPanel2Container";
-            this.uiPanel2Container.Size = new System.Drawing.Size(413, 176);
+            this.uiPanel2Container.Size = new System.Drawing.Size(413, 164);
             this.uiPanel2Container.TabIndex = 0;
             // 
             // officeFormAdorner1
@@ -233,7 +233,7 @@
             // 
             // ribbonStatusBar1
             // 
-            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 350);
+            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 338);
             this.ribbonStatusBar1.Name = "ribbonStatusBar1";
             this.ribbonStatusBar1.Size = new System.Drawing.Size(821, 23);
             // 
@@ -258,7 +258,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 373);
+            this.ClientSize = new System.Drawing.Size(821, 361);
             this.Controls.Add(this.uiPanel2);
             this.Controls.Add(this.uiPanel3);
             this.Controls.Add(this.uiPanel1);
@@ -266,7 +266,7 @@
             this.Controls.Add(this.MainRibbon);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "Мана 2016";
+            this.Text = "Мана 2019 (Юбилейная)";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);

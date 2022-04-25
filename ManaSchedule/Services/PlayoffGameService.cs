@@ -1,8 +1,10 @@
 ﻿using ManaSchedule.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using NPOI.HSSF.Record.Aggregates;
 
 namespace ManaSchedule.Services
 {
@@ -285,7 +287,26 @@ namespace ManaSchedule.Services
 
         public List<Game> GetTeamGames(Team team)
         {
-            return DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id && (f.TeamId == team.Id || f.Team2_Id == team.Id)).ToList();
+            DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id).Load();
+
+            var competitionGames = DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id).ToList();
+
+            var result = new List<Game>();
+            foreach (var game in competitionGames)
+            {
+                if (game.TeamId.HasValue && game.TeamId == team.Id)
+                {
+                    result.Add(game);
+                }else if (game.Team2_Id.HasValue && game.Team2_Id == team.Id)
+                {
+                    result.Add(game);
+                }
+            }
+
+
+            return result;
+
+            
         }
 
         public List<Game> GetNextStageGames(Stage stage)
@@ -304,8 +325,13 @@ namespace ManaSchedule.Services
 
         public override void UpdateGame(Game game)
         {
+            var placesOnCurrentStage = GetCompetitionGames().Count(f => (int)f.Stage.Type <= (int)game.Stage.Type);
+
+
             if (game.Winner != null)
             {
+                var games = GetTeamGames(game.Winner);
+
                 var nextStageGames = GetNextStageGames(game.Stage);
                 SetTeamScore(game.Winner, nextStageGames.Count, nextStageGames.Count, "Победа в этапе " + game.Stage.Name);
                 switch (game.Stage.Type)
@@ -327,70 +353,147 @@ namespace ManaSchedule.Services
                         var currentStageGames = GetCurrentStageGames(game.Stage).Count;
                         double place = 0;
                         for (int i = nextStageGames +1; i <= nextStageGames+currentStageGames; i++)place+=i;
-                        SetTeamScore(game.Looser, place / currentStageGames, place / currentStageGames, "Проигрыш в этапе " + game.Stage.Name);
+                            SetTeamScore(game.Looser, place / currentStageGames, place / currentStageGames, "Проигрыш в этапе " + game.Stage.Name);
                         break;
                 }
             }
 
-            if (game.Team != null && game.Team1Missed == true && GetTeamGames(game.Team).Count < 2)
+
+
+            if (game.Team != null && game.Team1Missed == true)
             {
-                SetTeamScore(game.Team, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
+                
+                if (IsPreviousGameWinner(game.Team, game))
+                {
+                    double place = placesOnCurrentStage + 1;
+
+                    SetTeamScore(game.Team, Math.Min(TeamsCount + 1, place), Math.Min(TeamsCount + 1, place), "Неявка на этап " + game.Stage.Name);
+                }
+                else
+                {
+                    SetTeamScore(game.Team, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
+                }
             }
 
-            if (game.Team2 != null && game.Team2Missed == true && GetTeamGames(game.Team2).Count < 2)
+            if (game.Team2 != null && game.Team2Missed == true)
             {
-                SetTeamScore(game.Team2, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
+                if (IsPreviousGameWinner(game.Team2, game))
+                {
+                    double place = placesOnCurrentStage + 1;
+
+                    SetTeamScore(game.Team2, Math.Min(TeamsCount + 1, place), Math.Min(TeamsCount + 1, place), "Неявка на этап " + game.Stage.Name);
+
+                }
+                else
+                {
+                    SetTeamScore(game.Team2, TeamsCount + 1, TeamsCount + 1, "Неявка на турнир");
+                }
             }
 
+            DbContext.SaveChanges();
 
+
+            
 
             var nextGames = DbContext.GameSet.Local.Where(f => f.ParentGame1 == game || f.ParentGame2 == game).ToList();
 
-            if (nextGames.Count == 0 || !game.Team1Missed.HasValue || !game.Team2Missed.HasValue)
-            {
-                DbContext.SaveChanges();
-                return;
-            }
-
-            if (game.IsMissing)
-                foreach (var nextGame in nextGames)
-                {
-                    if (nextGame.ParentGame1 == game) nextGame.Team1Missed = true;
-                    if (nextGame.ParentGame2 == game) nextGame.Team2Missed = true;
-                    UpdateGame(nextGame);
-                }
-            else
-            {
-                if (game.Winner != null)
+            //if (nextGames.Count == 0 || !game.Team1Missed.HasValue || !game.Team2Missed.HasValue)
+            //{
+                
+            //}
+            //else
+            //{
+                if (game.IsMissing)
                     foreach (var nextGame in nextGames)
                     {
-                        if (nextGame.ParentGame1 == game && nextGame.Stage.Type != StageType.Third)
+                        if (nextGame.ParentGame1 == game)
                         {
-                            nextGame.Team = game.Winner;
-                            UpdateGame(nextGame);
-                        }
-                        if (nextGame.ParentGame2 == game && nextGame.Stage.Type != StageType.Third)
-                        {
-                            nextGame.Team2 = game.Winner;
-                            UpdateGame(nextGame);
+                            nextGame.Team1Missed = true;
+                            nextGame.Team = null;
                         }
 
-                        if (nextGame.ParentGame1 == game && nextGame.Stage.Type == StageType.Third)
+                        if (nextGame.ParentGame2 == game)
                         {
-                            nextGame.Team = game.Looser;
-                            nextGame.Team1Missed = game.Looser == null;
-                            UpdateGame(nextGame);
+                            nextGame.Team2Missed = true;
+                            nextGame.Team2 = null;
                         }
-                        if (nextGame.ParentGame2 == game && nextGame.Stage.Type == StageType.Third)
-                        {
-                            nextGame.Team2 = game.Looser;
-                            nextGame.Team2Missed = game.Looser == null;
-                            UpdateGame(nextGame);
-                        }
+                        UpdateGame(nextGame);
                     }
-            }
-           
+                else
+                {
+                    //if (game.Winner != null)
+                        foreach (var nextGame in nextGames)
+                        {
+                            if (nextGame.ParentGame1 == game && nextGame.Stage.Type != StageType.Third)
+                            {
+                                nextGame.Team = game.Winner;
+                                UpdateGame(nextGame);
+                            }
+
+                            if (nextGame.ParentGame2 == game && nextGame.Stage.Type != StageType.Third)
+                            {
+                                nextGame.Team2 = game.Winner;
+                                UpdateGame(nextGame);
+                            }
+
+                            if (nextGame.ParentGame1 == game && nextGame.Stage.Type == StageType.Third)
+                            {
+                                nextGame.Team = game.Looser;
+                                nextGame.Team1Missed = game.Looser == null;
+                                UpdateGame(nextGame);
+                            }
+
+                            if (nextGame.ParentGame2 == game && nextGame.Stage.Type == StageType.Third)
+                            {
+                                nextGame.Team2 = game.Looser;
+                                nextGame.Team2Missed = game.Looser == null;
+                                UpdateGame(nextGame);
+                            }
+                        }
+                }
+            //}
+
             DbContext.SaveChanges();
+
+
+
+           
+
+
+
+        }
+
+        private List<Game> GetCompetitionGames()
+        {
+            return DbContext.GameSet.Where(f => f.CompetitionId == Competition.Id).ToList();
+        }
+
+        private bool IsPreviousGameWinner(Team team, Game game)
+        {
+            if (game.ParentGame1 != null && game.ParentGame1.Winner != null && game.ParentGame1.Winner.Id == team.Id) return true;
+            if (game.ParentGame2 != null && game.ParentGame2.Winner != null && game.ParentGame2.Winner.Id == team.Id) return true;
+
+            return false;
+        }
+
+        private bool TeamPlayedAnyGames(Team team)
+        {
+           
+            foreach (var game in GetTeamGames(team))
+            {
+                if (game.IsMissing) continue;
+                if (game.Team1Missed != null && game.Team != null && game.Team.Id == team.Id && !game.Team1Missed.Value && !game.Team1Cancel)
+                {
+                    return true;
+                }
+
+                if (game.Team2Missed != null && game.Team2 != null && game.Team2.Id == team.Id && !game.Team2Missed.Value && !game.Team2Cancel)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void UpdateParents(Game game)

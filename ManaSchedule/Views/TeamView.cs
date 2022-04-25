@@ -47,79 +47,60 @@ namespace ManaSchedule.Views
             }
         }
 
+        public string[] GetCommandsFromClipboard()
+        {
+            MessageBox.Show(this, "Скопируйте команд из экселя в буфер обмена (заголовок не включайте) и нажмите OK", "Импорт команд", MessageBoxButtons.OK);
+            var commands = Clipboard.GetText().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim()).Where(f => !string.IsNullOrEmpty(f)).ToList();
+
+            var skip = new string[] {"название", "команда", "наименование"};
+
+            return commands.Where(f => !skip.Any(v => string.Compare(f, v, StringComparison.InvariantCultureIgnoreCase) == 0)).ToArray();
+
+
+        }
+
         private void btImport_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
-             using (var fs = new OpenFileDialog() { Filter = "Excel (*.xl*)|*.xl*" })
 
-                if (fs.ShowDialog(this) == DialogResult.OK)
-                {
-                    var workbook = new NPOI.XSSF.UserModel.XSSFWorkbook(fs.OpenFile());
-                    var sheet = workbook.GetSheetAt(0);
-                    var naimIndex = -1;
-                    var cell = sheet.GetRow(0).Cells.Where(f=>f.CellType == NPOI.SS.UserModel.CellType.String).FirstOrDefault(f => f.StringCellValue.ToLower() == "наименование");
 
-                    var names = new List<string>();
-                    foreach (var r in sheet)
-                    {
-                        var row = r as IRow;
-                        if (row == null || row.RowNum == 0 || row.GetCell(cell.ColumnIndex).CellType != CellType.String) continue;
+            var names = GetCommandsFromClipboard().OrderBy(f => f).ToList();
 
-                        names.Add(row.GetCell(cell.ColumnIndex).StringCellValue.Trim());
-                    }
-                    names = names.OrderBy(f => f).ToList();
+            foreach (var name in names.ToList())
+            {
+                var alt = name + ";";
+                if (DbContext.TeamSet.Local.Any(f => string.Compare(f.Name, name, true) == 0 || f.AlternativeNames.Contains(alt)))
+                    names.Remove(name);
+            }
 
-                    foreach (var name in names.ToList())
-                    {
-                        var alt = name + ";";
-                        if (DbContext.TeamSet.Local.Any(f => string.Compare(f.Name,name,true) == 0 || f.AlternativeNames.Contains(alt)))
-                            names.Remove(name);
-                    }
+            using (var form = new ExcelImportForm(DbContext, names))
+                form.ShowDialog();
 
-                    using (var form = new ExcelImportForm(DbContext,names))
-                        form.ShowDialog();
-                }
 
-           
-            
+
+
         }
 
         private void btImportAkkr_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
-            using (var fs = new OpenFileDialog() { Filter = "Excel (*.xl*)|*.xl*" })
 
-                if (fs.ShowDialog(this) == DialogResult.OK)
+            var names = GetCommandsFromClipboard().OrderBy(f => f).ToList();
+
+            DbContext.TeamSet.Local.ToList().ForEach(f => f.Used = false);
+
+            foreach (var name in names.ToList())
+            {
+                var alt = name + ";";
+
+                if (DbContext.TeamSet.Local.Any(f => string.Compare(f.Name, name, true) == 0 || f.AlternativeNames.Contains(alt)))
                 {
-                    var workbook = new NPOI.XSSF.UserModel.XSSFWorkbook(fs.OpenFile());
-                    var sheet = workbook.GetSheetAt(0);
-                    var naimIndex = -1;
-                    var cell = sheet.GetRow(0).Cells.Where(f=>f.CellType == NPOI.SS.UserModel.CellType.String).FirstOrDefault(f => f.StringCellValue.ToLower() == "наименование");
-
-                    var names = new List<string>();
-                    foreach (var r in sheet)
-                    {
-                        var row = r as IRow;
-                        if (row == null || row.RowNum == 0 || row.GetCell(cell.ColumnIndex).CellType != CellType.String) continue;
-
-                        names.Add(row.GetCell(cell.ColumnIndex).StringCellValue.Trim());
-                    }
-                    names = names.OrderBy(f => f).ToList();
-
-                    DbContext.TeamSet.Local.ToList().ForEach(f => f.Used = false);
-
-                    foreach (var name in names.ToList())
-                    {
-                        var alt = name + ";";
-                        
-                        if (DbContext.TeamSet.Local.Any(f => string.Compare(f.Name,name,true) == 0 || f.AlternativeNames.Contains(alt)))
-                        {
-                            DbContext.TeamSet.Local.First(f => string.Compare(f.Name, name, true) == 0 || f.AlternativeNames.Contains(alt)).Used = true;
-                        }
-                    }
-
-                
+                    DbContext.TeamSet.Local.First(f => string.Compare(f.Name, name, true) == 0 || f.AlternativeNames.Contains(alt)).Used = true;
                 }
+            }
+
 
         }
+
+
 
         private void btExportNoZhereb_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
