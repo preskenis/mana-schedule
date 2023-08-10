@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             Janus.Windows.GridEX.GridEXLayout GridEX_DesignTimeLayout = new Janus.Windows.GridEX.GridEXLayout();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZherebExcelImportForm));
             this.GridEX = new Janus.Windows.GridEX.GridEX();
             this.uiButton1 = new Janus.Windows.EditControls.UIButton();
             this.uiButton2 = new Janus.Windows.EditControls.UIButton();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.importItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.importItemBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // GridEX
@@ -43,6 +48,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GridEX.ColumnAutoResize = true;
+            this.GridEX.DataSource = this.importItemBindingSource;
             GridEX_DesignTimeLayout.LayoutString = resources.GetString("GridEX_DesignTimeLayout.LayoutString");
             this.GridEX.DesignTimeLayout = GridEX_DesignTimeLayout;
             this.GridEX.Location = new System.Drawing.Point(12, 12);
@@ -75,6 +81,14 @@
             this.uiButton2.TabIndex = 5;
             this.uiButton2.Text = "Отмена";
             // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(ManaSchedule.DataModels.ImportItem);
+            // 
+            // importItemBindingSource
+            // 
+            this.importItemBindingSource.DataSource = typeof(ManaSchedule.DataModels.ImportItem);
+            // 
             // ZherebExcelImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -88,6 +102,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Импорт жеребьевки";
             ((System.ComponentModel.ISupportInitialize)(this.GridEX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.importItemBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -97,5 +113,7 @@
         private Janus.Windows.GridEX.GridEX GridEX;
         private Janus.Windows.EditControls.UIButton uiButton1;
         private Janus.Windows.EditControls.UIButton uiButton2;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.BindingSource importItemBindingSource;
     }
 }

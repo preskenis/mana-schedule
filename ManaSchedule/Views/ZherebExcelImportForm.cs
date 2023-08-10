@@ -14,15 +14,12 @@ using ManaSchedule.Services;
 
 namespace ManaSchedule.Views
 {
+
+   
+
     public partial class ZherebExcelImportForm : Form
     {
-        public class ImportItem
-        {
-            public string Number { get; set; }
-            public Team Team { get; set; }
-            public bool IsPastWinner { get; set; }
-            public double? PastWinnerPlace { get; set; }
-        }
+        
 
         public ZherebExcelImportForm()
         {
@@ -39,6 +36,8 @@ namespace ManaSchedule.Views
             {
                 DbContext = dbContext;
                 Competition = competition;
+
+                this.Text += $" {Competition.Name}";
 
                 DbContext.TeamSet.Load();
                 this.GridEX.RootTable.Columns["Team"].HasValueList = true;
@@ -62,10 +61,14 @@ namespace ManaSchedule.Views
 
 
                         ICell zherCell = null;
-                        foreach (var c in sheet.GetRow(0).Cells.Where(f => f.CellType == CellType.String).Reverse())
+                        foreach (var c in sheet.GetRow(0).Cells.Where(f => 
+                                     f.CellType == CellType.String && 
+                                     !string.IsNullOrEmpty(f.StringCellValue))
+                                     .OrderBy(f=>Math.Abs(string.Compare(Competition.Name.Substring(0,2), f.StringCellValue.Substring(0,2), StringComparison.InvariantCultureIgnoreCase))
+                                 ))
                         {
                             switch (
-                                MessageBox.Show(this, string.Format("Колонка '{0}' это номер жеребьевки?", c.StringCellValue), "выберите колонку", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                                MessageBox.Show(this, string.Format($"Колонка '{c.StringCellValue}' это номер жеребьевки для '{Competition.Name}'?" ), "выберите колонку", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                             {
                                 case System.Windows.Forms.DialogResult.Yes:
                                     zherCell = c;
@@ -115,13 +118,30 @@ namespace ManaSchedule.Views
 
                             if (!team.Used)
                             {
-                                MessageBox.Show(this, "Файл содержит команды без аккредитации! Импорта не будет.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(this, $"Файл содержит команду '{name}' без аккредитации! Импорта не будет.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 DialogResult = System.Windows.Forms.DialogResult.Cancel;
                                 return;
                             }
 
+                            var number = row.GetCell(zherCell.ColumnIndex) != null ? row.GetCell(zherCell.ColumnIndex).ToString().Trim() : "";
 
-                            data.Add(new ImportItem() { Team = team, Number = row.GetCell(zherCell.ColumnIndex) != null ? row.GetCell(zherCell.ColumnIndex).ToString().Trim() : "" });
+                            var item = new ImportItem() { Team = team, Number = number };
+                           
+                            if (item.Number.Contains("1/8") || item.Number.Contains(@"1\8"))
+                            {
+                                item.Number = "";
+                                item.IsPastWinner = true;
+                            }
+
+                            if (!string.IsNullOrEmpty(item.Number) && !int.TryParse(item.Number, out var number1))
+                            {
+                                MessageBox.Show(this, $"Неправильный номер жеребьевки у команды {item.Team.Name}: '{item.Number}'", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                                return;
+                            }
+                           
+
+                            data.Add(item);
 
                         }
 
@@ -130,11 +150,7 @@ namespace ManaSchedule.Views
                     }
                     else
                         DialogResult = System.Windows.Forms.DialogResult.Cancel;
-
-
-
-
-
+                
             }
             catch (Exception ex)
             {

@@ -423,18 +423,6 @@
             </summary>
             <param name="e">A CommandEventArgs that contains the event data</param>
         </member>
-        <member name="M:Janus.Windows.Ribbon.CommandBase.OnEnabledChanged(Janus.Windows.Ribbon.CommandEventArgs)">
-            <summary>
-            Raises the Janus.Windows.Ribbon.Command.EnabledChanged event
-            </summary>
-            <param name="e">A CommandEventArgs that contains the event data</param>
-        </member>
-        <member name="M:Janus.Windows.Ribbon.CommandBase.OnVisibleChanged(Janus.Windows.Ribbon.CommandEventArgs)">
-            <summary>
-            Raises the Janus.Windows.Ribbon.Command.VisibleChanged event
-            </summary>
-            <param name="e">A CommandEventArgs that contains the event data</param>
-        </member>
         <member name="F:Janus.Windows.Ribbon.CommandBase.components">
             <summary>
             Required designer variable.
@@ -535,16 +523,6 @@
         <member name="E:Janus.Windows.Ribbon.CommandBase.Click">
             <summary>
             Occurs when the Command is clicked.
-            </summary>
-        </member>
-        <member name="E:Janus.Windows.Ribbon.CommandBase.EnabledChanged">
-            <summary>
-            Occurs when the Enabled property is changed
-            </summary>
-        </member>
-        <member name="E:Janus.Windows.Ribbon.CommandBase.VisibleChanged">
-            <summary>
-            Occurs when the Visible property is changed
             </summary>
         </member>
         <member name="T:Janus.Windows.Ribbon.BackstageMenu">
@@ -1247,11 +1225,6 @@
             </summary>
             <param name="pos">A Point object that specifies the coordinates at which to display the menu.</param>
         </member>
-        <member name="M:Janus.Windows.Ribbon.RibbonContextMenu.Close">
-            <summary>
-            Hides the menu window.
-            </summary>
-        </member>
         <member name="M:Janus.Windows.Ribbon.RibbonContextMenu.OnCommandDropDownClosing(Janus.Windows.Ribbon.DropDownClosingEventArgs)">
             <summary>
             Raises the CommandDropDownClosing event.
@@ -1389,11 +1362,6 @@
         <member name="P:Janus.Windows.Ribbon.RibbonContextMenu.MaxDropDownItems">
             <summary>
             Gets or sets a value indicating the maximum number of child commands to display in the dropdown list
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.RibbonContextMenu.Tag">
-            <summary>
-            Gets or sets an object that contains data to associate with the RibbonContextMenu.
             </summary>
         </member>
         <member name="P:Janus.Windows.Ribbon.RibbonContextMenu.SourceControl">
@@ -2886,12 +2854,6 @@
             <param name="text">The Text of the new TextBoxCommand</param>
             <param name="imageIndex">The image list index value of the image displayed in the command.</param>
         </member>
-        <member name="M:Janus.Windows.Ribbon.TextBoxCommand.Clone">
-            <summary>
-            Creates a new ContainerControlCommand that is a copy of the current instance.
-            </summary>
-            <returns>A ContainerControlCommand representing a copy of this object. </returns>
-        </member>
         <member name="M:Janus.Windows.Ribbon.TextBoxCommand.Dispose(System.Boolean)">
             <summary>
             Overrides Component.Dispose
@@ -3441,46 +3403,6 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.Check">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.chevronDown2010">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.chevronUp2010">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.groupglyph">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.help">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.help10">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.help2010">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:Janus.Windows.Ribbon.ResourceFile.PIN2010">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
         <member name="T:Janus.Windows.Ribbon.Design.ObjectTypeEditor">

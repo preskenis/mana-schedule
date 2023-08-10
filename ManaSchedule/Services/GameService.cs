@@ -42,6 +42,14 @@ namespace ManaSchedule.Services
             return DbContext.CompetitionScoreSet.FirstOrDefault(f => f.CompetitionId == Competition.Id && f.TeamId == team.Id);
         }
 
+        public static IEnumerable<GameService> GetGameServices(Db dbContext)
+        {
+            foreach (var competition in dbContext.CompetitionSet)
+            {
+                yield return GetGameService(competition, dbContext);
+            }
+        }
+
 
         public static GameService GetGameService(Competition competition, Db dbContext)
         {

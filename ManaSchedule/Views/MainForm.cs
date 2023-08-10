@@ -79,7 +79,7 @@ namespace ManaSchedule.Views
                     }
                     _contentView.Visible = true;
 
-                    Text = string.Format("Мана 2016 - {0}", _contentView.ContentCaption);
+                    Text = string.Format("Мана 2022 - {0}", _contentView.ContentCaption);
 
                     LoadHelp();
                    

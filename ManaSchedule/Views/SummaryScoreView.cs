@@ -11,6 +11,7 @@ using System.Data.Entity;
 using Janus.Windows.GridEX;
 using NPOI.HSSF.UserModel;
 using System.IO;
+using ManaSchedule.Services;
 
 namespace ManaSchedule.Views
 {
@@ -152,7 +153,15 @@ namespace ManaSchedule.Views
 
         private void btClearAll_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
         {
+            if (MessageBox.Show(this, "Вы уверены что хотите удалить все игры? Отменить нельзя!", "Удаление всех игр", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                foreach (var gameService in GameService.GetGameServices(DbContext))
+                {
+                    gameService.ClearAll();
+                }
+            }
 
+            Init();
         }
 
         private void btExportZhereb_Click(object sender, Janus.Windows.Ribbon.CommandEventArgs e)
