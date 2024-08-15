@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using NPOI.SS.UserModel;
 using ManaSchedule.Services;
 
@@ -64,8 +65,10 @@ namespace ManaSchedule.Views
                         foreach (var c in sheet.GetRow(0).Cells.Where(f => 
                                      f.CellType == CellType.String && 
                                      !string.IsNullOrEmpty(f.StringCellValue))
-                                     .OrderBy(f=>Math.Abs(string.Compare(Competition.Name.Substring(0,2), f.StringCellValue.Substring(0,2), StringComparison.InvariantCultureIgnoreCase))
-                                 ))
+                                     .OrderBy(f=>Math.Abs(string.Compare(PrepareCell(Competition.Name), PrepareCell(f.StringCellValue), StringComparison.InvariantCultureIgnoreCase))))
+
+                           // Math.Abs(string.Compare(Competition.Name.Substring(0,2), f.StringCellValue.Substring(0,2), StringComparison.InvariantCultureIgnoreCase))
+                                 
                         {
                             switch (
                                 MessageBox.Show(this, string.Format($"Колонка '{c.StringCellValue}' это номер жеребьевки для '{Competition.Name}'?" ), "выберите колонку", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
@@ -159,6 +162,18 @@ namespace ManaSchedule.Views
                 DialogResult = DialogResult.Abort;
             }
           
+        }
+
+        private string PrepareCell(string text)
+        {
+            var items = text.Split(new string[] { ".", " ", "-" }, StringSplitOptions.RemoveEmptyEntries);
+
+            var delete = new string[] { "конкурс", "песня"};
+
+            items = items.Where(f => !delete.Contains(f, StringComparer.InvariantCultureIgnoreCase)).ToArray();
+
+            return string.Join(" ", items);
+
         }
 
         private void uiButton1_Click(object sender, EventArgs e)

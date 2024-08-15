@@ -35,19 +35,21 @@
             // 
             this.LogLabel.AutoSize = true;
             this.LogLabel.BackColor = System.Drawing.Color.Transparent;
-            this.LogLabel.Location = new System.Drawing.Point(12, 278);
+            this.LogLabel.Location = new System.Drawing.Point(16, 342);
+            this.LogLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LogLabel.Name = "LogLabel";
-            this.LogLabel.Size = new System.Drawing.Size(0, 13);
+            this.LogLabel.Size = new System.Drawing.Size(0, 16);
             this.LogLabel.TabIndex = 0;
             // 
             // SplashForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::ManaSchedule.Properties.Resources.splash1;
-            this.ClientSize = new System.Drawing.Size(450, 300);
+            this.BackgroundImage = global::ManaSchedule.Properties.Resources.splash50;
+            this.ClientSize = new System.Drawing.Size(600, 369);
             this.Controls.Add(this.LogLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SplashForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

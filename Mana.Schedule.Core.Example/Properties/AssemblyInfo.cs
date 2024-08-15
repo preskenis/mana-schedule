@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Manafest.ru")]
 [assembly: AssemblyProduct("Mana.Schedule.Core.Example")]
-[assembly: AssemblyCopyright("Copyright © Manafest.ru 2022")]
+[assembly: AssemblyCopyright("Copyright © Manafest.ru 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
