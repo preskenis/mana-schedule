@@ -153,7 +153,7 @@
             // SummaryScoreView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ContentCaption = "Общий итог";
+            this.ContentCaption = "Общий итог 2025";
             this.Controls.Add(this.GridEX);
             this.Controls.Add(this.ribbon1);
             this.Name = "SummaryScoreView";

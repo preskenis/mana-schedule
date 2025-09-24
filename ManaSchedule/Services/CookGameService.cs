@@ -19,7 +19,7 @@ namespace ManaSchedule.Services
                 StageType.Otbor, new Dictionary<GameValueType, StageScoreSettings>()
             {
                 { GameValueType.Taste, new StageScoreSettings(0, 10) } ,
-                { GameValueType.Visual, new StageScoreSettings(0, 7) } ,
+                { GameValueType.Visual, new StageScoreSettings(0, 5) } ,
                 { GameValueType.CookShow, new StageScoreSettings(0, 3) } ,
                 { GameValueType.CommandSupport, new StageScoreSettings(0, 1) } ,
                 { GameValueType.NonUsedIngredients, new StageScoreSettings(-50, 0) } ,

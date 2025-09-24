@@ -38,24 +38,25 @@
             this.LogLabel.Location = new System.Drawing.Point(16, 342);
             this.LogLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LogLabel.Name = "LogLabel";
-            this.LogLabel.Size = new System.Drawing.Size(0, 16);
+            this.LogLabel.Size = new System.Drawing.Size(0, 17);
             this.LogLabel.TabIndex = 0;
             // 
             // SplashForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::ManaSchedule.Properties.Resources.splash50;
+            this.BackgroundImage = global::ManaSchedule.Properties.Resources.splash1;
             this.ClientSize = new System.Drawing.Size(600, 369);
             this.Controls.Add(this.LogLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SplashForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashForm";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.SplashForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

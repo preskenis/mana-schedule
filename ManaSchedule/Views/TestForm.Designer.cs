@@ -38,17 +38,19 @@
             // 
             gridEX1_DesignTimeLayout.LayoutString = resources.GetString("gridEX1_DesignTimeLayout.LayoutString");
             this.gridEX1.DesignTimeLayout = gridEX1_DesignTimeLayout;
-            this.gridEX1.Location = new System.Drawing.Point(212, 32);
+            this.gridEX1.Location = new System.Drawing.Point(283, 39);
+            this.gridEX1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gridEX1.Name = "gridEX1";
-            this.gridEX1.Size = new System.Drawing.Size(400, 376);
+            this.gridEX1.Size = new System.Drawing.Size(533, 463);
             this.gridEX1.TabIndex = 0;
             // 
             // TestForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.gridEX1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "TestForm";
             this.Text = "TestForm";
             ((System.ComponentModel.ISupportInitialize)(this.gridEX1)).EndInit();

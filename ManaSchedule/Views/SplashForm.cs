@@ -15,5 +15,10 @@ namespace ManaSchedule.Views
         {
             InitializeComponent();
         }
+
+        private void SplashForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

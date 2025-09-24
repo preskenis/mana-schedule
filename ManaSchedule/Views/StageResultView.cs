@@ -70,10 +70,41 @@ namespace ManaSchedule.Views
 
                 
                 grid.ColumnAutoSizeMode = ColumnAutoSizeMode.ColumnHeader;
-                grid.ColumnAutoResize = true;
 
-                grid.RootTable.Columns.Cast<GridEXColumn>().ToList().ForEach(f => 
+
+                // Rotate column headers if there are more than 10 columns
+                if (grid.RootTable.Columns.Count < 15)
                 {
+                    grid.ColumnAutoResize = true;
+                }
+                else
+                {
+                    
+                    grid.FrozenColumns = 2;
+                   
+                }
+
+                grid.RootTable.HeaderLines = 5;
+
+                grid.ColumnSetHeaders = InheritableBoolean.True;
+
+                grid.RowFormatStyle.FontSize = 10;
+
+                grid.RootTable.Columns.Cast<GridEXColumn>().ToList().ForEach(f =>
+                {
+
+                    if (!grid.ColumnAutoResize)
+                    {
+                        f.Width = f.DataMember == "Команда" ? 200 : 80 ;
+                    }
+
+                    f.HeaderAlignment = TextAlignment.Center;
+                    f.TextAlignment = TextAlignment.Center;
+
+                    
+
+                    f.WordWrap = true;
+
                     if (dt.Columns[f.DataMember].DataType == typeof(int))
                     {
                         var condition = new GridEXFormatCondition();
@@ -90,6 +121,8 @@ namespace ManaSchedule.Views
                     }
                 
                 });
+
+               
                 
 
                 Data.Add(referee, dt);
@@ -100,7 +133,9 @@ namespace ManaSchedule.Views
                 grid.RowHeaders = InheritableBoolean.True;
 
                 grid.EnsureVisible(1);
-                
+
+             
+
             }
 
             /*
@@ -188,6 +223,7 @@ namespace ManaSchedule.Views
                         )
                     {
                         e.Row.SetField<int?>(e.Row.Table.Columns[EnumHelper<GameValueType>.GetDisplayValue(valueType)], null);
+                        Console.Beep();
                     }
                     else
                     {

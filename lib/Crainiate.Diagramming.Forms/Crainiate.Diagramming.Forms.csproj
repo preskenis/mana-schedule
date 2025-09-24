@@ -114,7 +114,9 @@
     <Compile Include="LabelEdit.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Crainiate.Diagramming.Flowcharting\Flowchart.cs" />
+    <Compile Include="Crainiate.Diagramming.Flowcharting\Flowchart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Crainiate.Diagramming.Forms.Rendering\LinkRender.cs" />
     <Compile Include="Crainiate.Diagramming.Forms.Rendering\ShapeRender.cs" />
     <Compile Include="Crainiate.Diagramming.Printing\%28Exceptions%29.cs" />

@@ -80,26 +80,53 @@ namespace ManaSchedule.Services
                 StageType.Final, new Dictionary<GameValueType, StageScoreSettings>()
             {
      
-                {GameValueType.OtkrTeamSuite, new StageScoreSettings(0, 3) } ,
-                {GameValueType.OtkrManSuite, new StageScoreSettings(0, 5) } ,
-                {GameValueType.OtkrFlag, new StageScoreSettings(0, 2) } ,
-                {GameValueType.OtkrNakl, new StageScoreSettings(0, 3) } ,
-                {GameValueType.OtkrNastroi, new StageScoreSettings(0, 1) } ,
+                // Блок 1: "Во время открытия Слета"
+                { GameValueType.OtkrTeamSuite, new StageScoreSettings(0, 5) },      // Общекомандные костюмы (было до 3, стало до 5)
+                { GameValueType.OtkrManSuite, new StageScoreSettings(0, 8) },       // Индивидуальные костюмы (было до 5, стало до 8)
+                { GameValueType.OtkrFlag, new StageScoreSettings(0, 2) },           // Флаг или штандарт команды
+                { GameValueType.OtkrNakl, new StageScoreSettings(0, 3) },           // Командные атрибуты
+                { GameValueType.OtkrNastroi, new StageScoreSettings(0, 1) },        // Праздничный настрой
                 
-                {GameValueType.OtkrShowKras, new StageScoreSettings(0, 5) } ,
-                {GameValueType.OtkrShowZrel, new StageScoreSettings(0, 5) } ,
-                {GameValueType.OtkrShowReact, new StageScoreSettings(0, 3) } ,
-                {GameValueType.OtkrShowNastroi, new StageScoreSettings(0, 1) } ,
+                // Блок 2: "Во время выступления на Конкурсе Шоу-песни или Открытии"
+                // (оценивается одно из выступлений, критерии идентичны)
                 
-                {GameValueType.ShowKras, new StageScoreSettings(0, 5) } ,
-                {GameValueType.ShowZrel, new StageScoreSettings(0, 5) } ,
-                {GameValueType.ShowReact, new StageScoreSettings(0, 3) } ,
-                {GameValueType.ShowNastroi, new StageScoreSettings(0, 1) } ,
+                // Выступление на Открытии
+                { GameValueType.OtkrShowKras, new StageScoreSettings(0, 8) },       // Красочность выступления (было до 5, стало до 8)
+                { GameValueType.OtkrShowZrel, new StageScoreSettings(0, 8) },       // Зрелищность выступления (было до 5, стало до 8)
+                { GameValueType.OtkrShowReact, new StageScoreSettings(0, 3) },      // Реакция зрителей
+                { GameValueType.OtkrShowNastroi, new StageScoreSettings(0, 1) },    // Праздничный настрой
+
+                // Выступление на Шоу-песни
+                { GameValueType.ShowKras, new StageScoreSettings(0, 8) },           // Красочность выступления (было до 5, стало до 8)
+                { GameValueType.ShowZrel, new StageScoreSettings(0, 8) },           // Зрелищность выступления (было до 5, стало до 8)
+                { GameValueType.ShowReact, new StageScoreSettings(0, 3) },          // Реакция зрителей
+                { GameValueType.ShowNastroi, new StageScoreSettings(0, 1) },        // Праздничный настрой
                 
-                {GameValueType.InKras, new StageScoreSettings(0, 5) } ,
-                {GameValueType.InZrel, new StageScoreSettings(0, 5) } ,
-                {GameValueType.InNastroi, new StageScoreSettings(0, 1) } ,
+               
+                // Блок 3: "Во время проведения Манских прыжков в воду" (НОВЫЙ БЛОК)
+                { GameValueType.WaterJumpCostumeOriginality, new StageScoreSettings(0, 5) }, // Оригинальность костюма
+                { GameValueType.WaterJumpCostumeBeauty, new StageScoreSettings(0, 5) },      // Красочность костюма
+                { GameValueType.WaterJumpShow, new StageScoreSettings(0, 5) },               // Зрелищность шоу
+                { GameValueType.WaterJumpEffect, new StageScoreSettings(0, 3) },             // Эффектность прыжка
+                { GameValueType.WaterJumpPenalty, new StageScoreSettings(-18, 0) },          // Штраф за неадекватное поведение и др.
+
                 
+                // Блок 4: "Народное голосование" (НОВЫЙ БЛОК)
+                // Присуждаются фиксированные баллы: 6, 5 или 4. Диапазон 0-6 для валидации.
+                { GameValueType.PeoplesChoiceAward, new StageScoreSettings(0, 100) },
+
+                // Блок 5: "Во время проведения спортивных соревнований" (поддержка болельщиков)
+                // Предполагается, что можно оценить до 2-х разных соревнований
+                { GameValueType.SportSuite1, new StageScoreSettings(0, 1) },        // Костюмы
+                { GameValueType.SportSongs1, new StageScoreSettings(0, 2) },        // Кричалки
+                { GameValueType.SportSupport1, new StageScoreSettings(0, 1) },      // Активность
+                { GameValueType.SportNeadekvat1, new StageScoreSettings(-2, 0) },   // Неадекватное состояние (штраф был -1, стал -2)
+
+                { GameValueType.SportSuite2, new StageScoreSettings(0, 1) },
+                { GameValueType.SportSongs2, new StageScoreSettings(0, 2) },
+                { GameValueType.SportSupport2, new StageScoreSettings(0, 1) },
+                { GameValueType.SportNeadekvat2, new StageScoreSettings(-2, 0) },
+
                 {GameValueType.Neadekvat, new StageScoreSettings(-10, 0) } ,
                 {GameValueType.Nenorm, new StageScoreSettings(-10, 0) } ,
                 {GameValueType.Narush, new StageScoreSettings(-10, 0) } ,
@@ -115,31 +142,62 @@ namespace ManaSchedule.Services
             switch (stage.Type)
             {
                 case StageType.Final:
-                    return new List<GameValueType>() 
+                    if (referee.IsMainReferee)
                     {
-                        GameValueType.OtkrTeamSuite,  
-                        GameValueType.OtkrManSuite, 
-                        GameValueType.OtkrFlag,  
-                        GameValueType.OtkrNakl,  
-                        GameValueType.OtkrNastroi,  
-                
-                        GameValueType.OtkrShowKras,  
-                        GameValueType.OtkrShowZrel,  
-                        GameValueType.OtkrShowReact, 
-                        GameValueType.OtkrShowNastroi,  
-                
-                        GameValueType.ShowKras, 
-                        GameValueType.ShowZrel,  
-                        GameValueType.ShowReact,  
-                        GameValueType.ShowNastroi,  
-                
-                        GameValueType.InKras, 
-                        GameValueType.InZrel,  
-                        GameValueType.InNastroi,  
-                
-                        GameValueType.Neadekvat,  
-                        GameValueType.Nenorm,  
-                        GameValueType.Narush,  
+                        return new List<GameValueType>()
+                        {
+                            // Блок 4: "Народное голосование" (НОВЫЙ БЛОК)
+                            GameValueType.PeoplesChoiceAward,
+                        };
+                    }
+
+                    return new List<GameValueType>()
+                    {
+                        // Блок 1: "Во время открытия Слета"
+                        GameValueType.OtkrTeamSuite, // Общекомандные костюмы
+                        GameValueType.OtkrManSuite, // Индивидуальные костюмы
+                        GameValueType.OtkrFlag, // Флаг или штандарт команды
+                        GameValueType.OtkrNakl, // Командные атрибуты
+                        GameValueType.OtkrNastroi, // Праздничный настрой
+
+                        // Блок 2: "Во время выступления на Конкурсе Шоу-песни или Открытии"
+
+                        // Выступление на Открытии
+                        GameValueType.OtkrShowKras, // Красочность выступления
+                        GameValueType.OtkrShowZrel, // Зрелищность выступления
+                        GameValueType.OtkrShowReact, // Реакция зрителей
+                        GameValueType.OtkrShowNastroi, // Праздничный настрой
+
+                        // Выступление на Шоу-песни
+                        GameValueType.ShowKras, // Красочность выступления
+                        GameValueType.ShowZrel, // Зрелищность выступления
+                        GameValueType.ShowReact, // Реакция зрителей
+                        GameValueType.ShowNastroi, // Праздничный настрой
+
+                        // Блок 3: "Во время проведения Манских прыжков в воду" (НОВЫЙ БЛОК)
+                        GameValueType.WaterJumpCostumeOriginality, // Оригинальность костюма
+                        GameValueType.WaterJumpCostumeBeauty, // Красочность костюма
+                        GameValueType.WaterJumpShow, // Зрелищность шоу
+                        GameValueType.WaterJumpEffect, // Эффектность прыжка
+                        GameValueType.WaterJumpPenalty, // Штраф за неадекватное поведение и др.
+
+                        
+
+                        //// Блок 5: "Во время проведения спортивных соревнований" (поддержка болельщиков)
+                        //GameValueType.SportSuite1, // Костюмы
+                        //GameValueType.SportSongs1, // Кричалки
+                        //GameValueType.SportSupport1, // Активность
+                        //GameValueType.SportNeadekvat1, // Неадекватное состояние
+
+                        //GameValueType.SportSuite2,
+                        //GameValueType.SportSongs2,
+                        //GameValueType.SportSupport2,
+                        //GameValueType.SportNeadekvat2,
+
+                        // Общие штрафы
+                        GameValueType.Neadekvat, // Откровенно неадекватное состояние
+                        GameValueType.Nenorm, // Ненормативная лексика, грубость
+                        GameValueType.Narush, // Нарушение общепринятых норм и правил
                     };
 
                 default: throw new NotImplementedException();
@@ -230,13 +288,52 @@ namespace ManaSchedule.Services
                 s.Score = 0;
             });
 
+            var peoplesAward = new Dictionary<int, int>() { };
+
+
             var scores = new List<TeamScore>();
             foreach (var game in stageGames.Where(f => f.Stage.Id == stage.Id && f.Team1Missed == false && f.Team1Cancel == false))
             {
                 var log = new StringBuilder();
                 var score = GetGameScore(game, log).Value;
+
+                peoplesAward.Add(game.Team.Id,
+                    GetGameResultValues(game).SelectMany(f => f.Value)
+                        .Where(f => f.Key == GameValueType.PeoplesChoiceAward).Sum(f => f.Value ?? 0));
+
                 scores.Add(new TeamScore() { Team = game.Team, Score = score, Description = log.ToString() });
             }
+
+            var step = 1;
+            foreach (var p in peoplesAward.GroupBy(f => f.Value).OrderByDescending(f => f.Key))
+            {
+                if (step > 3 || p.Key <= 0) break;
+
+                foreach (var t in p)
+                {
+                    var score = scores.First(f => f.Team.Id == t.Key);
+                    switch (step)
+                    {
+                        case 1:
+                            score.Score += 6;
+                            score.Description += "народ. голосование 1 место +6";
+                            break;
+                        case 2:
+                            score.Score += 5;
+                            score.Description += "народ. голосование 2 место +5";
+                            break;
+                        case 3:
+                            score.Score += 4;
+                            score.Description += "народ. голосование 3 место +4";
+                            break;
+                    }
+                }
+                step++;
+            }
+
+
+
+
 
             var nextPlace = 1;
             foreach (var g in scores.GroupBy(f => f.Score).OrderByDescending(f => f.Key))
@@ -257,6 +354,7 @@ namespace ManaSchedule.Services
 
             DbContext.SaveChanges();
         }
+
 
 
         public override double? GetGameScore(Game game, Dictionary<CompetitionReferee, Dictionary<GameValueType, int?>> values, StringBuilder log)
@@ -282,9 +380,12 @@ namespace ManaSchedule.Services
             vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrNakl), SumOtsechka(GameValueType.OtkrNakl, values));
             vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.OtkrNastroi), SumOtsechka(GameValueType.OtkrNastroi, values));
 
-            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.InKras), SumOtsechka(GameValueType.InKras, values));
-            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.InZrel), SumOtsechka(GameValueType.InZrel, values));
-            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.InNastroi), SumOtsechka(GameValueType.InNastroi, values));
+
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.WaterJumpCostumeOriginality), SumOtsechka(GameValueType.WaterJumpCostumeOriginality, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.WaterJumpCostumeBeauty), SumOtsechka(GameValueType.WaterJumpCostumeBeauty, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.WaterJumpShow), SumOtsechka(GameValueType.WaterJumpShow, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.WaterJumpEffect), SumOtsechka(GameValueType.WaterJumpEffect, values));
+            vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.WaterJumpPenalty), SumOtsechka(GameValueType.WaterJumpPenalty, values));
 
             vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.Neadekvat), SumOtsechka(GameValueType.Neadekvat, values));
             vals.Add(EnumHelper<GameValueType>.GetDisplayValue(GameValueType.Nenorm), SumOtsechka(GameValueType.Nenorm, values));
@@ -315,13 +416,16 @@ namespace ManaSchedule.Services
 
                 + Math.Max(sumOtkr, sumShow)
 
-                + SumOtsechka(GameValueType.InKras, values)
-                + SumOtsechka(GameValueType.InZrel, values)
-                + SumOtsechka(GameValueType.InNastroi, values)
-
                 + Sum(GameValueType.Neadekvat, values)
                 + Sum(GameValueType.Nenorm, values)
                 + Sum(GameValueType.Narush, values);
+
+
+            result += SumOtsechka(GameValueType.WaterJumpCostumeOriginality, values)
+                      + SumOtsechka(GameValueType.WaterJumpCostumeBeauty, values)
+                      + SumOtsechka(GameValueType.WaterJumpShow, values)
+                      + SumOtsechka(GameValueType.WaterJumpEffect, values)
+                      + SumOtsechka(GameValueType.WaterJumpPenalty, values);
 
             result += GetSportCarnivalScore(GameType.Soccer, game.Team);
             result += GetSportCarnivalScore(GameType.Rugby, game.Team);

@@ -180,34 +180,36 @@ namespace ManaSchedule.DataModels
         [Display(Name = "Итоговое место")]
         FinalPlace,
 
-        [Display(Name = "Откр. ком. кост.")]
+        [Display(Name = "Открытие коммандные костюмы")]
         OtkrTeamSuite,
-        [Display(Name = "Откр. инд. кост.")]
+        [Display(Name = "Открытие индивидуальный костюм")]
         OtkrManSuite,
-        [Display(Name = "Откр. флаг")]
+        [Display(Name = "Открытие флаг")]
         OtkrFlag,
-        [Display(Name = "Откр. наклейки")]
+        [Display(Name = "Открытие наклейки")]
         OtkrNakl,
-        [Display(Name = "Откр. настрой")]
+        [Display(Name = "Открытие настрой")]
         OtkrNastroi,
 
-        [Display(Name = "Откр.выст. красочность")]
+        [Display(Name = "Открытие выступление красочность")]
         OtkrShowKras,
-        [Display(Name = "Откр.выст. зрелищ.")]
+        [Display(Name = "Открытие выступление зрелищ.")]
         OtkrShowZrel,
-        [Display(Name = "Откр.выст. реакция")]
+        [Display(Name = "Открытие выступление реакция")]
         OtkrShowReact,
-        [Display(Name = "Откр.выст. настрой")]
+        [Display(Name = "Открытие выступление настрой")]
         OtkrShowNastroi,
 
-        [Display(Name = "Шоу красочность")]
+        [Display(Name = "Шоу-песня красочность")]
         ShowKras,
-        [Display(Name = "Шоу зрелищ.")]
+        [Display(Name = "Шоу-песня зрелищ.")]
         ShowZrel,
-        [Display(Name = "Шоу реакция")]
+        [Display(Name = "Шоу-песня реакция")]
         ShowReact,
-        [Display(Name = "Шоу настрой")]
+        [Display(Name = "Шоу-песня настрой")]
         ShowNastroi,
+
+
 
         [Display(Name = "Ин. красочность")]
         InKras,
@@ -241,5 +243,21 @@ namespace ManaSchedule.DataModels
         SportSupport2,
         [Display(Name = "2. Спорт неадекват")]
         SportNeadekvat2,
+
+
+        [Display(Name = "Прыжки: Оригинальность костюма")]
+        WaterJumpCostumeOriginality,
+        [Display(Name = "Прыжки: Красочность костюма")]
+        WaterJumpCostumeBeauty,
+        [Display(Name = "Прыжки: Зрелищность шоу")]
+        WaterJumpShow,
+        [Display(Name = "Прыжки: Эффектность прыжка")]
+        WaterJumpEffect,
+        [Display(Name = "Прыжки: Штраф")]
+        WaterJumpPenalty,
+
+        [Display(Name = "Народное голосование")]
+        PeoplesChoiceAward,
+
     }
 }
